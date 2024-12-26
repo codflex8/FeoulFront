@@ -1,0 +1,28 @@
+{
+  "Home": {
+    "title": "Hello world!",
+    "about": "Go to the about page"
+  },
+  "NotFoundPage": {
+    "description": "Oops! The page you are looking for doesn’t exist.",
+    "button": "Go Back Home"
+  },
+  "MapPage": {
+    "ShowPlaces": "Show Places",
+    "HidePlaces": "Hide Places",
+    "ChangeLanguage": "Change Language",
+    "language": "Ar",
+    "AskHelp": "Need Help?",
+    "ShareWebsite": "Share Website",
+    "FullScreen": "FullScreen",
+    "SmallScreen": "Small Screen",
+    "JaddahCity": "Jaddah",
+    "MapOptions": "Map Options",
+    "ShowAll": "Show All",
+    "MapPlaces": "Map Places",
+    "Places": "Places",
+    "Malls": "Malls",
+    "Educate": "Educate",
+    "Health": "Heath"
+  }
+}
