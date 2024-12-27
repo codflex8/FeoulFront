@@ -23,6 +23,10 @@
     "Places": "معالم",
     "Malls": "التجزئة",
     "Educate": "التعليم",
-    "Health": "الصحة"
+    "Health": "الصحة",
+    "CheckWebsite": "اكتشف هذا الموقع",
+    "LinkCopiedMessage": "تم نسخ الرابط إلى الحافظة",
+    "ErrorTitle": "حدث خطأ ما",
+    "CopyErrorMessage": "غير قادر على نسخ رابط الموقع"
   }
 }

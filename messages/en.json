@@ -23,6 +23,10 @@
     "Places": "Places",
     "Malls": "Malls",
     "Educate": "Educate",
-    "Health": "Heath"
+    "Health": "Heath",
+    "CheckWebsite": "Explore This Website",
+    "LinkCopiedMessage": "Website link copied into your clipboard",
+    "ErrorTitle": "An error happened",
+    "CopyErrorMessage": "Can't copy the website like into your clipboard"
   }
 }

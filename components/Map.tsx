@@ -34,7 +34,6 @@ const getCustomIcon = (iconName: string, size?: number) => {
   const iconPath = size ? `/assets/icons/${iconName}.svg` : `/assets/icons/${iconName}-marker.svg`
   const customIcon = new L.Icon({
     iconUrl: iconPath,
-    // shadowUrl: '/assets/educate-marker.svg',
     iconSize: size ? [size, size] : [72, 72],
     iconAnchor: [16, 32],
     popupAnchor: [0, -32],
@@ -50,30 +49,13 @@ const AlwaysOpenPopup = ({ position, children, project }: { position: [number, n
     const popup = L.popup({ autoClose: false, closeOnClick: false, closeButton: false, className:"projects-popup" })
       .setLatLng(position)
       .setContent(`<a href=${`/real-estate/${project.id}`}>
-                ${project.name}
-              </a>`) // children as string
+                    ${project.name}
+                  </a>`)
       .openOn(map);
-
-    console.log("popup", popup);
 
     return () => {
       map.closePopup(popup);
     };
-    // const popup = L.popup({ autoClose: false, closeOnClick: false, closeButton: false })
-    //   .setLatLng(position)
-    //   .setContent('<div id="popup-content"></div>') // Placeholder for the content
-    //   .openOn(map);
-
-    // // Render the children into the popup
-    // const popupContent = document.getElementById('popup-content');
-    // if (popupContent) {
-    //   ReactDOM.render(children, popupContent);
-    // }
-
-    // return () => {
-    //   map.closePopup(popup);
-    //   ReactDOM.unmountComponentAtNode(popupContent); // Clean up
-    // };
   }, [map, position, children]);
 
   return null;
@@ -83,8 +65,6 @@ const Map = ({ projects, basicLandmarks, landmarks }: MapProps) => {
   const t = useTranslations('MapPage');
   const router = useRouter();
   const { toast } = useToast()
-
-  // const mapRef = useRef<L.Map | null>(null);
 
   const [isFullScreen, setIsFullScreen] = useState<Checked>(false);
   const [selectedTypes, setSelectedTypes] = useState<string[]>(["places"])
@@ -128,7 +108,7 @@ const Map = ({ projects, basicLandmarks, landmarks }: MapProps) => {
         await navigator.clipboard.writeText(window.location.href);
         await navigator.share({
           title: document.title,
-          text: 'تفحص ها الموقع',
+          text: t("CheckWebsite"),
           url: window.location.href,
         });
       } catch (error) {
@@ -138,15 +118,15 @@ const Map = ({ projects, basicLandmarks, landmarks }: MapProps) => {
       try {
         await navigator.clipboard.writeText(window.location.href);
         toast({
-          description: 'تم نسخ الرابط إلى الحافظة',
+          description: t("LinkCopiedMessage"),
           duration: 5000,
           style: { width: '200px', paddingLeft: '40px', margin: '10px', textAlign: 'center', fontSize: '18px' }
         });
       } catch (error) {
         toast({
           variant: "destructive",
-          title: "حدث خطأ ما",
-          description: "غير قادر على نسخ رابط الموقع",
+          title: t("ErrorTitle"),
+          description: t("CopyErrorMessage"),
         })
       }
     }
