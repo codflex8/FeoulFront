@@ -18,9 +18,38 @@ body {
 
 .leaflet-popup:hover{
   transform: scale(1.1);
-
 }
-.leaflet-popup .leaflet-popup-content-wrapper {
+
+.leaflet-container a{
+  color: #ffffff !important;
+}
+
+.leaflet-popup.places-popup {
+  bottom: -23px !important;
+  left: 7px !important;
+  transition: all 0.3s ease-in-out;
+}
+.leaflet-popup.places-popup .leaflet-popup-content-wrapper {
+  background-color: inherit !important;
+  color: #ffffff;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  width: fit-content;
+}
+
+.leaflet-popup.places-popup .leaflet-popup-content-wrapper .leaflet-popup-content{
+  margin: 0.2rem 0.5rem;
+  font-weight: 500;
+  font-size: 12px;
+  transition: all 0.3s ease-in;
+}
+
+.leaflet-popup.places-popup .leaflet-popup-tip{
+  background-color: transparent !important;
+  display: none;
+}
+
+.leaflet-popup.projects-popup .leaflet-popup-content-wrapper {
   background-color: rgb(75, 93, 110) !important;
   color: #ffffff;
   transition: all 0.3s ease;
@@ -28,7 +57,7 @@ body {
   width: fit-content;
 }
 
-.leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content{
+.leaflet-popup.projects-popup .leaflet-popup-content-wrapper .leaflet-popup-content{
   margin: 0.5rem 1rem;
   font-weight: 500;
   font-size: 1rem;
@@ -38,7 +67,7 @@ body {
   transform: scale(1.1);
 }
 
-.leaflet-popup .leaflet-popup-tip{
+.leaflet-popup.projects-popup .leaflet-popup-tip{
   background-color: rgb(75, 93, 110) !important;
 }
 
@@ -76,6 +105,7 @@ body {
 .leaflet-control-zoom-out:hover{
   background-color: rgb(71 85 105 / var(--tw-bg-opacity, 1)) !important;
 }
+
 @layer base {
   :root {
     --background: 0 0% 100%;
