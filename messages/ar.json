@@ -1,0 +1,32 @@
+{
+  "Home": {
+    "title": "أهلا بالعالم",
+    "about": "أهلا أهلا بالعيد"
+  },
+  "NotFoundPage": {
+    "description": "أوبس! الصفحة التي تبحث عنها غير موجودة",
+    "button": "عد إلى الصفحة الرئسية"
+  },
+  "MapPage": {
+    "ShowPlaces": "أظهر المعالم",
+    "HidePlaces": "أخفي المعالم",
+    "ChangeLanguage": "غير اللغة",
+    "language": "En",
+    "AskHelp": "تحتاج لمساعدة ؟",
+    "ShareWebsite": "شارك الموقع",
+    "FullScreen": "شاشة كاملة",
+    "SmallScreen": "أغلق الشاشة الكاملة",
+    "JaddahCity": "جدة",
+    "MapOptions": "إختيارات الخريطة",
+    "ShowAll": "عرض الكل",
+    "MapPlaces": "معالم الخريطة",
+    "Places": "معالم",
+    "Malls": "التجزئة",
+    "Educate": "التعليم",
+    "Health": "الصحة",
+    "CheckWebsite": "اكتشف هذا الموقع",
+    "LinkCopiedMessage": "تم نسخ الرابط إلى الحافظة",
+    "ErrorTitle": "حدث خطأ ما",
+    "CopyErrorMessage": "غير قادر على نسخ رابط الموقع"
+  }
+}
