@@ -13,6 +13,7 @@
     "ChangeLanguage": "Change Language",
     "language": "Ar",
     "AskHelp": "Need Help?",
+    "gallery": "Gallery",
     "ShareWebsite": "Share Website",
     "FullScreen": "FullScreen",
     "SmallScreen": "Small Screen",
@@ -28,5 +29,25 @@
     "LinkCopiedMessage": "Website link copied into your clipboard",
     "ErrorTitle": "An error happened",
     "CopyErrorMessage": "Can't copy the website like into your clipboard"
+  },
+  "BuildingViewPage": {
+    "language": "Ar",
+    "MainStructureButton": "Go back to main structure",
+    "VRButton": "Enter The VR Mode",
+    "Rooms":"Rooms",
+    "Category":"Category",
+    "BuidingArea":"Buiding Area",
+    "Bathrooms":"Bathrooms",
+    "LandArea":"Land Area",
+    "Meter": "m2",
+    "Price":"Price",
+    "Riyal":"Riyal",
+    "AddInterest":"Add Your Interest",
+    "Floor": "Floor",
+    "GroundFloor": "Ground",
+    "FirstFloor": "First",
+    "SecondFloor": "Second",
+    "TotalArea": "Total Area",
+    "BlockNumber": "Block Number"
   }
 }

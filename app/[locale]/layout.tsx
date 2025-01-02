@@ -8,6 +8,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 const fontFamily = Cairo({
   variable: "--font-cairo",
@@ -22,15 +23,13 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
-  params: {locale}
+  params
 }: Readonly<{
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }>) {
   // const messages = getMessages()
-
-  console.log("eeeeeeee", locale);
-  
+  const locale = (await params).locale
 
   // Load messages dynamically
   let messages;
@@ -52,13 +51,15 @@ export default async function RootLayout({
   return (
     <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
       <body
-        className={`${fontFamily.variable} antialiased`}
+        className={`${fontFamily.variable}`}
       >
         <NextIntlClientProvider messages={messages}>
-          <ToastProvider>
-            <main>{children}</main>
-            <Toaster />
-          </ToastProvider>
+          <SidebarProvider>
+            <ToastProvider>
+              <main>{children}</main>
+              <Toaster />
+            </ToastProvider>
+          </SidebarProvider>
         </NextIntlClientProvider>
       </body>
     </html>

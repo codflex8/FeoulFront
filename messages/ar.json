@@ -13,6 +13,7 @@
     "ChangeLanguage": "غير اللغة",
     "language": "En",
     "AskHelp": "تحتاج لمساعدة ؟",
+    "gallery": "معرض الصور",
     "ShareWebsite": "شارك الموقع",
     "FullScreen": "شاشة كاملة",
     "SmallScreen": "أغلق الشاشة الكاملة",
@@ -28,5 +29,25 @@
     "LinkCopiedMessage": "تم نسخ الرابط إلى الحافظة",
     "ErrorTitle": "حدث خطأ ما",
     "CopyErrorMessage": "غير قادر على نسخ رابط الموقع"
+  },
+  "BuildingViewPage": {
+    "language": "En",
+    "MainStructureButton": "العودة إلى المخطط الرئيسي",
+    "VRButton": "الدخول إلى الواقع الإفتراضي",
+    "Rooms": "الغرف",
+    "Category": "الفئة",
+    "BuidingArea": "مساحة البناء",
+    "Bathrooms": "دورات المياه",
+    "LandArea": "مساحة الأرض",
+    "Meter": "م²",
+    "Price": "السعر",
+    "Riyal": "ريال",
+    "AddInterest": "سجل اهتمامك",
+    "Floor": "الدور",
+    "GroundFloor": "الأرضي",
+    "FirstFloor": "الأول",
+    "SecondFloor": "الثاني",
+    "TotalArea": "المساحة الإجمالية",
+    "BlockNumber": "رقم الوحدة"
   }
 }
