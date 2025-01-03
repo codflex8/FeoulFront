@@ -18,6 +18,7 @@ import {
 import { Select, SelectTrigger, SelectContent, SelectValue, SelectItem } from "./ui/select";
 
 import { Input } from "@/components/ui/input"
+import { useTranslations } from "next-intl"
 
 const formSchema = z.object({
   firstName: z.string({
@@ -46,6 +47,8 @@ const formSchema = z.object({
 })
 
 const InterestedForm = ({ setOpen }: React.ComponentState) => {
+  const t = useTranslations('BuildingViewPage');
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -62,6 +65,8 @@ const InterestedForm = ({ setOpen }: React.ComponentState) => {
     setOpen(false)
   }
 
+  
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4 gap-y-8 grid-cols-2">
@@ -70,9 +75,9 @@ const InterestedForm = ({ setOpen }: React.ComponentState) => {
           name="firstName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>الإسم الأول</FormLabel>
+              <FormLabel>{t("FirstName")}</FormLabel>
               <FormControl>
-                <Input placeholder="ألاء" {...field} />
+                <Input placeholder="..." {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -84,7 +89,7 @@ const InterestedForm = ({ setOpen }: React.ComponentState) => {
           name="secondName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>العائلة</FormLabel>
+              <FormLabel>{t("SurName")}</FormLabel>
               <FormControl>
                 <Input placeholder="..." {...field} />
               </FormControl>
@@ -98,7 +103,7 @@ const InterestedForm = ({ setOpen }: React.ComponentState) => {
           name="phone"
           render={({ field }) => (
             <FormItem className="flex-1">
-              <FormLabel>الهاتف</FormLabel>
+              <FormLabel>{t("Phone")}</FormLabel>
               <FormControl>
                 <PhoneInput
                   defaultCountry="SA"
@@ -107,7 +112,7 @@ const InterestedForm = ({ setOpen }: React.ComponentState) => {
                   withCountryCallingCode
                   value={field.value as E164Number | undefined}
                   onChange={field.onChange}
-                  style={{ direction: "rtl" }}
+                  style={{ direction: t("language").toLowerCase() === "en" ? "rtl" : "ltr" }}
                   className="!mt-2 h-9 !rounded-md !px-3 !text-sm !border !bg-dark-400 !placeholder:text-dark-600 !border-dark-500"
                 />
               </FormControl>
@@ -121,7 +126,7 @@ const InterestedForm = ({ setOpen }: React.ComponentState) => {
           name="region"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>المنطقة</FormLabel>
+              <FormLabel>{t("Area")}</FormLabel>
               <Select dir="rtl" onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
