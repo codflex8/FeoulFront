@@ -27,6 +27,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import InterestedForm from "@/components/InterestedForm";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 
 const BuildingProperties = () => {
@@ -155,27 +156,27 @@ const page = () => {
   const images = [
     {
       title: "المظهر الخارجي",
-      src: "/assets/images/view-1.png",
+      src: "/assets/images/test.jpg",
     },
     {
       title: "المظهر الخارجي",
-      src: "/assets/images/view-2.png",
+      src: "/assets/images/test.jpg",
     },
     {
       title: "المظهر الخارجي",
-      src: "/assets/images/view-1.png",
+      src: "/assets/images/test.jpg",
     },
     {
       title: "المظهر الخارجي",
-      src: "/assets/images/view-2.png",
+      src: "/assets/images/test.jpg",
     },
     {
       title: "المظهر الخارجي",
-      src: "/assets/images/view-1.png",
+      src: "/assets/images/test.jpg",
     },
     {
       title: "المظهر الخارجي",
-      src: "/assets/images/view-2.png",
+      src: "/assets/images/test.jpg",
     },
   ];
 
@@ -215,7 +216,7 @@ const page = () => {
           <CarouselContent className="min-h-[500px] h-[80vh]">
             <CarouselItem>
               <Image
-                src='/assets/images/Type_A_GF.png'
+                src='/assets/images/test.jpg'
                 alt="Type_A_GF"
                 width={300}
                 height={1000}
@@ -224,7 +225,7 @@ const page = () => {
             </CarouselItem>
             <CarouselItem>
               <Image
-                src='/assets/images/Type_A_FF.png'
+                src='/assets/images/test.jpg'
                 alt="Type_A_GF"
                 width={300}
                 height={1000}
@@ -233,7 +234,7 @@ const page = () => {
             </CarouselItem>
             <CarouselItem>
               <Image
-                src='/assets/images/Type_A_RF.png'
+                src='/assets/images/test.jpg'
                 alt="Type_A_RF"
                 width={300}
                 height={1000}
@@ -260,18 +261,20 @@ const page = () => {
       </div>
 
       {/* Gallery Popup */}
-      <AlertDialog open={isPopupOpen} onOpenChange={setPopupOpen}>
-        <AlertDialogContent dir="ltr" className="flex !h-full !w-screen rounded-none p-0 border-none" style={{ width: "100vw", height: "100vh" }}>
+      <Dialog open={isPopupOpen} onOpenChange={setPopupOpen}>
+        <DialogContent dir="ltr" className="flex !h-full !w-screen rounded-none p-0 border-none" style={{ width: "100vw", height: "100vh" }}>
           {/* Left Sidebar */}
           <div className="w-1/4 bg-gray-800 text-white">
-            <Button onClick={() => setPopupOpen(false)} className="m-6 p-0 w-fit h-fit">
-              <Image
-                src='/assets/icons/left-arrow.svg'
-                alt="Arrow"
-                width={40}
-                height={40}
-              />
-            </Button>
+            <DialogTitle>
+              <Button onClick={() => setPopupOpen(false)} className="m-6 p-0 w-fit h-fit">
+                <Image
+                  src='/assets/icons/left-arrow.svg'
+                  alt="Arrow"
+                  width={40}
+                  height={40}
+                />
+              </Button>
+            </DialogTitle>
             <div className="w-full mt-6 p-4 overflow-y-auto grid grid-cols-3 gap-4 place-content-start">
               {images.map((img, index) => (
                 <div key={index} className="text-center text-sm">
@@ -316,29 +319,21 @@ const page = () => {
               </div>
             ))}
           </div>
-        </AlertDialogContent>
-      </AlertDialog>
+        </DialogContent>
+      </Dialog>
 
       {/* Intrest Form Popup */}
-      <AlertDialog open={open} onOpenChange={setOpen}>
-        <AlertDialogContent className="max-w-lg">
-          <AlertDialogHeader>
-            <AlertDialogTitle className="flex items-center justify-between text-xl font-extrabold">
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle className="flex items-center justify-between text-xl font-extrabold">
               {t("AddInterest")}
-              <Image
-                src='/assets/icons/close.svg'
-                alt="close"
-                width={18}
-                height={18}
-                onClick={() => setOpen(false)}
-                className="cursor-pointer"
-              />
-            </AlertDialogTitle>
-          </AlertDialogHeader>
+            </DialogTitle>
+          </DialogHeader>
           <BuildingProperties />
           <InterestedForm setOpen={setOpen} />
-        </AlertDialogContent>
-      </AlertDialog>
+        </DialogContent>
+      </Dialog>
 
     </div>
   )
