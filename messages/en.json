@@ -48,6 +48,11 @@
     "FirstFloor": "First",
     "SecondFloor": "Second",
     "TotalArea": "Total Area",
-    "BlockNumber": "Block Number"
+    "BlockNumber": "Block Number",
+    "FirstName": "First Name",
+    "SurName": "SurName",
+    "Phone": "Phone",
+    "Area": "Area"
+
   }
 }

@@ -48,6 +48,10 @@
     "FirstFloor": "الأول",
     "SecondFloor": "الثاني",
     "TotalArea": "المساحة الإجمالية",
-    "BlockNumber": "رقم الوحدة"
+    "BlockNumber": "رقم الوحدة",
+    "FirstName": "الإسم الأول",
+    "SurName": "إسم العائلة",
+    "Phone": "الهاتف",
+    "Area": "المنطقة"
   }
 }
