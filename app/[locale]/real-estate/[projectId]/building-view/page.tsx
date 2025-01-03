@@ -97,10 +97,10 @@ const page = () => {
     }
 
     // setCount(api.scrollSnapList().length)
-    setCurrent(api.selectedScrollSnap() + 1)
+    setCurrent(api.selectedScrollSnap())
 
     api.on("select", () => {
-      setCurrent(api.selectedScrollSnap() + 1)
+      setCurrent(api.selectedScrollSnap())
     })
   }, [api])
 
@@ -180,6 +180,8 @@ const page = () => {
     },
   ];
 
+  console.log("Current", current);
+  
   return (
     <div className="bg-[#544533] relative text-center min-h-[100vh] w-screen flex items-center justify-center py-4 overflow-x-hidden">
 
@@ -204,15 +206,16 @@ const page = () => {
 
           <div className="p-2 rounded-md bg-slate-600 text-center h-fit flex flex-col">
             <h3 className="text-white text-xs font-semibold mb-1">{t("Floor")}</h3>
-            <Button onClick={() => api?.scrollTo(0)} className={clsx("py-2 px-3 rounded-none rounded-t-md text-white bg-gray-500 text-sm border-b border-slate-400 hover:bg-white hover:text-black transition-all", current === 1 ? "bg-white text-black" : "")}>{t("GroundFloor")}</Button>
-            <Button onClick={() => api?.scrollTo(1)} className={clsx("py-2 px-3 rounded-none text-white bg-gray-500 text-sm border-b border-slate-300 hover:bg-white hover:text-black transition-all", current === 2 ? "bg-white text-black" : "")}>{t("FirstFloor")}</Button>
-            <Button onClick={() => api?.scrollTo(2)} className={clsx("py-2 px-3 rounded-none rounded-b-md text-white bg-gray-500 text-sm hover:bg-white hover:text-black transition-all", current === 3 ? "bg-white text-black" : "")}>{t("SecondFloor")}</Button>
+            <Button onClick={() => api?.scrollTo(0)} className={clsx("py-2 px-3 rounded-none rounded-t-md text-white bg-gray-500 text-sm border-b border-slate-400 hover:bg-white hover:text-black transition-all", current === 0 ? "bg-white text-black" : "")}>{t("GroundFloor")}</Button>
+            <Button onClick={() => api?.scrollTo(1)} className={clsx("py-2 px-3 rounded-none text-white bg-gray-500 text-sm border-b border-slate-300 hover:bg-white hover:text-black transition-all", current === 1 ? "bg-white text-black" : "")}>{t("FirstFloor")}</Button>
+            <Button onClick={() => api?.scrollTo(2)} className={clsx("py-2 px-3 rounded-none rounded-b-md text-white bg-gray-500 text-sm hover:bg-white hover:text-black transition-all", current === 2 ? "bg-white text-black" : "")}>{t("SecondFloor")}</Button>
           </div>
         </div>
       </div>
 
-      <div className="m-auto">
-        <Carousel opts={{ loop: true }} setApi={setApi} dir="rtl" className={`w-[300px] m-auto h-full transform transition-all scale-${scale}`} style={{ transform: `scale(${scale})`, transition: "transform 0.3s ease-in-out" }}>
+      {/* Building Floor Carousel */}
+      <div className="m-auto relative">
+        <Carousel orientation="vertical" opts={{ loop: true }} setApi={setApi} dir="rtl" className={`w-[300px] m-auto h-full transform transition-all scale-${scale}`} style={{ transform: `scale(${scale})`, transition: "transform 0.3s ease-in-out" }}>
           <CarouselContent className="min-h-[500px] h-[80vh]">
             <CarouselItem>
               <Image
@@ -242,8 +245,23 @@ const page = () => {
               />
             </CarouselItem>
           </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
+          <Button className="bg-slate-600 hover:bg-slate-700 p-2 absolute top-[50%] transform translate-y-[-50%] left-[-50px]" onClick={() => api?.scrollTo(current - 1)}>
+            <Image
+              src='/assets/icons/left-arrow.svg'
+              alt="arrow"
+              width={25}
+              height={32}
+            />
+          </Button>
+          <Button className="bg-slate-600 hover:bg-slate-700 p-2 absolute top-[50%] transform translate-y-[-50%] right-[-50px]" onClick={() => api?.scrollTo(current + 1)}>
+            <Image
+              src='/assets/icons/left-arrow.svg'
+              alt="arrow"
+              width={25}
+              height={32}
+              className="transform rotate-180"
+            />
+          </Button>
         </Carousel>
 
         <div className="flex items-center justify-center gap-4 mt-8">
@@ -259,6 +277,8 @@ const page = () => {
           </Link>
         </div>
       </div>
+
+
 
       {/* Gallery Popup */}
       <Dialog open={isPopupOpen} onOpenChange={setPopupOpen}>
@@ -298,7 +318,7 @@ const page = () => {
           {/* Vertical Carousel */}
           <div
             ref={carouselRef}
-            className="w-3/4 bg-gray-100 overflow-y-auto"
+            className="w-3/4 bg-gray-100 overflow-y-auto scrollbar-hidden"
             onScroll={handleScroll}
             style={{
               scrollSnapType: 'y mandatory',
