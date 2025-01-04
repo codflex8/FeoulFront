@@ -28,12 +28,14 @@
     "CheckWebsite": "اكتشف هذا الموقع",
     "LinkCopiedMessage": "تم نسخ الرابط إلى الحافظة",
     "ErrorTitle": "حدث خطأ ما",
-    "CopyErrorMessage": "غير قادر على نسخ رابط الموقع"
+    "CopyErrorMessage": "غير قادر على نسخ رابط الموقع",
+    "ZoomIn": "تكبير",
+    "ZoomOut": "تصغير"
   },
   "BuildingViewPage": {
     "language": "En",
     "MainStructureButton": "العودة إلى المخطط الرئيسي",
-    "VRButton": "الدخول إلى الواقع الإفتراضي",
+    "VRButton": "عرض الوحدة السكنية",
     "Rooms": "الغرف",
     "Category": "الفئة",
     "BuidingArea": "مساحة البناء",

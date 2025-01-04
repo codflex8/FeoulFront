@@ -78,7 +78,6 @@ const page = () => {
   const [api, setApi] = useState<CarouselApi>()
   const [current, setCurrent] = useState(0)
   // const [count, setCount] = useState(0)
-  const [selectedTypes, setSelectedTypes] = useState<string[]>(["places"])
 
   const zoomIn = () => {
     if (scale <= 1) {
@@ -185,7 +184,7 @@ const page = () => {
   return (
     <div className="bg-[#544533] relative text-center min-h-[100vh] w-screen flex items-center justify-center py-4 overflow-x-hidden">
 
-      <ControlFunctions selectedTypes={selectedTypes} setSelectedTypes={setSelectedTypes} zoomIn={zoomIn} zoomOut={zoomOut} setPopupOpen={setPopupOpen} />
+      <ControlFunctions zoomIn={zoomIn} zoomOut={zoomOut} setPopupOpen={setPopupOpen} />
 
       <div className={clsx("absolute top-4 z-[1000]", t("language").toLowerCase() === 'en' ? "right-[10px]" : "left-[10px]")}>
         <WebsiteTitleSec />
@@ -266,12 +265,12 @@ const page = () => {
 
         <div className="flex items-center justify-center gap-4 mt-8">
           <Link href='/ar/real-estate/2555545'>
-            <Button>
+            <Button className="font-semibold">
               {t("MainStructureButton")}
             </Button>
           </Link>
           <Link href='/ar/vr-view'>
-            <Button variant="outline">
+            <Button variant="outline" className="font-semibold">
               {t("VRButton")}
             </Button>
           </Link>

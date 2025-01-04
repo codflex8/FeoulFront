@@ -28,12 +28,14 @@
     "CheckWebsite": "Explore This Website",
     "LinkCopiedMessage": "Website link copied into your clipboard",
     "ErrorTitle": "An error happened",
-    "CopyErrorMessage": "Can't copy the website like into your clipboard"
+    "CopyErrorMessage": "Can't copy the website like into your clipboard",
+    "ZoomIn": "Zoom In",
+    "ZoomOut": "Zoom Out"
   },
   "BuildingViewPage": {
     "language": "Ar",
     "MainStructureButton": "Go back to main structure",
-    "VRButton": "Enter The VR Mode",
+    "VRButton": "Show Building Block",
     "Rooms":"Rooms",
     "Category":"Category",
     "BuidingArea":"Buiding Area",

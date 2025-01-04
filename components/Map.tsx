@@ -85,7 +85,7 @@ const Map = ({ projects, basicLandmarks, landmarks }: MapProps) => {
         minZoom={11}
         maxBounds={bounds}
         maxBoundsViscosity={1.0}
-        style={{ height: "100vh", width: "100%" }}
+        style={{ height: "100vh", width: "100vw" }}
       >
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

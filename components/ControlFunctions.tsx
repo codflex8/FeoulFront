@@ -10,8 +10,8 @@ import { DropdownMenuCheckboxItemProps } from "@radix-ui/react-dropdown-menu"
 type Checked = DropdownMenuCheckboxItemProps["checked"]
 
 interface ControlFunctionsProps {
-  selectedTypes: string[];
-  setSelectedTypes: React.ComponentState;
+  selectedTypes?: string[];
+  setSelectedTypes?: React.ComponentState;
   zoomIn?: () => void;
   zoomOut?: () => void;
   setPopupOpen?: React.ComponentState;
@@ -101,19 +101,19 @@ const ControlFunctions = ({ selectedTypes, setSelectedTypes, zoomIn, zoomOut, se
   // Handle For Ask For Help Button
   const handleAskHelp = () => { }
 
-  // Handle For Show Building Gallery Button
-  const ShowGallery = () => { }
 
   return (
-    <div className={clsx("fixed flex flex-col justify-between z-[1000] p-[10px]", t("language").toLowerCase() == 'ar' ? "right-[10px]" : "left-[10px]", zoomIn ? "top-0  h-full" : "top-20 h-[calc(100%-5rem)]")}>
+    <div className={clsx("fixed flex flex-col justify-between z-[1000] pb-[10px]", t("language").toLowerCase() == 'ar' ? "right-[10px]" : "left-[10px]", zoomIn ? "top-0  h-full" : "top-20 h-[calc(100%-5rem)]")}>
       {(zoomIn && zoomOut) && (
         <div >
-          <MapControlBtn onClick={zoomIn} icon="plus" title={"zoom in"} />
-          <MapControlBtn onClick={zoomOut} icon="minus" title={"zoom out"} />
+          <MapControlBtn onClick={zoomIn} icon="plus" title={t("ZoomIn")} />
+          <MapControlBtn onClick={zoomOut} icon="minus" title={t("ZoomOut")} />
         </div>
       )}
       <div>
-        <MapControlBtn onClick={(selectedTypes.includes("places") || selectedTypes.length) ? handleHidePlaces : handleShowPlaces} icon={selectedTypes.length ? 'eyes-dash' : 'eyes'} title={selectedTypes.length ? t("HidePlaces") : t("ShowPlaces")} />
+        {selectedTypes && (
+          <MapControlBtn onClick={(selectedTypes.includes("places") || selectedTypes.length) ? handleHidePlaces : handleShowPlaces} icon={selectedTypes.length ? 'eyes-dash' : 'eyes'} title={selectedTypes.length ? t("HidePlaces") : t("ShowPlaces")} />
+        )}
         <MapControlBtn onClick={() => handleChangeLanguage(t("language").toLowerCase())} text={t("language")} title={t("ChangeLanguage")} />
       </div>
 
