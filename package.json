@@ -2,10 +2,10 @@
   "name": "saraya-buhirat",
   "version": "0.1.0",
   "private": true,
-  "scripts": {
-    "dev": "node server.js",
+    "scripts": {
+    "dev": "next dev --turbopack",
     "build": "next build",
-    "start": "NODE_ENV=production node server.js",
+    "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
