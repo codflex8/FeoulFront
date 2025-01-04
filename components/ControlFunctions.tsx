@@ -118,7 +118,7 @@ const ControlFunctions = ({ selectedTypes, setSelectedTypes, zoomIn, zoomOut, se
       </div>
 
       <div className="flex-1 flex flex-col justify-end">
-        {(zoomIn && zoomOut) && (
+        {(zoomIn && zoomOut && setPopupOpen) && (
           <MapControlBtn onClick={() => setPopupOpen(true)} icon="gallery" title={t('gallery')} />
         )}
         <MapControlBtn onClick={handleAskHelp} icon="question" title={t('AskHelp')} />

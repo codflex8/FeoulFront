@@ -30,7 +30,31 @@
     "ErrorTitle": "An error happened",
     "CopyErrorMessage": "Can't copy the website like into your clipboard",
     "ZoomIn": "Zoom In",
-    "ZoomOut": "Zoom Out"
+    "ZoomOut": "Zoom Out",
+    "Block": "Block"
+  },
+  "ProjectPage": {
+    "language": "Ar",
+    "Category":"Category",
+    "ShowAll": "Show All",
+    "Avaliable": "Avaliable",
+    "Bocked": "Bocked",
+    "Sold": "Sold",
+    "AvaliableBlocks": "Avaliable Blocks",
+    "BockedBlocks": "Bocked Blocks",
+    "SoldBlocks": "Sold Blocks",
+    "Price": "Price",
+    "Riyal": "Riyal",
+    "TotalArea": "Total Area",
+    "Meter": "m2",
+    "HelpingTools": "Helping Tools",
+    "Library": "Library",
+    "Educate": "Educate",
+    "Hospital": "Hospital",
+    "Commerical": "Commerical",
+    "Kindergarten": "Kindergarten",
+    "Mosque": "Mosque"
+
   },
   "BuildingViewPage": {
     "language": "Ar",

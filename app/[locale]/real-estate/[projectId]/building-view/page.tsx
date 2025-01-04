@@ -187,7 +187,7 @@ const page = () => {
       <ControlFunctions zoomIn={zoomIn} zoomOut={zoomOut} setPopupOpen={setPopupOpen} />
 
       <div className={clsx("absolute top-4 z-[1000]", t("language").toLowerCase() === 'en' ? "right-[10px]" : "left-[10px]")}>
-        <WebsiteTitleSec />
+        <WebsiteTitleSec projectId="222" blockNumber={60} />
 
         <div className="flex gap-2">
           <BuildingPropertiesCard
