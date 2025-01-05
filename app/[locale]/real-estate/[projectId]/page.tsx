@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import ControlFunctions from '@/components/ControlFunctions';
 import WebsiteTitleSec from '@/components/WebsiteTitleSec';
 import BuildingBlocksFiters from '@/components/BuildingBlocksFiters';
+import HelppingTools from '@/components/HelppingTools';
 
 const page = (
   {
@@ -42,6 +43,7 @@ const page = (
 
         <BuildingBlocksFiters />
       </div>
+      <HelppingTools />
     </div>
   )
 }
