@@ -13,207 +13,124 @@ import Image from "next/image"
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuSeparator, DropdownMenuTrigger } from "./ui/dropdown-menu"
 import { Badge } from "./ui/badge";
 
-const BuildingBlocksFiters = () => {
-  const t = useTranslations('ProjectPage');
-  const [price, setPrice] = useState<[number, number]>([10000, 100000]);
-  const [space, setSpace] = useState<[number, number]>([150, 400]);
-  const [categories, setCategories] = useState<string[]>(["category-A", "category-B", "category-C", "category-D"])
+interface DropdownMenuBlockProps {
+  selectedCategories: string[];
+  setSelectedCategories: React.ComponentState;
+}
+interface BuildingBlocksFitersProps {
+  selectedCategories: string[];
+  setSelectedCategories: React.ComponentState;
+  price: [number, number];
+  setPrice: React.ComponentState;
+  space: [number, number];
+  setSpace: React.ComponentState;
+}
 
-  const handleShowAllBtn = () => {
-    setCategories((prev: string[]) => (
-      prev.includes("category-A") &&
-        prev.includes("category-B") &&
-        prev.includes("category-C") &&
-        prev.includes("category-D") ? [] : ["category-A", "category-B", "category-C", "category-D"]
-    ))
-  }
+const DropdownMenuBlock = ({ selectedCategories, setSelectedCategories }: DropdownMenuBlockProps) => {
+  const t = useTranslations('ProjectPage');
 
   const toggleType = (type: string) => {
-    setCategories((prev: string[]) =>
+    setSelectedCategories((prev: string[]) =>
       prev.includes(type) ? prev.filter((t: string) => t !== type) : [...prev, type]
     );
   };
 
+  return (
+    <DropdownMenu dir={t("language").toLowerCase() === 'en' ? "rtl" : "ltr"}>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" className="flex items-center justify-between gap-6 w-full">
+          <span>{t("Category")}</span>
+          <Image
+            src='/assets/icons/right-arrow.svg'
+            alt="arrow"
+            width={10}
+            height={10}
+            className="transform rotate-90 -translate-y-[1px]"
+          />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-36 !z-[1000]">
+        <DropdownMenuSeparator />
+        <DropdownMenuCheckboxItem
+          className={clsx("flex items-center justify-between mb-1 cursor-pointer", selectedCategories.includes("category-a") && 'bg-slate-400')}
+          checked={selectedCategories.includes("category-a")}
+          onCheckedChange={() => toggleType("category-a")}
+        >
+          <span className="block text-base text-slate-500 font-semibold">فئة- A</span>
+        </DropdownMenuCheckboxItem>
+        <DropdownMenuCheckboxItem
+          className={clsx("flex items-center justify-between mb-1 cursor-pointer", selectedCategories.includes("category-b") && 'bg-slate-400')}
+          checked={selectedCategories.includes("category-b")}
+          onCheckedChange={() => toggleType("category-b")}
+        >
+          <span className="block text-base text-slate-500 font-semibold">فئة-A</span>
+        </DropdownMenuCheckboxItem>
+        <DropdownMenuCheckboxItem
+          className={clsx("flex items-center justify-between mb-1 cursor-pointer", selectedCategories.includes("category-c") && 'bg-slate-400')}
+          checked={selectedCategories.includes("category-c")}
+          onCheckedChange={() => toggleType("category-c")}
+        >
+          <span className="block text-base text-slate-500 font-semibold">فئة-A</span>
+        </DropdownMenuCheckboxItem>
+        <DropdownMenuCheckboxItem
+          className={clsx("flex items-center justify-between mb-1 cursor-pointer", selectedCategories.includes("category-d") && 'bg-slate-400')}
+          checked={selectedCategories.includes("category-d")}
+          onCheckedChange={() => toggleType("category-d")}
+        >
+          <span className="block text-base text-slate-500 font-semibold">فئة-A</span>
+        </DropdownMenuCheckboxItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}
+
+const BuildingBlocksFiters = ({ selectedCategories, setSelectedCategories, price, setPrice, space, setSpace }: BuildingBlocksFitersProps) => {
+  const t = useTranslations('ProjectPage');
+
+  const handleShowAllBtn = () => {
+    setSelectedCategories((prev: string[]) => (
+      prev.includes("category-a") &&
+        prev.includes("category-b") &&
+        prev.includes("category-c") &&
+        prev.includes("category-d") ? [] : ["category-a", "category-b", "category-c", "category-d"]
+    ))
+  }
 
   return (
     <div className="w-fit bg-slate-600 rounded-md p-4">
 
-      <Tabs dir="rtl" defaultValue="available" className="w-fit bg-slate-600 rounded-md">
+      <Tabs dir={t("language").toLowerCase() === 'en' ? "rtl" : "ltr"} defaultValue="available" className="w-fit bg-slate-600 rounded-md">
         <TabsList className="grid w-full grid-cols-3 bg-slate-600">
-          <TabsTrigger value="available" className="text-white">متاح</TabsTrigger>
-          <TabsTrigger value="bocked" className="text-white">تم حجزه</TabsTrigger>
-          <TabsTrigger value="sold" className="text-white">تم البيع</TabsTrigger>
+          <TabsTrigger value="available" className="text-white">{t("Avaliable")}</TabsTrigger>
+          <TabsTrigger value="bocked" className="text-white">{t("Bocked")}</TabsTrigger>
+          <TabsTrigger value="sold" className="text-white">{t("Sold")}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="available" className="p-4 pt-0 mt-0">
           <DropdownMenuSeparator className="mt-0" />
-          <h1 className="text-sm font-semibold text-white mb-2">150 من الوحدات المتاحة</h1>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="flex items-center justify-between gap-6 w-full">
-                <span>{t("Category")}</span>
-                <Image
-                  src='/assets/icons/right-arrow.svg'
-                  alt="arrow"
-                  width={10}
-                  height={10}
-                  className="transform rotate-90 -translate-y-[1px]"
-                />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-36 !z-[1000]">
-              <DropdownMenuSeparator />
-              <DropdownMenuCheckboxItem
-                dir="rtl"
-                className={clsx("flex items-center justify-between mb-1 cursor-pointer", categories.includes("category-A") && 'bg-slate-400')}
-                checked={categories.includes("category-A")}
-                onCheckedChange={() => toggleType("category-A")}
-              >
-                <span className="block text-base text-slate-500 font-semibold">فئة- A</span>
-              </DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem
-                dir="rtl"
-                className={clsx("flex items-center justify-between mb-1 cursor-pointer", categories.includes("category-B") && 'bg-slate-400')}
-                checked={categories.includes("category-B")}
-                onCheckedChange={() => toggleType("category-B")}
-              >
-                <span className="block text-base text-slate-500 font-semibold">فئة-A</span>
-              </DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem
-                dir="rtl"
-                className={clsx("flex items-center justify-between mb-1 cursor-pointer", categories.includes("category-C") && 'bg-slate-400')}
-                checked={categories.includes("category-C")}
-                onCheckedChange={() => toggleType("category-C")}
-              >
-                <span className="block text-base text-slate-500 font-semibold">فئة-A</span>
-              </DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem
-                dir="rtl"
-                className={clsx("flex items-center justify-between mb-1 cursor-pointer", categories.includes("category-D") && 'bg-slate-400')}
-                checked={categories.includes("category-D")}
-                onCheckedChange={() => toggleType("category-D")}
-              >
-                <span className="block text-base text-slate-500 font-semibold">فئة-A</span>
-              </DropdownMenuCheckboxItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <h1 className="text-sm font-semibold text-white mb-2">150 {t("AvaliableBlocks")}</h1>
+          <DropdownMenuBlock selectedCategories={selectedCategories} setSelectedCategories={setSelectedCategories} />
         </TabsContent>
 
         <TabsContent value="bocked" className="p-4 pt-0 mt-0">
           <DropdownMenuSeparator className="mt-0" />
-          <h1 className="text-sm font-semibold text-white mb-2">150 من الوحدات المحجوزة</h1>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="flex items-center justify-between gap-6 w-full">
-                <span>{t("Category")}</span>
-                <Image
-                  src='/assets/icons/right-arrow.svg'
-                  alt="arrow"
-                  width={10}
-                  height={10}
-                  className="transform rotate-90 -translate-y-[1px]"
-                />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-36 !z-[1000]">
-              <DropdownMenuSeparator />
-              <DropdownMenuCheckboxItem
-                dir="rtl"
-                className={clsx("flex items-center justify-between mb-1 cursor-pointer", categories.includes("category-A") && 'bg-slate-400')}
-                checked={categories.includes("category-A")}
-                onCheckedChange={() => toggleType("category-A")}
-              >
-                <span className="block text-base text-slate-500 font-semibold">فئة- A</span>
-              </DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem
-                dir="rtl"
-                className={clsx("flex items-center justify-between mb-1 cursor-pointer", categories.includes("category-B") && 'bg-slate-400')}
-                checked={categories.includes("category-B")}
-                onCheckedChange={() => toggleType("category-B")}
-              >
-                <span className="block text-base text-slate-500 font-semibold">فئة-A</span>
-              </DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem
-                dir="rtl"
-                className={clsx("flex items-center justify-between mb-1 cursor-pointer", categories.includes("category-C") && 'bg-slate-400')}
-                checked={categories.includes("category-C")}
-                onCheckedChange={() => toggleType("category-C")}
-              >
-                <span className="block text-base text-slate-500 font-semibold">فئة-A</span>
-              </DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem
-                dir="rtl"
-                className={clsx("flex items-center justify-between mb-1 cursor-pointer", categories.includes("category-D") && 'bg-slate-400')}
-                checked={categories.includes("category-D")}
-                onCheckedChange={() => toggleType("category-D")}
-              >
-                <span className="block text-base text-slate-500 font-semibold">فئة-A</span>
-              </DropdownMenuCheckboxItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <h1 className="text-sm font-semibold text-white mb-2">150 {t("BockedBlocks")}</h1>
+          <DropdownMenuBlock selectedCategories={selectedCategories} setSelectedCategories={setSelectedCategories} />
         </TabsContent>
 
         <TabsContent value="sold" className="p-4 pt-0 mt-0">
           <DropdownMenuSeparator className="mt-0" />
-          <h1 className="text-sm font-semibold text-white mb-2">150 من الوحدات المباعة</h1>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="flex items-center justify-between gap-6 w-full">
-                <span>{t("Category")}</span>
-                <Image
-                  src='/assets/icons/right-arrow.svg'
-                  alt="arrow"
-                  width={10}
-                  height={10}
-                  className="transform rotate-90 -translate-y-[1px]"
-                />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-36 !z-[1000]">
-              <DropdownMenuSeparator />
-              <DropdownMenuCheckboxItem
-                dir="rtl"
-                className={clsx("flex items-center justify-between mb-1 cursor-pointer", categories.includes("category-A") && 'bg-slate-400')}
-                checked={categories.includes("category-A")}
-                onCheckedChange={() => toggleType("category-A")}
-              >
-                <span className="block text-base text-slate-500 font-semibold">فئة- A</span>
-              </DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem
-                dir="rtl"
-                className={clsx("flex items-center justify-between mb-1 cursor-pointer", categories.includes("category-B") && 'bg-slate-400')}
-                checked={categories.includes("category-B")}
-                onCheckedChange={() => toggleType("category-B")}
-              >
-                <span className="block text-base text-slate-500 font-semibold">فئة-A</span>
-              </DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem
-                dir="rtl"
-                className={clsx("flex items-center justify-between mb-1 cursor-pointer", categories.includes("category-C") && 'bg-slate-400')}
-                checked={categories.includes("category-C")}
-                onCheckedChange={() => toggleType("category-C")}
-              >
-                <span className="block text-base text-slate-500 font-semibold">فئة-A</span>
-              </DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem
-                dir="rtl"
-                className={clsx("flex items-center justify-between mb-1 cursor-pointer", categories.includes("category-D") && 'bg-slate-400')}
-                checked={categories.includes("category-D")}
-                onCheckedChange={() => toggleType("category-D")}
-              >
-                <span className="block text-base text-slate-500 font-semibold">فئة-A</span>
-              </DropdownMenuCheckboxItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <h1 className="text-sm font-semibold text-white mb-2">150 {t("SoldBlocks")}</h1>
+          <DropdownMenuBlock selectedCategories={selectedCategories} setSelectedCategories={setSelectedCategories} />
         </TabsContent>
       </Tabs>
 
       {/* price Range Slider */}
       <div className="py-2">
         <h1 className="font-bold text-sm text-gray-300 mb-8">
-          السعر
+          {t("Price")}
           <Badge variant="secondary" className="mx-1">
-            ريال سعودي
+            {t("Riyal")}
           </Badge>
         </h1>
 
@@ -246,9 +163,9 @@ const BuildingBlocksFiters = () => {
       {/* Space Range Slider */}
       <div className="py-2">
         <h1 className="font-bold text-sm text-gray-300 mb-8">
-          المساحة
+          {t("TotalArea")}
           <Badge variant="secondary" className="mx-1">
-            متر مربع
+            {t("Meter")}
           </Badge>
         </h1>
 
@@ -280,10 +197,10 @@ const BuildingBlocksFiters = () => {
 
       <Button variant="showALl"
         className={clsx("w-full mt-2",
-          categories.includes("category-A") &&
-          categories.includes("category-B") &&
-          categories.includes("category-C") &&
-          categories.includes("category-D") &&
+          selectedCategories.includes("category-a") &&
+          selectedCategories.includes("category-b") &&
+          selectedCategories.includes("category-c") &&
+          selectedCategories.includes("category-d") &&
           "bg-white text-slate-600"
         )}
         onClick={handleShowAllBtn}>{t("ShowAll")}</Button>

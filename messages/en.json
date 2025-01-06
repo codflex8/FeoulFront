@@ -8,6 +8,8 @@
     "button": "Go Back Home"
   },
   "MapPage": {
+    "ShowCategories": "Show Categories",
+    "HideCategories": "Hide Categories",
     "ShowPlaces": "Show Places",
     "HidePlaces": "Hide Places",
     "ChangeLanguage": "Change Language",

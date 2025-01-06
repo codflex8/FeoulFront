@@ -8,6 +8,8 @@
     "button": "عد إلى الصفحة الرئسية"
   },
   "MapPage": {
+    "ShowCategories": "أظهر التصنيفات",
+    "HideCategories": "أخفي التصنيفات",
     "ShowPlaces": "أظهر المعالم",
     "HidePlaces": "أخفي المعالم",
     "ChangeLanguage": "غير اللغة",
