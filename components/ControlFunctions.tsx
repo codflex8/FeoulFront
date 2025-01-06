@@ -17,9 +17,10 @@ interface ControlFunctionsProps {
   zoomIn?: () => void;
   zoomOut?: () => void;
   setPopupOpen?: React.ComponentState;
+  setOpenHelpForm: React.ComponentState;
 }
 
-const ControlFunctions = ({ selectedTypes, setSelectedTypes, zoomIn, zoomOut, setPopupOpen, selectedCategories, setSelectedCategories }: ControlFunctionsProps) => {
+const ControlFunctions = ({ selectedTypes, setSelectedTypes, zoomIn, zoomOut, setPopupOpen, selectedCategories, setSelectedCategories, setOpenHelpForm }: ControlFunctionsProps) => {
   const t = useTranslations('MapPage');
   const router = useRouter();
   const pathname = usePathname()
@@ -111,7 +112,9 @@ const ControlFunctions = ({ selectedTypes, setSelectedTypes, zoomIn, zoomOut, se
   }
 
   // Handle For Ask For Help Button
-  const handleAskHelp = () => { }
+  const handleAskHelp = () => {
+    setOpenHelpForm(true)
+   }
 
 
   return (

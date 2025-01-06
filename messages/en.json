@@ -33,11 +33,12 @@
     "CopyErrorMessage": "Can't copy the website like into your clipboard",
     "ZoomIn": "Zoom In",
     "ZoomOut": "Zoom Out",
-    "Block": "Block"
+    "Block": "Block",
+    "NeedHelp": "Need Help"
   },
   "ProjectPage": {
     "language": "Ar",
-    "Category":"Category",
+    "Category": "Model",
     "ShowAll": "Show All",
     "Avaliable": "Avaliable",
     "Bocked": "Bocked",
@@ -55,32 +56,38 @@
     "Hospital": "Hospital",
     "Commerical": "Commerical",
     "Kindergarten": "Kindergarten",
-    "Mosque": "Mosque"
-
+    "Mosque": "Mosque",
+    "NeedHelp": "Need Help"
   },
   "BuildingViewPage": {
     "language": "Ar",
     "MainStructureButton": "Go back to main structure",
     "VRButton": "Show Building Block",
-    "Rooms":"Rooms",
-    "Category":"Category",
-    "BuidingArea":"Buiding Area",
-    "Bathrooms":"Bathrooms",
-    "LandArea":"Land Area",
+    "Rooms": "Rooms",
+    "Category": "Model",
+    "BuidingArea": "Buiding Area",
+    "Bathrooms": "Bathrooms",
+    "LandArea": "Land Area",
     "Meter": "m2",
-    "Price":"Price",
-    "Riyal":"Riyal",
-    "AddInterest":"Add Your Interest",
+    "Price": "Price",
+    "Riyal": "Riyal",
+    "AddInterest": "Add Your Interest",
     "Floor": "Floor",
     "GroundFloor": "Ground",
     "FirstFloor": "First",
     "SecondFloor": "Second",
     "TotalArea": "Total Area",
     "BlockNumber": "Block Number",
+    "NeedHelp": "Need Help",
+    "Name": "Name",
+    "NamePlaceholder": "Mohammed Aladwi",
+    "Message": "Message",
+    "MessagePlaceholder": "Type your message here.",
     "FirstName": "First Name",
+    "FirstNamePlaceholder": "Mohammed",
     "SurName": "SurName",
+    "SurNamePlaceholder": "Aladwi",
     "Phone": "Phone",
     "Area": "Area"
-
   }
 }

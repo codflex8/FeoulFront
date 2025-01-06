@@ -33,11 +33,12 @@
     "CopyErrorMessage": "غير قادر على نسخ رابط الموقع",
     "ZoomIn": "تكبير",
     "ZoomOut": "تصغير",
-    "Block": "وحدة"
+    "Block": "وحدة",
+    "NeedHelp": "تحتاج لمساعدة"
   },
   "ProjectPage": {
     "language": "En",
-    "Category": "الفئة",
+    "Category": "النموذج",
     "ShowAll": "عرض الكل",
     "Avaliable": "متاح",
     "Bocked": "محجوز",
@@ -55,7 +56,8 @@
     "Hospital": "مستشفى",
     "Commerical": "تجاري",
     "Kindergarten": "رياض أطفال",
-    "Mosque": "مسجد"
+    "Mosque": "مسجد",
+    "NeedHelp": "تحتاج لمساعدة"
 
   },
   "BuildingViewPage": {
@@ -63,7 +65,7 @@
     "MainStructureButton": "العودة إلى المخطط الرئيسي",
     "VRButton": "عرض الوحدة السكنية",
     "Rooms": "الغرف",
-    "Category": "الفئة",
+    "Category": "النموذج",
     "BuidingArea": "مساحة البناء",
     "Bathrooms": "دورات المياه",
     "LandArea": "مساحة الأرض",
@@ -77,8 +79,15 @@
     "SecondFloor": "الثاني",
     "TotalArea": "المساحة الإجمالية",
     "BlockNumber": "رقم الوحدة",
+    "NeedHelp": "تحتاج لمساعدة",
+    "Name": "الإسم",
+    "NamePlaceholder": "محمد العدوي",
+    "Message": "المشكلة",
+    "MessagePlaceholder": "أرفق رسالتك هنا",
     "FirstName": "الإسم الأول",
+    "FirstNamePlaceholder": "محمد",
     "SurName": "إسم العائلة",
+    "SurNamePlaceholder": "العدوي",
     "Phone": "الهاتف",
     "Area": "المنطقة"
   }

@@ -17,7 +17,9 @@ interface DropdownMenuBlockProps {
   selectedCategories: string[];
   setSelectedCategories: React.ComponentState;
 }
+
 interface BuildingBlocksFitersProps {
+  className: string;
   selectedCategories: string[];
   setSelectedCategories: React.ComponentState;
   price: [number, number];
@@ -84,7 +86,7 @@ const DropdownMenuBlock = ({ selectedCategories, setSelectedCategories }: Dropdo
   )
 }
 
-const BuildingBlocksFiters = ({ selectedCategories, setSelectedCategories, price, setPrice, space, setSpace }: BuildingBlocksFitersProps) => {
+const BuildingBlocksFiters = ({ className, selectedCategories, setSelectedCategories, price, setPrice, space, setSpace }: BuildingBlocksFitersProps) => {
   const t = useTranslations('ProjectPage');
 
   const handleShowAllBtn = () => {
@@ -97,7 +99,7 @@ const BuildingBlocksFiters = ({ selectedCategories, setSelectedCategories, price
   }
 
   return (
-    <div className="w-fit bg-slate-600 rounded-md p-4">
+    <div className={clsx("w-fit bg-slate-600 rounded-md px-4 transition-all ease-in-out overflow-hidden", className)}>
 
       <Tabs dir={t("language").toLowerCase() === 'en' ? "rtl" : "ltr"} defaultValue="available" className="w-fit bg-slate-600 rounded-md">
         <TabsList className="grid w-full grid-cols-3 bg-slate-600">
@@ -106,19 +108,19 @@ const BuildingBlocksFiters = ({ selectedCategories, setSelectedCategories, price
           <TabsTrigger value="sold" className="text-white">{t("Sold")}</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="available" className="p-4 pt-0 mt-0">
+        <TabsContent value="available" className="pb-4 pt-0 mt-0">
           <DropdownMenuSeparator className="mt-0" />
           <h1 className="text-sm font-semibold text-white mb-2">150 {t("AvaliableBlocks")}</h1>
           <DropdownMenuBlock selectedCategories={selectedCategories} setSelectedCategories={setSelectedCategories} />
         </TabsContent>
 
-        <TabsContent value="bocked" className="p-4 pt-0 mt-0">
+        <TabsContent value="bocked" className="pb-4 pt-0 mt-0">
           <DropdownMenuSeparator className="mt-0" />
           <h1 className="text-sm font-semibold text-white mb-2">150 {t("BockedBlocks")}</h1>
           <DropdownMenuBlock selectedCategories={selectedCategories} setSelectedCategories={setSelectedCategories} />
         </TabsContent>
 
-        <TabsContent value="sold" className="p-4 pt-0 mt-0">
+        <TabsContent value="sold" className="pb-4 pt-0 mt-0">
           <DropdownMenuSeparator className="mt-0" />
           <h1 className="text-sm font-semibold text-white mb-2">150 {t("SoldBlocks")}</h1>
           <DropdownMenuBlock selectedCategories={selectedCategories} setSelectedCategories={setSelectedCategories} />
@@ -195,13 +197,14 @@ const BuildingBlocksFiters = ({ selectedCategories, setSelectedCategories, price
         />
       </div>
 
+      {/* Show All Button */}
       <Button variant="showALl"
-        className={clsx("w-full mt-2",
+        className={clsx("w-full mt-4 bg-gradient-to-r from-blue-400 to-purple-500 transition-all",
           selectedCategories.includes("category-a") &&
           selectedCategories.includes("category-b") &&
           selectedCategories.includes("category-c") &&
           selectedCategories.includes("category-d") &&
-          "bg-white text-slate-600"
+          "!bg-white bg-none text-slate-600 !important"
         )}
         onClick={handleShowAllBtn}>{t("ShowAll")}</Button>
     </div>

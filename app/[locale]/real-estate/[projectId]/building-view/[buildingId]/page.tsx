@@ -7,17 +7,9 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
   type CarouselApi
 } from "@/components/ui/carousel"
 
-import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
 
 import clsx from 'clsx';
 
@@ -28,7 +20,12 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import InterestedForm from "@/components/InterestedForm";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import NeedHelpForm from "@/components/NeedHelpForm";
 
+interface floorsImagesProps {
+  src: string;
+  title: string;
+}
 
 const BuildingProperties = () => {
   const t = useTranslations('BuildingViewPage');
@@ -71,86 +68,15 @@ const BuildingProperties = () => {
 
 const page = () => {
   const t = useTranslations('BuildingViewPage');
-  const [scale, setScale] = useState(1);
-  const [open, setOpen] = useState(false);
-  const zoomStep = 0.2;
-
-  const [api, setApi] = useState<CarouselApi>()
-  const [current, setCurrent] = useState(0)
-  // const [count, setCount] = useState(0)
-
-  const zoomIn = () => {
-    if (scale <= 1) {
-      setScale((prev) => prev + zoomStep)
-    }
-  };
-  const zoomOut = () => {
-    if (scale <= 2 && scale >= 0.6) {
-      setScale((prev) => (prev > zoomStep ? prev - zoomStep : prev))
-    }
-  };
-
-  useEffect(() => {
-    if (!api) {
-      return
-    }
-
-    // setCount(api.scrollSnapList().length)
-    setCurrent(api.selectedScrollSnap())
-
-    api.on("select", () => {
-      setCurrent(api.selectedScrollSnap())
-    })
-  }, [api])
-
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [scale, setScale] = useState<number>(1);
+  const [openInterestedForm, setOpenInterestedForm] = useState<boolean>(false);
+  const [openHelpForm, setOpenHelpForm] = useState<boolean>(false);
+  const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const carouselRef = useRef<HTMLDivElement>(null);
-
-  const handleWheel = (event: WheelEvent) => {
-    if (!carouselRef.current) return;
-    const itemHeight = window.innerHeight; // 100vh step
-    const delta = Math.sign(event.deltaY); // Check if scrolling up or down
-    const newIndex = selectedIndex + delta;
-
-    if (newIndex >= 0 && newIndex < images.length) {
-      setSelectedIndex(newIndex);
-      carouselRef.current.scrollTo({
-        top: newIndex * itemHeight,
-        behavior: 'smooth',
-      });
-    }
-
-    // Prevent default scrolling
-    event.preventDefault();
-  };
-
-  useEffect(() => {
-    const carousel = carouselRef.current;
-    if (!carousel) return;
-
-    carousel.addEventListener('wheel', handleWheel, { passive: false });
-    return () => carousel.removeEventListener('wheel', handleWheel);
-  }, [selectedIndex]);
-
-  const handleScroll = () => {
-    if (!carouselRef.current) return;
-    const scrollTop = carouselRef.current.scrollTop;
-    const itemHeight = window.innerHeight;
-    const index = Math.round(scrollTop / itemHeight);
-    setSelectedIndex(index);
-  };
-
-  const scrollToIndex = (index: number) => {
-    if (!carouselRef.current) return;
-    const itemHeight = window.innerHeight;
-    carouselRef.current.scrollTo({
-      top: index * itemHeight,
-      behavior: 'smooth',
-    });
-    setSelectedIndex(index);
-  };
-
-  const [isPopupOpen, setPopupOpen] = useState(false);
+  const [isPopupOpen, setPopupOpen] = useState<boolean>(false);
+  const [api, setApi] = useState<CarouselApi>()
+  const [current, setCurrent] = useState<number>(0)
+  const zoomStep = 0.1;
 
   const images = [
     {
@@ -179,28 +105,108 @@ const page = () => {
     },
   ];
 
-  console.log("Current", current);
-  
+  const floorsImages: floorsImagesProps[] = [
+    {
+      src: "test.jpg",
+      title: "Ground Floor"
+    },
+    {
+      src: "test.jpg",
+      title: "First Floor"
+    },
+    {
+      src: "test.jpg",
+      title: "Roof Floor"
+    },
+  ]
+
+  const zoomIn = () => {
+    if (scale <= 1) {
+      setScale((prev) => prev + zoomStep)
+    }
+  };
+  const zoomOut = () => {
+    if (scale <= 2 && scale >= 0.6) {
+      setScale((prev) => (prev > zoomStep ? prev - zoomStep : prev))
+    }
+  };
+
+  const handleWheel = (event: WheelEvent) => {
+    if (!carouselRef.current) return;
+    const itemHeight = window.innerHeight; // 100vh step
+    const delta = Math.sign(event.deltaY); // Check if scrolling up or down
+    const newIndex = selectedIndex + delta;
+
+    if (newIndex >= 0 && newIndex < images.length) {
+      setSelectedIndex(newIndex);
+      carouselRef.current.scrollTo({
+        top: newIndex * itemHeight,
+        behavior: 'smooth',
+      });
+    }
+
+    // Prevent default scrolling
+    event.preventDefault();
+  };
+
+  const handleScroll = () => {
+    if (!carouselRef.current) return;
+    const scrollTop = carouselRef.current.scrollTop;
+    const itemHeight = window.innerHeight;
+    const index = Math.round(scrollTop / itemHeight);
+    setSelectedIndex(index);
+  };
+
+  const scrollToIndex = (index: number) => {
+    if (!carouselRef.current) return;
+    const itemHeight = window.innerHeight;
+    carouselRef.current.scrollTo({
+      top: index * itemHeight,
+      behavior: 'smooth',
+    });
+    setSelectedIndex(index);
+  };
+
+  useEffect(() => {
+    const carousel = carouselRef.current;
+    if (!carousel) return;
+
+    carousel.addEventListener('wheel', handleWheel, { passive: false });
+    return () => carousel.removeEventListener('wheel', handleWheel);
+  }, [selectedIndex]);
+
+  useEffect(() => {
+    if (!api) {
+      return
+    }
+
+    setCurrent(api.selectedScrollSnap())
+
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap())
+    })
+  }, [api])
+
   return (
     <div className="bg-[#544533] relative text-center min-h-[100vh] w-screen flex items-center justify-center py-4 overflow-x-hidden">
 
-      <ControlFunctions zoomIn={zoomIn} zoomOut={zoomOut} setPopupOpen={setPopupOpen} />
+      <ControlFunctions zoomIn={zoomIn} zoomOut={zoomOut} setPopupOpen={setPopupOpen} setOpenHelpForm={setOpenHelpForm} />
 
       <div className={clsx("absolute top-4 z-[1000]", t("language").toLowerCase() === 'en' ? "right-[10px]" : "left-[10px]")}>
         <WebsiteTitleSec projectId="222" blockNumber={60} />
 
         <div className="flex gap-2">
           <BuildingPropertiesCard
-            type="فيلا"
+            type="فيلا الياسمين"
             status="متاح"
-            category="فئة A-1"
+            category="نموذج A-1"
             rooms={5}
             bathrooms={4}
             buildingSpace={525.25}
             landSpace={600}
             price={1117427}
-            open={open}
-            setOpen={setOpen}
+            open={openInterestedForm}
+            setOpen={setOpenInterestedForm}
           />
 
           <div className="p-2 rounded-md bg-slate-600 text-center h-fit flex flex-col">
@@ -214,35 +220,19 @@ const page = () => {
 
       {/* Building Floor Carousel */}
       <div className="m-auto relative">
-        <Carousel orientation="vertical" opts={{ loop: true }} setApi={setApi} dir="rtl" className={`w-[300px] m-auto h-full transform transition-all scale-${scale}`} style={{ transform: `scale(${scale})`, transition: "transform 0.3s ease-in-out" }}>
-          <CarouselContent className="min-h-[500px] h-[80vh]">
-            <CarouselItem>
-              <Image
-                src='/assets/images/test.jpg'
-                alt="Type_A_GF"
-                width={300}
-                height={1000}
-                className="min-h-[500px] h-[80vh]"
-              />
-            </CarouselItem>
-            <CarouselItem>
-              <Image
-                src='/assets/images/test.jpg'
-                alt="Type_A_GF"
-                width={300}
-                height={1000}
-                className="min-h-[500px] h-[80vh]"
-              />
-            </CarouselItem>
-            <CarouselItem>
-              <Image
-                src='/assets/images/test.jpg'
-                alt="Type_A_RF"
-                width={300}
-                height={1000}
-                className="min-h-[500px] h-[80vh]"
-              />
-            </CarouselItem>
+        <Carousel orientation="vertical" opts={{ loop: true }} setApi={setApi} dir="rtl" className={`w-[300px] m-auto h-full transform transition-all scale-${scale} rounded-md`} style={{ transform: `scale(${scale})`, transition: "transform 0.3s ease-in-out" }}>
+          <CarouselContent className="min-h-[500px] h-[80vh] rounded-md">
+            {floorsImages.map((img, key) => (
+              <CarouselItem key={key + img.title}>
+                <Image
+                  src={`/assets/images/${img.src}`}
+                  alt={img.title}
+                  width={300}
+                  height={1000}
+                  className="min-h-[500px] h-[80vh] rounded-md"
+                />
+              </CarouselItem>
+            ))}
           </CarouselContent>
           <Button className="bg-slate-600 hover:bg-slate-700 p-2 absolute top-[50%] transform translate-y-[-50%] left-[-50px]" onClick={() => api?.scrollTo(current - 1)}>
             <Image
@@ -342,7 +332,7 @@ const page = () => {
       </Dialog>
 
       {/* Intrest Form Popup */}
-      <Dialog open={open} onOpenChange={setOpen}>
+      <Dialog open={openInterestedForm} onOpenChange={setOpenInterestedForm}>
         <DialogContent className="max-w-lg">
           <DialogHeader>
             <DialogTitle className="flex items-center justify-between text-xl font-extrabold">
@@ -350,7 +340,19 @@ const page = () => {
             </DialogTitle>
           </DialogHeader>
           <BuildingProperties />
-          <InterestedForm setOpen={setOpen} />
+          <InterestedForm setOpen={setOpenInterestedForm} />
+        </DialogContent>
+      </Dialog>
+
+      {/* Need Help Form Popup */}
+      <Dialog open={openHelpForm} onOpenChange={setOpenHelpForm}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle className="flex items-center justify-between text-xl font-extrabold">
+              {t("NeedHelp")}
+            </DialogTitle>
+          </DialogHeader>
+          <NeedHelpForm setOpen={setOpenHelpForm} />
         </DialogContent>
       </Dialog>
 
