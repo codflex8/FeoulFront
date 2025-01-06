@@ -88,6 +88,7 @@
     "SurName": "SurName",
     "SurNamePlaceholder": "Aladwi",
     "Phone": "Phone",
-    "Area": "Area"
+    "Area": "Area",
+    "StartFrom": "Start From"
   }
 }

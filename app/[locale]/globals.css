@@ -76,15 +76,21 @@ body {
   font-size: 1.25rem;
 }
 
-.leaflet-control{
+.leaflet-control-zoom{
   border: none !important;
   float: none !important;
 }
 
+@media (max-width:780px) {
+  .leaflet-control-zoom{
+    top: 147px;
+  }
+}
+
 .leaflet-control-zoom-in,
 .leaflet-control-zoom-out{
-  background-color: rgb(100 116 139 / var(--tw-bg-opacity, 1)) !important;
-  border: 1px solid transparent;
+  background-color: #475569 !important;
+  border: 0 solid transparent;
   color: #ffffff !important;
   transition: all 0.15s ease-in;
   width: 34px !important;

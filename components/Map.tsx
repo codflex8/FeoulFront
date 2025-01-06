@@ -15,6 +15,8 @@ import DropdownPlacesOptionsMenu from "./DropdownPlacesOptions";
 import WebsiteTitleSec from "./WebsiteTitleSec";
 import ControlFunctions from "./ControlFunctions";
 import AlwaysOpenPopup from "./AlwaysOpenPopup";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./ui/dialog";
+import NeedHelpForm from "./NeedHelpForm";
 
 const getCustomIcon = (iconName: string, size?: number) => {
   const iconPath = size ? `/assets/icons/${iconName}.svg` : `/assets/icons/${iconName}-marker.svg`
@@ -83,8 +85,9 @@ const Map = ({ projects, basicLandmarks, landmarks }: MapProps) => {
       <MapContainer
         // center={[21.614635, 39.230685]}
         // center={[21.71490891866162, 39.17269298743262]}
-        center={[21.697046, 38.781305]}
+        // center={[21.697046, 38.781305]}
         // center={[21.633232, 39.222131]}
+        center={[21.758334, 39.056873]}
         zoom={12}
         maxZoom={13}
         minZoom={11}
@@ -156,6 +159,18 @@ const Map = ({ projects, basicLandmarks, landmarks }: MapProps) => {
           </Marker>
         ))}
       </MapContainer>
+
+      {/* Need Help Form Popup */}
+      <Dialog open={openHelpForm} onOpenChange={setOpenHelpForm}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle className="flex items-center justify-between text-xl font-extrabold">
+              {t("NeedHelp")}
+            </DialogTitle>
+          </DialogHeader>
+          <NeedHelpForm setOpen={setOpenHelpForm} />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

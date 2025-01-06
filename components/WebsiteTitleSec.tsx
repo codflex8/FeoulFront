@@ -6,7 +6,6 @@ import { Badge } from "@/components/ui/badge"
 import {
   Breadcrumb,
   BreadcrumbItem,
-  BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
@@ -16,11 +15,10 @@ const WebsiteTitleSec = ({projectId, blockNumber}: {projectId?: string, blockNum
   const t = useTranslations('MapPage');
 
   return (
-    <div className="bg-slate-600 rounded-md px-4 py-3 mb-4 flex items-center gap-6">
+    <div className="bg-slate-600 rounded-md px-4 py-3 mb-4 flex items-center gap-6 w-fit">
       <Breadcrumb>
-        <BreadcrumbList>
+        <BreadcrumbList className="gap-1 md:gap-2">
           <BreadcrumbItem>
-            {/* <BreadcrumbLink> */}
             <Link href="/">
               <Image
                 src='/assets/icons/sarah-logo.png'
@@ -29,7 +27,6 @@ const WebsiteTitleSec = ({projectId, blockNumber}: {projectId?: string, blockNum
                 height={50}
               />
             </Link>
-            {/* </BreadcrumbLink> */}
           </BreadcrumbItem>
           <Badge variant="secondary">{t("JaddahCity")}</Badge>
           {projectId && (
@@ -37,7 +34,7 @@ const WebsiteTitleSec = ({projectId, blockNumber}: {projectId?: string, blockNum
               <BreadcrumbSeparator className="text-white font-bold rtl:rotate-180" />
               <BreadcrumbItem>
                 <Badge variant={(projectId && !blockNumber) ? "white" : "secondary" }>
-                  <Link href="/ar/real-estate/2555545">سرايا البحيرات</Link>
+                  <Link href="/ar/real-estate/2555545">سراة من فيول</Link>
                 </Badge>
               </BreadcrumbItem>
             </>

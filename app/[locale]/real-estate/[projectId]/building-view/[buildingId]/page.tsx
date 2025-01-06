@@ -68,6 +68,7 @@ const BuildingProperties = () => {
 
 const page = () => {
   const t = useTranslations('BuildingViewPage');
+
   const [scale, setScale] = useState<number>(1);
   const [openInterestedForm, setOpenInterestedForm] = useState<boolean>(false);
   const [openHelpForm, setOpenHelpForm] = useState<boolean>(false);
@@ -125,6 +126,7 @@ const page = () => {
       setScale((prev) => prev + zoomStep)
     }
   };
+
   const zoomOut = () => {
     if (scale <= 2 && scale >= 0.6) {
       setScale((prev) => (prev > zoomStep ? prev - zoomStep : prev))
@@ -133,8 +135,8 @@ const page = () => {
 
   const handleWheel = (event: WheelEvent) => {
     if (!carouselRef.current) return;
-    const itemHeight = window.innerHeight; // 100vh step
-    const delta = Math.sign(event.deltaY); // Check if scrolling up or down
+    const itemHeight = window.innerHeight;
+    const delta = Math.sign(event.deltaY);
     const newIndex = selectedIndex + delta;
 
     if (newIndex >= 0 && newIndex < images.length) {
@@ -192,36 +194,42 @@ const page = () => {
 
       <ControlFunctions zoomIn={zoomIn} zoomOut={zoomOut} setPopupOpen={setPopupOpen} setOpenHelpForm={setOpenHelpForm} />
 
+      {/* <div className={clsx("absolute top-4 z-[1000]", t("language").toLowerCase() === 'en' ? "right-[10px]" : "left-[10px]")}> */}
+
       <div className={clsx("absolute top-4 z-[1000]", t("language").toLowerCase() === 'en' ? "right-[10px]" : "left-[10px]")}>
         <WebsiteTitleSec projectId="222" blockNumber={60} />
+      </div>
 
-        <div className="flex gap-2">
-          <BuildingPropertiesCard
-            type="فيلا الياسمين"
-            status="متاح"
-            category="نموذج A-1"
-            rooms={5}
-            bathrooms={4}
-            buildingSpace={525.25}
-            landSpace={600}
-            price={1117427}
-            open={openInterestedForm}
-            setOpen={setOpenInterestedForm}
-          />
+      {/* <div className="flex gap-2"> */}
+      <div className={clsx("absolute top-28 z-[1000] hidden md:block", t("language").toLowerCase() === 'en' ? "right-[10px]" : "left-[10px]")}>
+        <BuildingPropertiesCard
+          type="فيلا الياسمين"
+          status="متاح"
+          category="نموذج A-1"
+          rooms={5}
+          bathrooms={4}
+          buildingSpace={525.25}
+          landSpace={600}
+          price={1117427}
+          open={openInterestedForm}
+          setOpen={setOpenInterestedForm}
+        />
+      </div>
 
-          <div className="p-2 rounded-md bg-slate-600 text-center h-fit flex flex-col">
-            <h3 className="text-white text-xs font-semibold mb-1">{t("Floor")}</h3>
-            <Button onClick={() => api?.scrollTo(0)} className={clsx("py-2 px-3 rounded-none rounded-t-md text-white bg-gray-500 text-sm border-b border-slate-400 hover:bg-white hover:text-black transition-all", current === 0 ? "bg-white text-black" : "")}>{t("GroundFloor")}</Button>
-            <Button onClick={() => api?.scrollTo(1)} className={clsx("py-2 px-3 rounded-none text-white bg-gray-500 text-sm border-b border-slate-300 hover:bg-white hover:text-black transition-all", current === 1 ? "bg-white text-black" : "")}>{t("FirstFloor")}</Button>
-            <Button onClick={() => api?.scrollTo(2)} className={clsx("py-2 px-3 rounded-none rounded-b-md text-white bg-gray-500 text-sm hover:bg-white hover:text-black transition-all", current === 2 ? "bg-white text-black" : "")}>{t("SecondFloor")}</Button>
-          </div>
+      <div className={clsx("absolute top-[62%] md:top-28 z-[1000]", t("language").toLowerCase() === 'en' ? "right-[25px] md:right-[275px]" : "left-[25px] md:left-[275px]")}>
+        <div className="p-2 rounded-md bg-slate-600 text-center h-fit flex flex-col">
+          <h3 className="text-white text-xs font-semibold mb-1">{t("Floor")}</h3>
+          <Button onClick={() => api?.scrollTo(0)} className={clsx("py-2 px-3 rounded-none rounded-t-md text-white bg-gray-500 text-sm border-b border-slate-400 hover:bg-white hover:text-black transition-all", current === 0 ? "bg-white text-black" : "")}>{t("GroundFloor")}</Button>
+          <Button onClick={() => api?.scrollTo(1)} className={clsx("py-2 px-3 rounded-none text-white bg-gray-500 text-sm border-b border-slate-300 hover:bg-white hover:text-black transition-all", current === 1 ? "bg-white text-black" : "")}>{t("FirstFloor")}</Button>
+          <Button onClick={() => api?.scrollTo(2)} className={clsx("py-2 px-3 rounded-none rounded-b-md text-white bg-gray-500 text-sm hover:bg-white hover:text-black transition-all", current === 2 ? "bg-white text-black" : "")}>{t("SecondFloor")}</Button>
         </div>
       </div>
+      {/* </div> */}
 
       {/* Building Floor Carousel */}
       <div className="m-auto relative">
-        <Carousel orientation="vertical" opts={{ loop: true }} setApi={setApi} dir="rtl" className={`w-[300px] m-auto h-full transform transition-all scale-${scale} rounded-md`} style={{ transform: `scale(${scale})`, transition: "transform 0.3s ease-in-out" }}>
-          <CarouselContent className="min-h-[500px] h-[80vh] rounded-md">
+        <Carousel orientation="vertical" opts={{ loop: true }} setApi={setApi} dir="rtl" className={`w-[300px] max-w-[90%] m-auto h-full transform transition-all scale-${scale} rounded-md`} style={{ transform: `scale(${scale})`, transition: "transform 0.3s ease-in-out" }}>
+          <CarouselContent className="min-h-[450px] h-[80vh] rounded-md max-w-[80%] m-auto">
             {floorsImages.map((img, key) => (
               <CarouselItem key={key + img.title}>
                 <Image
@@ -229,12 +237,12 @@ const page = () => {
                   alt={img.title}
                   width={300}
                   height={1000}
-                  className="min-h-[500px] h-[80vh] rounded-md"
+                  className="h-full w-full rounded-md"
                 />
               </CarouselItem>
             ))}
           </CarouselContent>
-          <Button className="bg-slate-600 hover:bg-slate-700 p-2 absolute top-[50%] transform translate-y-[-50%] left-[-50px]" onClick={() => api?.scrollTo(current - 1)}>
+          <Button className="bg-slate-600 hover:bg-slate-700 p-2 absolute top-[50%] transform translate-y-[-50%] -left-8 hidden sm:inline-flex" onClick={() => api?.scrollTo(current - 1)}>
             <Image
               src='/assets/icons/left-arrow.svg'
               alt="arrow"
@@ -242,7 +250,7 @@ const page = () => {
               height={32}
             />
           </Button>
-          <Button className="bg-slate-600 hover:bg-slate-700 p-2 absolute top-[50%] transform translate-y-[-50%] right-[-50px]" onClick={() => api?.scrollTo(current + 1)}>
+          <Button className="bg-slate-600 hover:bg-slate-700 p-2 absolute top-[50%] transform translate-y-[-50%] -right-8 hidden sm:inline-flex" onClick={() => api?.scrollTo(current + 1)}>
             <Image
               src='/assets/icons/left-arrow.svg'
               alt="arrow"
@@ -356,7 +364,7 @@ const page = () => {
         </DialogContent>
       </Dialog>
 
-    </div>
+    </div >
   )
 }
 

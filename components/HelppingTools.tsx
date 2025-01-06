@@ -49,7 +49,7 @@ export function HelppingTools() {
     <Collapsible
       open={isOpen}
       onOpenChange={setIsOpen}
-      className={clsx("absolute bottom-2", t("language").toLowerCase() === "en" ? "left-14" : "right-14")}
+      className={clsx("absolute bottom-2", t("language").toLowerCase() === "en" ? "left-2 md:left-14" : "right-2 md:right-14")}
     >
       <div className="flex items-center justify-end">
         <CollapsibleTrigger asChild>

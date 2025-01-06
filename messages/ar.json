@@ -89,6 +89,7 @@
     "SurName": "إسم العائلة",
     "SurNamePlaceholder": "العدوي",
     "Phone": "الهاتف",
-    "Area": "المنطقة"
+    "Area": "المنطقة",
+    "StartFrom": "يبدأ من"
   }
 }

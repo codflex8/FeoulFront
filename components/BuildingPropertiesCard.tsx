@@ -53,8 +53,10 @@ const BuildingPropertiesCard = ({ type, status, category, rooms, bathrooms, buil
 
         <div className="bg-green-100 rounded-md p-1 shadow-sm col-span-2">
           <span className="block text-xs text-gray-600">{t("Price")}</span>
-          <span className="block font-extrabold text-green-600">
-            {price} <span className="text-sm text-gray-500">{t("Riyal")}</span>
+          <span className="block font-semibold text-green-600 space-x-1">
+            <span className="text-sm text-gray-500 ml-1">{t("StartFrom")}</span>
+            {price}
+            <span className="text-sm text-gray-500 mr-1">{t("Riyal")}</span>
           </span>
         </div>
       </div>

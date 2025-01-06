@@ -118,7 +118,7 @@ const ControlFunctions = ({ selectedTypes, setSelectedTypes, zoomIn, zoomOut, se
 
 
   return (
-    <div className={clsx("fixed flex flex-col justify-between z-[1000] pb-[10px]", t("language").toLowerCase() == 'ar' ? "right-[10px]" : "left-[10px]", zoomIn ? "top-0  h-full" : "top-20 h-[calc(100%-5rem)]")}>
+    <div className={clsx("fixed flex flex-col justify-center md:justify-between z-[1000] pb-[10px]", t("language").toLowerCase() == 'ar' ? "right-[10px]" : "left-[10px]", zoomIn ? "top-0  h-full" : "top-20 h-[calc(100%-5rem)]")}>
       {(zoomIn && zoomOut) && (
         <div >
           <MapControlBtn onClick={zoomIn} icon="plus" title={t("ZoomIn")} />
@@ -135,7 +135,7 @@ const ControlFunctions = ({ selectedTypes, setSelectedTypes, zoomIn, zoomOut, se
         <MapControlBtn onClick={() => handleChangeLanguage(t("language").toLowerCase())} text={t("language")} title={t("ChangeLanguage")} />
       </div>
 
-      <div className="flex-1 flex flex-col justify-end">
+      <div className="md:flex-1 flex flex-col md:justify-end">
         {(zoomIn && zoomOut && setPopupOpen) && (
           <MapControlBtn onClick={() => setPopupOpen(true)} icon="gallery" title={t('gallery')} />
         )}
