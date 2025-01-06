@@ -8,6 +8,8 @@
     "button": "عد إلى الصفحة الرئسية"
   },
   "MapPage": {
+    "ShowCategories": "أظهر التصنيفات",
+    "HideCategories": "أخفي التصنيفات",
     "ShowPlaces": "أظهر المعالم",
     "HidePlaces": "أخفي المعالم",
     "ChangeLanguage": "غير اللغة",
@@ -30,7 +32,31 @@
     "ErrorTitle": "حدث خطأ ما",
     "CopyErrorMessage": "غير قادر على نسخ رابط الموقع",
     "ZoomIn": "تكبير",
-    "ZoomOut": "تصغير"
+    "ZoomOut": "تصغير",
+    "Block": "وحدة"
+  },
+  "ProjectPage": {
+    "language": "En",
+    "Category": "الفئة",
+    "ShowAll": "عرض الكل",
+    "Avaliable": "متاح",
+    "Bocked": "محجوز",
+    "Sold": "مباع",
+    "AvaliableBlocks": "وحدة متاحة",
+    "BockedBlocks": "وحدة محجوزة",
+    "SoldBlocks": "وحدة مباعة",
+    "Price": "السعر",
+    "Riyal": "ريال",
+    "TotalArea": "المساحة الإجمالية",
+    "Meter": "م²",
+    "HelpingTools": "وسائل الراحة",
+    "Library": "مكتبة",
+    "Educate": "تعليم",
+    "Hospital": "مستشفى",
+    "Commerical": "تجاري",
+    "Kindergarten": "رياض أطفال",
+    "Mosque": "مسجد"
+
   },
   "BuildingViewPage": {
     "language": "En",
