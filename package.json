@@ -2,8 +2,13 @@
   "name": "saraya-buhirat",
   "version": "0.1.0",
   "private": true,
+<<<<<<< HEAD
   "scripts": {
     "dev": "next dev",
+=======
+    "scripts": {
+    "dev": "next dev --turbopack",
+>>>>>>> 605c3da21ba3dc3f456fa065125503c1f4a1fcbc
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
