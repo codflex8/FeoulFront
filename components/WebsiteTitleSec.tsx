@@ -23,10 +23,10 @@ const WebsiteTitleSec = ({projectId, blockNumber}: {projectId?: string, blockNum
             {/* <BreadcrumbLink> */}
             <Link href="/">
               <Image
-                src='/assets/icons/logo.svg'
+                src='/assets/icons/sarah-logo.png'
                 alt="logo"
-                width={70}
-                height={32}
+                width={50}
+                height={50}
               />
             </Link>
             {/* </BreadcrumbLink> */}

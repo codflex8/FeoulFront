@@ -32,6 +32,8 @@ const Map = ({ projects, basicLandmarks, landmarks }: MapProps) => {
   const t = useTranslations('MapPage');
 
   const [selectedTypes, setSelectedTypes] = useState<string[]>(["places"])
+  const [openHelpForm, setOpenHelpForm] = useState<boolean>(false);
+
 
   const filteredLandmarks = landmarks.filter(landmark =>
     selectedTypes.length ? selectedTypes.includes(landmark.type) : []
@@ -70,7 +72,7 @@ const Map = ({ projects, basicLandmarks, landmarks }: MapProps) => {
 
   return (
     <div className="h-full w-full relative">
-      <ControlFunctions selectedTypes={selectedTypes} setSelectedTypes={setSelectedTypes} />
+      <ControlFunctions selectedTypes={selectedTypes} setSelectedTypes={setSelectedTypes} setOpenHelpForm={setOpenHelpForm} />
 
       <div className={clsx("absolute top-4 z-[1000]", t("language").toLowerCase() === 'en' ? "right-[10px]" : "left-[10px]")}>
         <WebsiteTitleSec />
@@ -79,7 +81,10 @@ const Map = ({ projects, basicLandmarks, landmarks }: MapProps) => {
       </div>
 
       <MapContainer
-        center={[21.614635, 39.230685]}
+        // center={[21.614635, 39.230685]}
+        // center={[21.71490891866162, 39.17269298743262]}
+        center={[21.697046, 38.781305]}
+        // center={[21.633232, 39.222131]}
         zoom={12}
         maxZoom={13}
         minZoom={11}
@@ -87,10 +92,36 @@ const Map = ({ projects, basicLandmarks, landmarks }: MapProps) => {
         maxBoundsViscosity={1.0}
         style={{ height: "100vh", width: "100vw" }}
       >
-        <TileLayer
+        {/* <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        /> */}
+
+        {/* <TileLayer
+          url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/">CARTO</a>'
+        /> */}
+
+        {/* <TileLayer
+          url="https://stamen-tiles.a.ssl.fastly.net/terrain/{z}/{x}/{y}.png"
+          attribution='Map tiles by <a href="https://stamen.com">Stamen Design</a>, <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        /> */}
+
+        {/* NICE */}
+        <TileLayer
+          url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+          attribution='Tiles &copy; <a href="https://www.esri.com/">Esri</a>'
         />
+
+        {/* <TileLayer
+          url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}"
+          attribution='Tiles &copy; <a href="https://www.esri.com/">Esri</a>'
+        /> */}
+
+        {/* <TileLayer
+          url="https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="https://opentopomap.org">OpenTopoMap</a> contributors & <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        /> */}
 
         {projects.map((project, idx) => (
           <Polygon key={idx} positions={project.position} pathOptions={fillPolygonOptions}>

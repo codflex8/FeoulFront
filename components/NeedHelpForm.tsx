@@ -15,21 +15,17 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { Select, SelectTrigger, SelectContent, SelectValue, SelectItem } from "./ui/select";
+import { Textarea } from "@/components/ui/textarea"
+
 
 import { Input } from "@/components/ui/input"
 import { useTranslations } from "next-intl"
 
 const formSchema = z.object({
-  firstName: z.string({
-    required_error: "First name is required.",
+  name: z.string({
+    required_error: "Your name is required.",
   }).min(2, {
-    message: "First name must be at least 2 characters.",
-  }),
-  secondName: z.string({
-    required_error: "Second name is required.",
-  }).min(2, {
-    message: "Second name must be at least 2 characters.",
+    message: "Name must be at least 2 characters.",
   }),
   phone: z
     .string({
@@ -41,57 +37,40 @@ const formSchema = z.object({
     .max(15, {
       message: "Phone number must be at most 15 digits.",
     }),
-  region: z.enum(["central", "eastern", "western"], {
-    required_error: "Region is required.",
-  })
+  message: z
+    .string({ required_error: "Message is required.", })
+    .min(10, "Message must be at least 10 characters.")
+    .max(500, "Message must be no longer than 500 characters.")
+
 })
 
-const InterestedForm = ({ setOpen }: React.ComponentState) => {
+const NeedHelpForm = ({ setOpen }: React.ComponentState) => {
   const t = useTranslations('BuildingViewPage');
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      firstName: "",
-      secondName: "",
+      name: "",
       phone: "",
-      region: "central"
+      message: ""
     },
   })
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-
-    console.log(values)
     setOpen(false)
   }
 
-  
-
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4 gap-y-8 grid-cols-2">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4 grid-cols-1">
         <FormField
           control={form.control}
-          name="firstName"
+          name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("FirstName")}</FormLabel>
+              <FormLabel>{t("Name")}</FormLabel>
               <FormControl>
-                <Input placeholder={t("FirstNamePlaceholder")} {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="secondName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>{t("SurName")}</FormLabel>
-              <FormControl>
-                <Input placeholder={t("SurNamePlaceholder")} {...field} />
+                <Input placeholder={t("NamePlaceholder")} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -123,34 +102,22 @@ const InterestedForm = ({ setOpen }: React.ComponentState) => {
 
         <FormField
           control={form.control}
-          name="region"
+          name="message"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("Area")}</FormLabel>
-              <Select dir="rtl" onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder={t("Area")} />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent className="shad-select-content">
-                  {["central", "eastern", "western"].map((dir, i) => (
-                    <SelectItem key={dir + i} value={dir}>
-                      <div className="flex items-center gap-2 cursor-pointer">
-                        <p>{dir}</p>
-                      </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <FormLabel>{t("Message")}</FormLabel>
+              <FormControl>
+                <Textarea placeholder={t("MessagePlaceholder")} {...field} />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button className="block w-full col-span-2 transition-all bg-green-600 hover:bg-green-500 text-lg h-fit" type="submit">إرسال</Button>
+
+        <Button className="block w-full  transition-all bg-green-600 hover:bg-green-500 text-lg h-fit" type="submit">إرسال</Button>
       </form>
     </Form>
   )
 }
 
-export default InterestedForm;
+export default NeedHelpForm;

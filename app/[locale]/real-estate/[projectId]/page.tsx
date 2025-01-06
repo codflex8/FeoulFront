@@ -1,12 +1,16 @@
 "use client";
 
-import React, { useState } from 'react'
+import React, { ReactEventHandler, useEffect, useRef, useState } from 'react'
 import { useTranslations } from 'next-intl';
 import clsx from 'clsx';
 import ControlFunctions from '@/components/ControlFunctions';
 import WebsiteTitleSec from '@/components/WebsiteTitleSec';
 import BuildingBlocksFiters from '@/components/BuildingBlocksFiters';
 import HelppingTools from '@/components/HelppingTools';
+import { Button } from '@/components/ui/button';
+import Image from 'next/image';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import NeedHelpForm from '@/components/NeedHelpForm';
 
 interface BuildingProps {
   id: number;
@@ -24,10 +28,13 @@ const page = (
   // const projectId = (await params).projectId;
   const t = useTranslations('ProjectPage');
 
+  const [showFilters, setShowFilters] = useState<boolean>(false);
+  const [isLargeScreen, setIsLargeScreen] = useState<boolean>(false);
   const [scale, setScale] = useState<number>(1);
   const [selectedCategories, setSelectedCategories] = useState(["category-a", "category-b", "category-c", "category-d"]);
   const [price, setPrice] = useState<[number, number]>([10000, 100000]);
   const [space, setSpace] = useState<[number, number]>([150, 400]);
+  const [openHelpForm, setOpenHelpForm] = useState<boolean>(false);
 
   const buildings: BuildingProps[] = [
     { id: 1, category: "category-a", price: 500, space: 500 },
@@ -63,20 +70,67 @@ const page = (
     }
   };
 
+  const handleShowBuildigsFilters = () => {
+    setShowFilters(prev => !prev)
+  }
+
+
+  // Function to check screen width
+  const checkScreenWidth = () => {
+    setIsLargeScreen(window.innerWidth > 780);
+  };
+
+  useEffect(() => {
+    checkScreenWidth();
+
+    window.addEventListener("resize", checkScreenWidth);
+
+    return () => {
+      window.removeEventListener("resize", checkScreenWidth);
+
+    };
+  }, []);
+
   return (
     <div className="bg-[#544533] relative text-center min-h-[100vh] w-screen flex items-center justify-center py-4 overflow-x-hidden">
 
-      <ControlFunctions zoomIn={zoomIn} zoomOut={zoomOut} selectedCategories={selectedCategories} setSelectedCategories={setSelectedCategories} />
+      <ControlFunctions zoomIn={zoomIn} zoomOut={zoomOut} selectedCategories={selectedCategories} setSelectedCategories={setSelectedCategories} setOpenHelpForm={setOpenHelpForm} />
 
       <div className={clsx("absolute top-4 z-[1000]", t("language").toLowerCase() === 'en' ? "right-[10px]" : "left-[10px]")}>
         <WebsiteTitleSec projectId="222" />
 
-        <BuildingBlocksFiters selectedCategories={selectedCategories} setSelectedCategories={setSelectedCategories} price={price} setPrice={setPrice} space={space} setSpace={setSpace} />
+        <div className='w-fit'>
+          <Button
+            className='md:hidden w-full !bg-slate-600 text-white !justify-between'
+            onClick={handleShowBuildigsFilters}>
+            <span>فلاتر</span>
+            <Image
+              src="/assets/icons/left-arrow.svg"
+              alt="arrow"
+              width={32}
+              height={32}
+              className={clsx("transition-all", showFilters ? "rotate-90" : "-rotate-90")}
+            />
+          </Button>
+
+          {/* Filters block */}
+
+          <BuildingBlocksFiters
+            className={(showFilters || isLargeScreen) ? "max-h-[800] py-2" : "max-h-0"}
+            selectedCategories={selectedCategories}
+            setSelectedCategories={setSelectedCategories}
+            price={price}
+            setPrice={setPrice}
+            space={space}
+            setSpace={setSpace} />
+
+        </div>
       </div>
       <HelppingTools />
 
       <div>
         <h1>Filtered Buildings</h1>
+        {/* <Image src='/assets/icons/test.svg' alt='' width={500} height={500} className='scale-[2]' /> */}
         <ul>
           {filteredBuildings.map((building) => (
             <li key={building.id}>
@@ -85,6 +139,18 @@ const page = (
           ))}
         </ul>
       </div>
+
+      {/* Need Help Form Popup */}
+      <Dialog open={openHelpForm} onOpenChange={setOpenHelpForm}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle className="flex items-center justify-between text-xl font-extrabold">
+              {t("NeedHelp")}
+            </DialogTitle>
+          </DialogHeader>
+          <NeedHelpForm setOpen={setOpenHelpForm} />
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }

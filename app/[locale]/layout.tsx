@@ -18,7 +18,7 @@ const fontFamily = Cairo({
 export const metadata: Metadata = {
   title: "سرايا البحيرات",
   description: "مدن عقارية متطورة في مدينة جدة",
-  icons: ['/assets/icons/logo.svg']
+  icons: ['/assets/icons/sarah-logo.png']
 };
 
 export default async function RootLayout({

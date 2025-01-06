@@ -18,7 +18,6 @@ export function HelppingTools() {
   const t = useTranslations("ProjectPage")
   const [isOpen, setIsOpen] = useState(false)
   const [tools, setTools] = useState<string[]>([])
-  // ["library", "educate", "hospital", "commerical", kindergarten", "mosque"]
 
   const handleShowAllBtn = () => {
     setTools((prev: string[]) => (
@@ -45,6 +44,7 @@ export function HelppingTools() {
 
   const helpingTools = ["library", "educate", "hospital", "commerical", "kindergarten", "mosque"]
 
+  
   return (
     <Collapsible
       open={isOpen}
@@ -65,9 +65,9 @@ export function HelppingTools() {
           isOpen ? "h-[60px]" : "h-0"
         )}
       >
-        <CollapsibleContent className="flex items-center justify-between gap-4 space-y-2 transform transition-[display] duration-300 ease-in-out">
+        <CollapsibleContent className="flex items-center justify-between gap-2 space-y-2 transform transition-[display] duration-300 ease-in-out w-full overflow-x-scroll ">
           {helpingTools.map((item, key) => (
-            <Button key={key} size="sm" onClick={() => toggleTool(item)} className={clsx("flex flex-col gap-1 h-fit py-1 px-4 text-sm", tools.includes(item) ? "bg-white text-black hover:bg-white" : '')} >
+            <Button key={key} size="sm" onClick={() => toggleTool(item)} className={clsx("flex flex-col gap-1 h-fit mt-2 py-1 px-4 text-sm", tools.includes(item) ? "bg-white text-black hover:bg-white" : '')} >
               <Image
                 src={`/assets/icons/${item}-logo.svg`}
                 alt={item}
@@ -79,7 +79,7 @@ export function HelppingTools() {
           ))}
 
           <div onClick={handleShowAllBtn} className={clsx("flex items-center justify-center whitespace-nowrap cursor-pointer rounded-md text-sm font-medium transition-colors disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground shadow hover:bg-primary/90 flex-col gap-1 py-1 px-3", isAll ? "bg-white !text-black hover:bg-white" : '')} >
-            <Switch dir="ltr" checked={isAll} onCheckedChange={handleShowAllBtn} />
+            <Switch dir="ltr" checked={isAll} onCheckedChange={handleShowAllBtn} onClick={handleShowAllBtn} />
             <span className="text-sm">{t("ShowAll")}</span>
           </div>
         </CollapsibleContent>
