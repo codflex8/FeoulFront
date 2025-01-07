@@ -19,3 +19,7 @@ app.prepare().then(() => {
     }`
   )
 })
+
+// "dev": "node server.js",
+// "build": "next build",
+// "start": "NODE_ENV=production node server.js",
