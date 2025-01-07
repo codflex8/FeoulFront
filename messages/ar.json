@@ -15,7 +15,7 @@
     "ChangeLanguage": "غير اللغة",
     "language": "En",
     "AskHelp": "تحتاج لمساعدة ؟",
-    "gallery": "معرض الصور",
+    "Gallery": "معرض الصور",
     "ShareWebsite": "شارك الموقع",
     "FullScreen": "شاشة كاملة",
     "SmallScreen": "أغلق الشاشة الكاملة",
@@ -34,7 +34,8 @@
     "ZoomIn": "تكبير",
     "ZoomOut": "تصغير",
     "Block": "وحدة",
-    "NeedHelp": "تحتاج لمساعدة"
+    "NeedHelp": "تحتاج لمساعدة",
+    "BuildingProperties": "نافذة الخصائص"
   },
   "ProjectPage": {
     "language": "En",
@@ -90,6 +91,8 @@
     "SurNamePlaceholder": "العدوي",
     "Phone": "الهاتف",
     "Area": "المنطقة",
-    "StartFrom": "يبدأ من"
+    "StartFrom": "يبدأ من",
+    "BuildingProperties": "نافذة الخصائص",
+    "Gallery": "معرض الصور"
   }
 }

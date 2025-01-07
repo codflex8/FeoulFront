@@ -10,6 +10,14 @@ import {
   type CarouselApi
 } from "@/components/ui/carousel"
 
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet"
+
 
 import clsx from 'clsx';
 
@@ -21,6 +29,18 @@ import { useEffect, useRef, useState } from "react";
 import InterestedForm from "@/components/InterestedForm";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import NeedHelpForm from "@/components/NeedHelpForm";
+
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarTrigger,
+} from "@/components/ui/sidebar"
 
 interface floorsImagesProps {
   src: string;
@@ -71,6 +91,7 @@ const page = () => {
 
   const [scale, setScale] = useState<number>(1);
   const [openInterestedForm, setOpenInterestedForm] = useState<boolean>(false);
+  const [openBlockProperties, setOpenBlockProperties] = useState<boolean>(false);
   const [openHelpForm, setOpenHelpForm] = useState<boolean>(false);
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -190,18 +211,18 @@ const page = () => {
   }, [api])
 
   return (
-    <div className="bg-[#544533] relative text-center min-h-[100vh] w-screen flex items-center justify-center py-4 overflow-x-hidden">
+    <div className="bg-[#4b5d6e75] relative text-center min-h-[100vh] w-screen flex items-center justify-center py-2 overflow-x-hidden">
 
-      <ControlFunctions zoomIn={zoomIn} zoomOut={zoomOut} setPopupOpen={setPopupOpen} setOpenHelpForm={setOpenHelpForm} />
+      {/* Website Control Functions */}
+      <ControlFunctions zoomIn={zoomIn} zoomOut={zoomOut} setPopupOpen={setPopupOpen} setOpenHelpForm={setOpenHelpForm} setOpenBlockProperties={setOpenBlockProperties} />
 
-      {/* <div className={clsx("absolute top-4 z-[1000]", t("language").toLowerCase() === 'en' ? "right-[10px]" : "left-[10px]")}> */}
-
+      {/* Website Title Section */}
       <div className={clsx("absolute top-4 z-[1000]", t("language").toLowerCase() === 'en' ? "right-[10px]" : "left-[10px]")}>
         <WebsiteTitleSec projectId="222" blockNumber={60} />
       </div>
 
-      {/* <div className="flex gap-2"> */}
-      <div className={clsx("absolute top-28 z-[1000] hidden md:block", t("language").toLowerCase() === 'en' ? "right-[10px]" : "left-[10px]")}>
+      {/* Building Properities Block */}
+      <div className={clsx("absolute top-24 z-[1000] hidden md:block", t("language").toLowerCase() === 'en' ? "right-[10px]" : "left-[10px]")}>
         <BuildingPropertiesCard
           type="فيلا الياسمين"
           status="متاح"
@@ -216,20 +237,20 @@ const page = () => {
         />
       </div>
 
-      <div className={clsx("absolute top-[62%] md:top-28 z-[1000]", t("language").toLowerCase() === 'en' ? "right-[25px] md:right-[275px]" : "left-[25px] md:left-[275px]")}>
+      {/* Floors Buttons */}
+      <div className={clsx("absolute top-[65%] md:top-[55%] lg:top-24 z-[1000]", t("language").toLowerCase() === 'en' ? "right-[25px] md:right-[275px]" : "left-[25px] md:left-[275px]")}>
         <div className="p-2 rounded-md bg-slate-600 text-center h-fit flex flex-col">
           <h3 className="text-white text-xs font-semibold mb-1">{t("Floor")}</h3>
-          <Button onClick={() => api?.scrollTo(0)} className={clsx("py-2 px-3 rounded-none rounded-t-md text-white bg-gray-500 text-sm border-b border-slate-400 hover:bg-white hover:text-black transition-all", current === 0 ? "bg-white text-black" : "")}>{t("GroundFloor")}</Button>
-          <Button onClick={() => api?.scrollTo(1)} className={clsx("py-2 px-3 rounded-none text-white bg-gray-500 text-sm border-b border-slate-300 hover:bg-white hover:text-black transition-all", current === 1 ? "bg-white text-black" : "")}>{t("FirstFloor")}</Button>
-          <Button onClick={() => api?.scrollTo(2)} className={clsx("py-2 px-3 rounded-none rounded-b-md text-white bg-gray-500 text-sm hover:bg-white hover:text-black transition-all", current === 2 ? "bg-white text-black" : "")}>{t("SecondFloor")}</Button>
+          <Button onClick={() => api?.scrollTo(0)} className={clsx("py-1 !h-fit md:py-2 px-1 md:px-3 rounded-none rounded-t-md text-white bg-gray-500 text-sm border-b border-slate-400 hover:bg-white hover:text-black transition-all", current === 0 ? "bg-white text-black" : "")}>{t("GroundFloor")}</Button>
+          <Button onClick={() => api?.scrollTo(1)} className={clsx("py-1 !h-fit md:py-2 px-1 md:px-3 rounded-none text-white bg-gray-500 text-sm border-b border-slate-300 hover:bg-white hover:text-black transition-all", current === 1 ? "bg-white text-black" : "")}>{t("FirstFloor")}</Button>
+          <Button onClick={() => api?.scrollTo(2)} className={clsx("py-1 !h-fit md:py-2 px-1 md:px-3 rounded-none rounded-b-md text-white bg-gray-500 text-sm hover:bg-white hover:text-black transition-all", current === 2 ? "bg-white text-black" : "")}>{t("SecondFloor")}</Button>
         </div>
       </div>
-      {/* </div> */}
 
       {/* Building Floor Carousel */}
-      <div className="m-auto relative">
+      <div className="mx-auto mt-auto md:m-auto relative">
         <Carousel orientation="vertical" opts={{ loop: true }} setApi={setApi} dir="rtl" className={`w-[300px] max-w-[90%] m-auto h-full transform transition-all scale-${scale} rounded-md`} style={{ transform: `scale(${scale})`, transition: "transform 0.3s ease-in-out" }}>
-          <CarouselContent className="min-h-[450px] h-[80vh] rounded-md max-w-[80%] m-auto">
+          <CarouselContent className="min-h-[400px] h-[70vh] md:h-[80vh] rounded-md max-w-[80%] m-auto">
             {floorsImages.map((img, key) => (
               <CarouselItem key={key + img.title}>
                 <Image
@@ -261,7 +282,7 @@ const page = () => {
           </Button>
         </Carousel>
 
-        <div className="flex items-center justify-center gap-4 mt-8">
+        <div className="flex items-center justify-center gap-4 mt-4 md:mt-8">
           <Link href='/ar/real-estate/2555545'>
             <Button className="font-semibold">
               {t("MainStructureButton")}
@@ -275,56 +296,84 @@ const page = () => {
         </div>
       </div>
 
-
+      {/* Building Properities Block For Small Devices */}
+      <Sheet open={openBlockProperties} onOpenChange={setOpenBlockProperties}>
+        <SheetContent>
+          <SheetHeader className="mb-4 !text-center">
+            <SheetTitle >{t("BuildingProperties")}</SheetTitle>
+          </SheetHeader>
+          <BuildingPropertiesCard
+            type="فيلا الياسمين"
+            status="متاح"
+            category="نموذج A-1"
+            rooms={5}
+            bathrooms={4}
+            buildingSpace={525.25}
+            landSpace={600}
+            price={1117427}
+            open={openInterestedForm}
+            setOpen={setOpenInterestedForm}
+          />
+        </SheetContent>
+      </Sheet>
 
       {/* Gallery Popup */}
       <Dialog open={isPopupOpen} onOpenChange={setPopupOpen}>
-        <DialogContent dir="ltr" className="flex !h-full !w-screen rounded-none p-0 border-none" style={{ width: "100vw", height: "100vh" }}>
+        <DialogContent dir="ltr" className="flex !h-full !w-screen rounded-none p-0 border-none" >
           {/* Left Sidebar */}
-          <div className="w-1/4 bg-gray-800 text-white">
-            <DialogTitle>
-              <Button onClick={() => setPopupOpen(false)} className="m-6 p-0 w-fit h-fit">
-                <Image
-                  src='/assets/icons/left-arrow.svg'
-                  alt="Arrow"
-                  width={40}
-                  height={40}
-                />
-              </Button>
-            </DialogTitle>
-            <div className="w-full mt-6 p-4 overflow-y-auto grid grid-cols-3 gap-4 place-content-start">
-              {images.map((img, index) => (
-                <div key={index} className="text-center text-sm">
-                  <Image
-                    width={40}
-                    height={40}
-                    src={img.src}
-                    alt={`Image ${index + 1}`}
-                    className={clsx(
-                      "h-20 w-full mb-4 cursor-pointer rounded-md",
-                      selectedIndex === index ? "border-4 border-blue-500" : "border"
-                    )}
-                    onClick={() => scrollToIndex(index)}
-                  />
-                  <h1>{img.title}</h1>
-                </div>
-              ))}
-            </div>
-          </div>
+          <Sidebar>
+            <SidebarContent dir="ltr" className="bg-gray-800 text-white min-w-[300px] max-w-[300px]">
+              <SidebarGroup>
+                <SidebarGroupContent>
+                  <DialogTitle className="flex items-center justify-between">
+                    <Button onClick={() => setPopupOpen(false)} className="m-6 p-0 w-fit h-fit">
+                      <Image
+                        src='/assets/icons/left-arrow.svg'
+                        alt="Arrow"
+                        width={40}
+                        height={40}
+                      />
+                    </Button>
+                    <SidebarGroupLabel className="text-white text-base font-semibold">{t("Gallery")}</SidebarGroupLabel>
+                  </DialogTitle>
+
+                  <div className="w-full mt-6 p-4 overflow-y-auto grid grid-cols-3 gap-4 place-content-start">
+                    {images.map((img, index) => (
+                      <div key={index} className="text-center text-sm">
+                        <Image
+                          width={40}
+                          height={40}
+                          src={img.src}
+                          alt={`Image ${index + 1}`}
+                          className={clsx(
+                            "h-20 w-full mb-4 cursor-pointer rounded-md",
+                            selectedIndex === index ? "border-4 border-blue-500" : "border"
+                          )}
+                          onClick={() => scrollToIndex(index)}
+                        />
+                        <h1>{img.title}</h1>
+                      </div>
+                    ))}
+                  </div>
+                </SidebarGroupContent>
+              </SidebarGroup>
+            </SidebarContent>
+          </Sidebar>
 
           {/* Vertical Carousel */}
           <div
             ref={carouselRef}
-            className="w-3/4 bg-gray-100 overflow-y-auto scrollbar-hidden"
+            className="bg-gray-100 overflow-y-auto scrollbar-hidden relative md:w-[calc(100%-300px)] md:ml-auto"
             onScroll={handleScroll}
             style={{
               scrollSnapType: 'y mandatory',
             }}
           >
+            <SidebarTrigger className="fixed top-4 left-4" />
             {images.map((img, index) => (
               <div
                 key={index}
-                className="flex items-center justify-center h-screen border-b border-red-600"
+                className="flex items-center justify-center h-screen border-b !w-full"
               >
                 <Image
                   src={img.src}

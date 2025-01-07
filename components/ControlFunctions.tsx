@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { useTranslations } from 'next-intl';
 import { usePathname, useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { DropdownMenuCheckboxItemProps } from "@radix-ui/react-dropdown-menu"
 
@@ -18,15 +18,16 @@ interface ControlFunctionsProps {
   zoomOut?: () => void;
   setPopupOpen?: React.ComponentState;
   setOpenHelpForm: React.ComponentState;
+  setOpenBlockProperties?: React.ComponentState;
 }
 
-const ControlFunctions = ({ selectedTypes, setSelectedTypes, zoomIn, zoomOut, setPopupOpen, selectedCategories, setSelectedCategories, setOpenHelpForm }: ControlFunctionsProps) => {
+const ControlFunctions = ({ selectedTypes, setSelectedTypes, zoomIn, zoomOut, setPopupOpen, selectedCategories, setSelectedCategories, setOpenHelpForm, setOpenBlockProperties }: ControlFunctionsProps) => {
   const t = useTranslations('MapPage');
   const router = useRouter();
   const pathname = usePathname()
   const { toast } = useToast()
 
-
+  const [isLargeScreen, setIsLargeScreen] = useState<boolean>(false);
   const [isFullScreen, setIsFullScreen] = useState<Checked>(false);
 
   // Handle For Full Screen Button
@@ -114,8 +115,22 @@ const ControlFunctions = ({ selectedTypes, setSelectedTypes, zoomIn, zoomOut, se
   // Handle For Ask For Help Button
   const handleAskHelp = () => {
     setOpenHelpForm(true)
-   }
+  }
 
+  const checkScreenWidth = () => {
+    setIsLargeScreen(window.innerWidth > 768);
+  };
+
+  useEffect(() => {
+    checkScreenWidth();
+
+    window.addEventListener("resize", checkScreenWidth);
+
+    return () => {
+      window.removeEventListener("resize", checkScreenWidth);
+
+    };
+  }, []);
 
   return (
     <div className={clsx("fixed flex flex-col justify-center md:justify-between z-[1000] pb-[10px]", t("language").toLowerCase() == 'ar' ? "right-[10px]" : "left-[10px]", zoomIn ? "top-0  h-full" : "top-20 h-[calc(100%-5rem)]")}>
@@ -136,8 +151,11 @@ const ControlFunctions = ({ selectedTypes, setSelectedTypes, zoomIn, zoomOut, se
       </div>
 
       <div className="md:flex-1 flex flex-col md:justify-end">
+        {(setOpenBlockProperties && !isLargeScreen) && (
+          <MapControlBtn onClick={() => setOpenBlockProperties(true)} icon="building" title={t('BuildingProperties')} />
+        )}
         {(zoomIn && zoomOut && setPopupOpen) && (
-          <MapControlBtn onClick={() => setPopupOpen(true)} icon="gallery" title={t('gallery')} />
+          <MapControlBtn onClick={() => setPopupOpen(true)} icon="gallery" title={t('Gallery')} />
         )}
         <MapControlBtn onClick={handleAskHelp} icon="question" title={t('AskHelp')} />
         <MapControlBtn onClick={handleShareWebsite} icon="share" title={t("ShareWebsite")} />

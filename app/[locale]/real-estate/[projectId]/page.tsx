@@ -77,7 +77,7 @@ const page = (
 
   // Function to check screen width
   const checkScreenWidth = () => {
-    setIsLargeScreen(window.innerWidth > 780);
+    setIsLargeScreen(window.innerWidth > 768);
   };
 
   useEffect(() => {
@@ -130,14 +130,17 @@ const page = (
 
       <div>
         <h1>Filtered Buildings</h1>
-        {/* <Image src='/assets/icons/test.svg' alt='' width={500} height={500} className='scale-[2]' /> */}
-        <ul>
+
+        {/* <Image src='/assets/icons/test.svg' alt='' width={500} height={500} className='max-h-full max-w-full' /> */}
+        {/* <ul>
           {filteredBuildings.map((building) => (
             <li key={building.id}>
               Building ID: {building.id}, Category: {building.category}, Price: {building.price}, Space: {building.space}
             </li>
           ))}
-        </ul>
+        </ul> */}
+
+        {/* <Image width="2048" height="2048" preserveAspectRatio="none" id="image1" x="0" y="0" sodipodi:insensitive="true" className="fill-opacity:1;stroke:none;stroke-opacity:1;stroke-width:1.6;stroke-dasharray:none" /> */}
       </div>
 
       {/* Need Help Form Popup */}

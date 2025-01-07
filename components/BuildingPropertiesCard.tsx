@@ -19,7 +19,7 @@ const BuildingPropertiesCard = ({ type, status, category, rooms, bathrooms, buil
   const t = useTranslations('BuildingViewPage');
 
   return (
-    <div className="w-64 bg-white shadow-md rounded-md overflow-hidden">
+    <div className="w-full md:w-64 bg-white shadow-md rounded-md overflow-hidden">
       <div className="bg-slate-600 text-white p-2 flex justify-between items-center rounded-t-md">
         <h3 className="text-sm font-semibold">{type}</h3>
         <Badge className="bg-green-500 hover:bg-green-400">{status}</Badge>

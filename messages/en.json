@@ -15,7 +15,7 @@
     "ChangeLanguage": "Change Language",
     "language": "Ar",
     "AskHelp": "Need Help?",
-    "gallery": "Gallery",
+    "Gallery": "Gallery",
     "ShareWebsite": "Share Website",
     "FullScreen": "FullScreen",
     "SmallScreen": "Small Screen",
@@ -34,7 +34,8 @@
     "ZoomIn": "Zoom In",
     "ZoomOut": "Zoom Out",
     "Block": "Block",
-    "NeedHelp": "Need Help"
+    "NeedHelp": "Need Help",
+    "BuildingProperties": "Properties Window"
   },
   "ProjectPage": {
     "language": "Ar",
@@ -89,6 +90,8 @@
     "SurNamePlaceholder": "Aladwi",
     "Phone": "Phone",
     "Area": "Area",
-    "StartFrom": "Start From"
+    "StartFrom": "Start From",
+    "BuildingProperties": "Properties Window",
+    "Gallery": "Gallery"
   }
 }

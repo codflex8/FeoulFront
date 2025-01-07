@@ -15,7 +15,7 @@ const WebsiteTitleSec = ({projectId, blockNumber}: {projectId?: string, blockNum
   const t = useTranslations('MapPage');
 
   return (
-    <div className="bg-slate-600 rounded-md px-4 py-3 mb-4 flex items-center gap-6 w-fit">
+    <div className="bg-slate-600 rounded-md px-4 py-1 mb-4 flex items-center gap-6 w-fit">
       <Breadcrumb>
         <BreadcrumbList className="gap-1 md:gap-2">
           <BreadcrumbItem>

@@ -8,7 +8,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
-import { SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar"
 
 const fontFamily = Cairo({
   variable: "--font-cairo",
@@ -56,8 +56,10 @@ export default async function RootLayout({
         <NextIntlClientProvider messages={messages}>
           <SidebarProvider>
             <ToastProvider>
-              <main>{children}</main>
-              <Toaster />
+              <SidebarProvider>
+                <main>{children}</main>
+                <Toaster />
+              </SidebarProvider>
             </ToastProvider>
           </SidebarProvider>
         </NextIntlClientProvider>
