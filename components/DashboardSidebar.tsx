@@ -3,10 +3,12 @@ import { MdCategory, MdInterests } from "react-icons/md";
 import { FaBuilding, FaBuildingCircleCheck, FaBuildingLock, FaMoneyBillTransfer } from "react-icons/fa6";
 import { BiSolidDashboard } from "react-icons/bi";
 import { FaCity } from "react-icons/fa";
+import { IoAdd } from "react-icons/io5";
 
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -26,42 +28,42 @@ interface ItemsProps {
 const items: ItemsProps[] = [
   {
     title: "لوحة التحكم",
-    url: "ar/dashboard",
+    url: "/dashboard",
     icon: BiSolidDashboard,
   },
   {
     title: "المشاريع",
-    url: "ar/dashboard/projects",
+    url: "/dashboard/projects",
     icon: FaCity,
   },
   {
     title: "الفئات",
-    url: "ar/dashboard/categories",
+    url: "/dashboard/categories",
     icon: MdCategory,
   },
   {
     title: "الإهتمامات",
-    url: "ar/dashboard/interests",
+    url: "/dashboard/interests",
     icon: MdInterests,
   },
   {
     title: "الوحدات السكنية",
-    url: "ar/dashboard/buildings",
+    url: "/dashboard/buildings",
     icon: FaBuilding,
   },
   {
     title: "الوحدات السكنية المحجوزة",
-    url: "ar/dashboard/booked-buildings",
+    url: "/dashboard/booked-buildings",
     icon: FaBuildingLock,
   },
   {
     title: "الوحدات السكنية المباعة",
-    url: "ar/dashboard/sold-buildings",
+    url: "/dashboard/sold-buildings",
     icon: FaBuildingCircleCheck,
   },
   {
     title: "المالية",
-    url: "ar/dashboard/financial",
+    url: "/dashboard/financial",
     icon: FaMoneyBillTransfer,
   },
 ]
@@ -88,6 +90,19 @@ export default function DashboardSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+
+      <SidebarFooter>
+        <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton className="py-6" asChild>
+                <Link href="/ar/dashboard/add-project">
+                  <IoAdd className="!w-7 !h-7" />
+                  <span className="text-gray-600 text-base font-semibold">إضافة مشروع</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
     </Sidebar>
   )
 }

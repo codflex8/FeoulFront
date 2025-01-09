@@ -16,16 +16,19 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+
 import { Button } from "../ui/button"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
-  data: TData[]
+  data: TData[],
+  page?: string
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  page
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
@@ -35,9 +38,9 @@ export function DataTable<TData, TValue>({
   })
 
   return (
-    <>
-      <div className="rounded-md border">
-        <Table className="bg-white">
+    <div className="flex-1">
+      <div className="rounded-md border overflow-x-auto">
+        <Table className="bg-white min-w-full">
           <TableHeader className="bg-zinc-500 !hover:bg-zinc-500">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
@@ -80,24 +83,26 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-strat !space-x-4 py-4">
-        <Button
-          variant="outline"
-          size="lg"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          السابق
-        </Button>
-        <Button
-          variant="outline"
-          size="lg"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          التالي
-        </Button>
-      </div>
-    </>
+      {!page && (
+        <div className="flex items-center justify-strat !space-x-4 py-4">
+          <Button
+            variant="outline"
+            size="lg"
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+          >
+            السابق
+          </Button>
+          <Button
+            variant="outline"
+            size="lg"
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+          >
+            التالي
+          </Button>
+        </div>
+      )}
+    </div>
   )
 }
