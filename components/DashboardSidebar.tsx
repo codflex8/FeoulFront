@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { MdCategory, MdInterests } from "react-icons/md";
 import { FaBuilding, FaBuildingCircleCheck, FaBuildingLock, FaMoneyBillTransfer } from "react-icons/fa6";
@@ -16,7 +18,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-
+import { usePathname } from "next/navigation";
+import clsx from "clsx";
 
 interface ItemsProps {
   title: string,
@@ -24,51 +27,52 @@ interface ItemsProps {
   icon: React.ElementType,
 }
 
-// Menu items.
 const items: ItemsProps[] = [
   {
     title: "لوحة التحكم",
-    url: "/dashboard",
+    url: "/ar/dashboard",
     icon: BiSolidDashboard,
   },
   {
     title: "المشاريع",
-    url: "/dashboard/projects",
+    url: "/ar/dashboard/projects",
     icon: FaCity,
   },
   {
     title: "الفئات",
-    url: "/dashboard/categories",
+    url: "/ar/dashboard/categories",
     icon: MdCategory,
   },
   {
     title: "الإهتمامات",
-    url: "/dashboard/interests",
+    url: "/ar/dashboard/interests",
     icon: MdInterests,
   },
   {
     title: "الوحدات السكنية",
-    url: "/dashboard/buildings",
+    url: "/ar/dashboard/buildings",
     icon: FaBuilding,
   },
   {
     title: "الوحدات السكنية المحجوزة",
-    url: "/dashboard/booked-buildings",
+    url: "/ar/dashboard/booked-buildings",
     icon: FaBuildingLock,
   },
   {
     title: "الوحدات السكنية المباعة",
-    url: "/dashboard/sold-buildings",
+    url: "/ar/dashboard/sold-buildings",
     icon: FaBuildingCircleCheck,
   },
   {
     title: "المالية",
-    url: "/dashboard/financial",
+    url: "/ar/dashboard/financial",
     icon: FaMoneyBillTransfer,
   },
 ]
 
 export default function DashboardSidebar() {
+  const path = usePathname()  
+
   return (
     <Sidebar side="right">
       <SidebarContent>
@@ -78,10 +82,10 @@ export default function DashboardSidebar() {
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton className="py-6" asChild>
+                  <SidebarMenuButton className={clsx("py-6", path.split('/').pop() === item.url.split('/').pop() ? 'bg-[#00a8e8] hover:bg-[#00a8e8] !text-white' : '')} asChild>
                     <Link href={item.url}>
                       <item.icon className="!w-6 !h-6" />
-                      <span className="text-gray-600 text-base font-semibold">{item.title}</span>
+                      <span className={clsx("text-gray-600 text-base font-semibold", path.split('/').pop() === item.url.split('/').pop() ? 'text-white' : '')}>{item.title}</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
