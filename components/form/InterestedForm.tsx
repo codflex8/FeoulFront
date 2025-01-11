@@ -15,7 +15,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { Select, SelectTrigger, SelectContent, SelectValue, SelectItem } from "./ui/select";
+import { Select, SelectTrigger, SelectContent, SelectValue, SelectItem } from "../ui/select";
 
 import { Input } from "@/components/ui/input"
 import { useTranslations } from "next-intl"

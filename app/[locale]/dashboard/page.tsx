@@ -1,6 +1,6 @@
 "use client";
 
-import CountsCard from "@/components/CountsCard";
+import CountsCard from "@/components/dashboard/CountsCard";
 import { FaUsers } from "react-icons/fa";
 import { FaCity } from "react-icons/fa";
 import { MdInterests } from "react-icons/md";
@@ -10,29 +10,14 @@ import { intrestsColumns } from "@/components/table/columns";
 import { DataTable } from "@/components/table/data-table";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import WeeklyChart from "@/components/WeeklyChart";
-import BuildingsChart from "@/components/BuildingsChart";
+import WeeklyChart from "@/components/dashboard/WeeklyChart";
+import BuildingsChart from "@/components/dashboard/BuildingsChart";
 
 const Dashboard: React.FC = () => {
   const router = useRouter()
 
   return (
     <div className="min-h-screen bg-gray-100 flex-1 p-6">
-
-      {/* main content */}
-      {/* <header className="flex justify-between items-center bg-white shadow-md rounded-lg p-4 mb-6">
-          <h2 className="text-2xl font-bold text-gray-700">نظرة عامة</h2>
-          <div className="flex items-center space-x-4">
-            <input
-              type="text"
-              placeholder="بحث..."
-              className="py-2 px-4 border rounded-lg"
-            />
-            <button className="p-2 bg-blue-500 text-white rounded-lg flex items-center">
-              <FaBell className="text-lg" />
-            </button>
-          </div>
-        </header> */}
 
       {/* Cards Section */}
       <section className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-6 text-right">

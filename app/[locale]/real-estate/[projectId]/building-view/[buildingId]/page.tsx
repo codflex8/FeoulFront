@@ -26,9 +26,9 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import InterestedForm from "@/components/InterestedForm";
+import InterestedForm from "@/components/form/InterestedForm";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import NeedHelpForm from "@/components/NeedHelpForm";
+import NeedHelpForm from "@/components/form/NeedHelpForm";
 
 import {
   Sidebar,

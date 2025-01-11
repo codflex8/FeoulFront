@@ -16,7 +16,7 @@ import WebsiteTitleSec from "./WebsiteTitleSec";
 import ControlFunctions from "./ControlFunctions";
 import AlwaysOpenPopup from "./AlwaysOpenPopup";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./ui/dialog";
-import NeedHelpForm from "./NeedHelpForm";
+import NeedHelpForm from "./form/NeedHelpForm";
 
 const getCustomIcon = (iconName: string, size?: number) => {
   const iconPath = size ? `/assets/icons/${iconName}.svg` : `/assets/icons/${iconName}-marker.svg`

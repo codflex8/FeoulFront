@@ -1,27 +1,37 @@
+"use client";
+
+import React, { useState } from 'react'
 import { categoriesColumns } from '@/components/table/columns';
 import { DataTable } from '@/components/table/data-table';
-import React from 'react'
-
-export type Category = {
-  id: number;
-  name: string;
-  color: string;
-  status: "مسودة" | "منشور" | "محذوف";
-};
-
-export const categoriesData: Category[] = [
-  { id: 1, name: "فئة A", color: "أزرق", status: "منشور" },
-  { id: 2, name: "فئة B", color: "أخضر", status: "مسودة" },
-  { id: 3, name: "فئة C", color: "أصفر", status: "محذوف" },
-  { id: 4, name: "فئة D", color: "أحمر", status: "منشور" },
-];
+import { Button } from '@/components/ui/button';
+import { FaPlus } from "react-icons/fa6";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import AddCategoryForm from '@/components/form/AddCategoryForm';
+import { categoriesData } from '@/dummyData';
 
 
 const page = () => {
+  const [openCategory, setOpenCategory] = useState<boolean>(false)
   return (
     <div className="min-h-screen bg-gray-100 flex-1 p-6">
+      <Button onClick={() => setOpenCategory(true)} className="mb-4 bg-slate-600 hover:bg-slate-700 text-white">
+        إضافة فئة
+        <FaPlus />
+      </Button>
+
+      <Dialog open={openCategory} onOpenChange={setOpenCategory}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle className="flex items-center justify-between text-xl font-extrabold">
+              إضافة فئة
+            </DialogTitle>
+          </DialogHeader>
+          <AddCategoryForm setOpen={setOpenCategory} />
+        </DialogContent>
+      </Dialog>
+
       {/* Table Section */}
-      <DataTable columns={categoriesColumns} data={categoriesData} />
+      <DataTable page="categories" columns={categoriesColumns} data={categoriesData} />
     </div>
   )
 }

@@ -9,7 +9,6 @@ import {
   useReactTable,
   getPaginationRowModel,
 } from "@tanstack/react-table"
-import { FaChevronDown } from "react-icons/fa";
 
 import {
   Table,
@@ -20,62 +19,20 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
-import { Button } from "../ui/button"
-import { Input } from "@/components/ui/input"
+
+import ProjectDropdown from "../ProjectDropdownFilter";
 import { useState } from "react"
-
-import { DropdownMenuCheckboxItemProps } from "@radix-ui/react-dropdown-menu"
-
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-
-type Checked = DropdownMenuCheckboxItemProps["checked"]
-
-export function DropdownMenuCheckboxes() {
-  const [showPublished, setShowPublished] = useState<Checked>(true)
-  const [showUnpublished, setShowUnpublished] = useState<Checked>(false)
-  const [showDeleted, setShowDeleted] = useState<Checked>(false)
-
-  const cities = ["خانيونس", "غزة", "رفح"]
-
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="outline" className="w-[150px] felx items-center justify-between">
-          <span>حالة المشروع</span>
-          <FaChevronDown />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56">
-        <DropdownMenuCheckboxItem
-          checked={showPublished}
-          onCheckedChange={setShowPublished}
-        >
-          منشور
-        </DropdownMenuCheckboxItem>
-        <DropdownMenuCheckboxItem
-          checked={showUnpublished}
-          onCheckedChange={setShowUnpublished}
-        >
-          مسودة
-        </DropdownMenuCheckboxItem>
-        <DropdownMenuCheckboxItem
-          checked={showDeleted}
-          onCheckedChange={setShowDeleted}
-        >
-          محذوف
-        </DropdownMenuCheckboxItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  )
-}
-
+import { Button } from "../ui/button"
+import { DatePicker } from "../DatePicker";
+import { Input } from "../ui/input";
+import { format } from "date-fns";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
+import { FaChevronDown } from "react-icons/fa6";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { cn } from "@/lib/utils";
+import { CalendarIcon } from "lucide-react";
+import { Calendar } from "../ui/calendar";
+import { cityOptions, statusOptions } from "@/constants";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -104,25 +61,117 @@ export function DataTable<TData, TValue>({
     },
   })
 
+  const [selectedCity, setSelectedCity] = useState<string>("")
+  const [selectedStatus, setSelectedStatus] = useState<string>("")
+  const [date, setDate] = useState<Date | string>("")
+
+  const handleCityOption = (value: string) => {
+    setSelectedCity(value)
+    table.getColumn("city")?.setFilterValue(value)
+  }
+
+  const handleStatusOption = (value: string) => {
+    setSelectedStatus(value)
+    table.getColumn("status")?.setFilterValue(value)
+  }
+
+  const handleDateFilter = (value: Date | string) => {
+    setDate(value)
+    const formattedDate = new Date(value).toLocaleDateString("ar-EG", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+
+    table.getColumn("date")?.setFilterValue(formattedDate)
+  }
+
+  const clearAll = () => {
+    setSelectedCity("")
+    setSelectedStatus("")
+    setDate("")
+  }
+
   return (
     <div className="flex-1">
-      <div className="my-4 flex items-center justify-start gap-8">
-        <div className="flex items-center py-4">
-          <Input
-            placeholder="Filter emails..."
-            value={(table.getColumn("projectName")?.getFilterValue() as string) ?? ""}
-            onChange={(event) =>
-              table.getColumn("projectName")?.setFilterValue(event.target.value)
-            }
-            className="max-w-sm"
-          />
-        </div>
-        
-        <DropdownMenuCheckboxes />
-        <DropdownMenuCheckboxes />
 
-        <Button className="bg-slate-500 hover:bg-slate-600 text-white">إعادة ضبط</Button>
-      </div>
+      {/* Projects Filter Section */}
+      {(page === "projects") && (
+        <div className="my-4 flex items-center justify-start gap-8">
+
+          {/* Cities Filter */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="w-[150px] flex items-center justify-between">
+                <span>{cityOptions.find((option) => option.label === selectedCity)?.label || 'المدينة'}</span>
+                <FaChevronDown />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-full">
+              <DropdownMenuRadioGroup value={selectedCity} onValueChange={setSelectedCity}>
+                {cityOptions.map((option) => (
+                  <DropdownMenuRadioItem
+                    key={option.id}
+                    value={option.label}
+                    onSelect={() => handleCityOption(option.label)}
+                  >
+                    {option.label}
+                  </DropdownMenuRadioItem>
+                ))}
+              </DropdownMenuRadioGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          {/* Status Filter */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="w-[150px] flex items-center justify-between">
+                <span>{statusOptions.find((option) => option.label === selectedStatus)?.label || 'حالة المشروع'}</span>
+                <FaChevronDown />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-full">
+              <DropdownMenuRadioGroup value={selectedStatus} onValueChange={setSelectedStatus}>
+                {statusOptions.map((option) => (
+                  <DropdownMenuRadioItem
+                    key={option.id}
+                    value={option.label}
+                    onSelect={() => handleStatusOption(option.label)}
+                  >
+                    {option.label}
+                  </DropdownMenuRadioItem>
+                ))}
+              </DropdownMenuRadioGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          {/* DatePicker Filter */}
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant={"outline"}
+                className={cn(
+                  "w-[240px] justify-start text-left font-normal",
+                  !date && "text-muted-foreground"
+                )}
+              >
+                <CalendarIcon />
+                {date ? format(date, "PPP") : <span className="text-black">تاريخ الإضافة</span>}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0" align="start">
+              <Calendar
+                mode="single"
+                selected={new Date(date)}
+                onSelect={(value) => handleDateFilter(value)}
+                initialFocus
+              />
+            </PopoverContent>
+          </Popover>
+
+          <Button onClick={() => clearAll()} className="bg-slate-500 hover:bg-slate-600 text-white">إعادة ضبط</Button>
+        </div>
+      )}
 
       <div className="rounded-md border overflow-x-auto">
         <Table className="bg-white min-w-full">

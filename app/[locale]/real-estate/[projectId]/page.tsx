@@ -10,7 +10,7 @@ import HelppingTools from '@/components/HelppingTools';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import NeedHelpForm from '@/components/NeedHelpForm';
+import NeedHelpForm from '@/components/form/NeedHelpForm';
 
 interface BuildingProps {
   id: number;
