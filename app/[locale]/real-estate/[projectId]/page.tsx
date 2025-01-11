@@ -92,7 +92,7 @@ const page = (
   }, []);
 
   return (
-    <div className="bg-[#544533] relative text-center min-h-[100vh] w-screen flex items-center justify-center py-4 overflow-x-hidden">
+    <div className="bg-[#544533] relative text-center min-h-[100vh] w-screen flex items-center justify-center overflow-x-hidden">
 
       <ControlFunctions zoomIn={zoomIn} zoomOut={zoomOut} selectedCategories={selectedCategories} setSelectedCategories={setSelectedCategories} setOpenHelpForm={setOpenHelpForm} />
 
@@ -128,19 +128,11 @@ const page = (
       </div>
       <HelppingTools />
 
-      <div>
-        <h1>Filtered Buildings</h1>
+      <div className='w-screen h-[100vh]'>
 
         {/* <Image src='/assets/icons/test.svg' alt='' width={500} height={500} className='max-h-full max-w-full' /> */}
-        {/* <ul>
-          {filteredBuildings.map((building) => (
-            <li key={building.id}>
-              Building ID: {building.id}, Category: {building.category}, Price: {building.price}, Space: {building.space}
-            </li>
-          ))}
-        </ul> */}
+        <Image src='/assets/images/project.jpg' alt='' width={2000} height={2000} className='max-h-full min-w-full' />
 
-        {/* <Image width="2048" height="2048" preserveAspectRatio="none" id="image1" x="0" y="0" sodipodi:insensitive="true" className="fill-opacity:1;stroke:none;stroke-opacity:1;stroke-width:1.6;stroke-dasharray:none" /> */}
       </div>
 
       {/* Need Help Form Popup */}
