@@ -7,7 +7,7 @@ import { Separator } from "../ui/separator"
 
 const DashboardHeader = () => {
   return (
-    <div className="flex items-center justify-between pl-6 pr-2 py-4">
+    <div className="flex items-center justify-between pl-6 pr-2 py-4 bg-white">
       <SidebarTrigger className="w-10 h-10" />
 
       {/* User Profile Section */}

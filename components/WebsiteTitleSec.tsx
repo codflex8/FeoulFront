@@ -11,7 +11,13 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 
-const WebsiteTitleSec = ({projectId, blockNumber}: {projectId?: string, blockNumber?: number}) => {
+interface WebsiteTitleProps {
+  projectId?: string;
+  projectName?: string;
+  blockNumber?: number
+}
+
+const WebsiteTitleSec = ({ projectId, projectName, blockNumber }: WebsiteTitleProps) => {
   const t = useTranslations('MapPage');
 
   return (
@@ -33,8 +39,8 @@ const WebsiteTitleSec = ({projectId, blockNumber}: {projectId?: string, blockNum
             <>
               <BreadcrumbSeparator className="text-white font-bold rtl:rotate-180" />
               <BreadcrumbItem>
-                <Badge variant={(projectId && !blockNumber) ? "white" : "secondary" }>
-                  <Link href="/ar/real-estate/2555545">سراة من فيول</Link>
+                <Badge variant={(projectId && !blockNumber) ? "white" : "secondary"}>
+                  <Link href={`/ar/real-estate/${projectId}`}>{projectName}</Link>
                 </Badge>
               </BreadcrumbItem>
             </>
@@ -44,7 +50,7 @@ const WebsiteTitleSec = ({projectId, blockNumber}: {projectId?: string, blockNum
               <BreadcrumbSeparator className="text-white font-bold rtl:rotate-180" />
               <BreadcrumbItem>
                 <Badge variant="white">
-                  <BreadcrumbPage>{t("Block")} {blockNumber}</BreadcrumbPage>
+                  <BreadcrumbPage>{t("Block")}{blockNumber}</BreadcrumbPage>
                 </Badge>
               </BreadcrumbItem>
             </>

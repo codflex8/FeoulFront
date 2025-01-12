@@ -31,20 +31,32 @@ const ControlFunctions = ({ selectedTypes, setSelectedTypes, zoomIn, zoomOut, se
   const [isFullScreen, setIsFullScreen] = useState<Checked>(false);
 
   // Handle For Full Screen Button
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullScreen(!!document.fullscreenElement);
+    };
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+    };
+  }, []);
+
   const handleFullScreen = () => {
-    const element = document.documentElement;
-
-    if (!document.fullscreenElement) {
-      element.requestFullscreen()
-        .then(() => setIsFullScreen(true))
-        .catch((error) => console.error(`Error entering full-screen mode: ${error.message}`));
+    if (!isFullScreen) {
+      // Request fullscreen
+      if (document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen();
+      }
     } else {
-      document.exitFullscreen()
-        .then(() => setIsFullScreen(false))
-        .catch((error) => console.error(`Error exiting full-screen mode: ${error.message}`));
+      // Exit fullscreen
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
     }
-  }
-
+  };
+  
   // Handle For Share Website Button
   const handleShareWebsite = async () => {
     if (navigator.share) {

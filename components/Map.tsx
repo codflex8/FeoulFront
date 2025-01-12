@@ -6,7 +6,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap, Polygon } from "react-l
 import "leaflet/dist/leaflet.css";
 import "leaflet-routing-machine";
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
-import { MapProps } from "@/types/map.types";
+import { LatLng, MapProps } from "@/types/map.types";
 
 import clsx from "clsx";
 
@@ -41,6 +41,8 @@ const Map = ({ projects, basicLandmarks, landmarks }: MapProps) => {
     selectedTypes.length ? selectedTypes.includes(landmark.type) : []
   )
 
+  projects.map((pro, key) => console.log(pro.lat))
+
   const bounds = L.latLngBounds(
     [21.25, 39.05],
     [21.80, 39.45]
@@ -72,6 +74,19 @@ const Map = ({ projects, basicLandmarks, landmarks }: MapProps) => {
     updateZoomControlPosition();
   }, [t("language")]);
 
+
+  const position: LatLng[] = [
+    [21.713749258798922, 39.12805840919132],
+    [21.70654215541264, 39.13234536865425],
+    [21.70312813836255, 39.12499629528922],
+    [21.698386313695085, 39.12458801343561],
+    [21.697248252537044, 39.12009691304587],
+    [21.709197446022582, 39.115197530802526],
+    [21.71507684373483, 39.118259644704615],
+    [21.716783720651417, 39.12581285899645],
+    [21.713749258798922, 39.12805840919132],
+  ]
+  
   return (
     <div className="h-full w-full relative">
       <ControlFunctions selectedTypes={selectedTypes} setSelectedTypes={setSelectedTypes} setOpenHelpForm={setOpenHelpForm} />
@@ -83,10 +98,6 @@ const Map = ({ projects, basicLandmarks, landmarks }: MapProps) => {
       </div>
 
       <MapContainer
-        // center={[21.614635, 39.230685]}
-        // center={[21.71490891866162, 39.17269298743262]}
-        // center={[21.697046, 38.781305]}
-        // center={[21.633232, 39.222131]}
         center={[21.758334, 39.056873]}
         zoom={12}
         maxZoom={13}
@@ -127,8 +138,9 @@ const Map = ({ projects, basicLandmarks, landmarks }: MapProps) => {
         /> */}
 
         {projects.map((project, idx) => (
-          <Polygon key={idx} positions={project.position} pathOptions={fillPolygonOptions}>
-            <AlwaysOpenPopup position={project.position[0]} project={project}>
+          <Polygon key={idx} positions={position} pathOptions={fillPolygonOptions}>
+            {/* <AlwaysOpenPopup position={project.position[0]} project={project}> */}
+            <AlwaysOpenPopup position={[project.lat, project.lng]} project={project}>
               {project.name}
             </AlwaysOpenPopup>
           </Polygon>

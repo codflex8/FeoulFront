@@ -1,23 +1,33 @@
 import Map from "@/components/Map";
-import { Landmark, Project } from "@/types/map.types";
+import { getPlaces, getProjects } from "@/lib/actions/map.actions";
+import { Landmark } from "@/types/map.types";
 
-const Home = () => {
+const Home = async () => {
 
-  const projects: Project[] = [
-    {
-      name: "سراة من فيول", id: "255545", position: [
-        [21.713749258798922, 39.12805840919132],
-        [21.70654215541264, 39.13234536865425],
-        [21.70312813836255, 39.12499629528922],
-        [21.698386313695085, 39.12458801343561],
-        [21.697248252537044, 39.12009691304587],
-        [21.709197446022582, 39.115197530802526],
-        [21.71507684373483, 39.118259644704615],
-        [21.716783720651417, 39.12581285899645],
-        [21.713749258798922, 39.12805840919132],
-      ]
-    },
-  ];
+  const projects = await getProjects();
+  const places = await getPlaces();
+
+
+  console.log("projectssss", projects);
+  
+
+
+
+  // const projects: Project[] = [
+  //   {
+  //     name: "سراة من فيول", id: "255545", position: [
+  //       [21.713749258798922, 39.12805840919132],
+  //       [21.70654215541264, 39.13234536865425],
+  //       [21.70312813836255, 39.12499629528922],
+  //       [21.698386313695085, 39.12458801343561],
+  //       [21.697248252537044, 39.12009691304587],
+  //       [21.709197446022582, 39.115197530802526],
+  //       [21.71507684373483, 39.118259644704615],
+  //       [21.716783720651417, 39.12581285899645],
+  //       [21.713749258798922, 39.12805840919132],
+  //     ]
+  //   },
+  // ];
 
   const basicLandmarks: Landmark[] = [
     { name: "مطار الملك عبدالعزيز الدولي", type: 'airport', position: [21.681865, 39.166439] },
@@ -45,7 +55,7 @@ const Home = () => {
 
   return (
     <div>
-      <Map projects={projects} basicLandmarks={basicLandmarks} landmarks={landmarks} />
+      <Map projects={projects} basicLandmarks={places} landmarks={landmarks} />
     </div>
   );
 };

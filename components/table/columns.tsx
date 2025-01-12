@@ -7,14 +7,22 @@ import { Button } from "../ui/button"
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import { Category, InterestsData, Project, Unit, Operation } from "@/types/dashboard.types";
+import { Dialog, DialogContent } from "../ui/dialog";
 
 const deleteRow = (id: string) => {
-  console.log("iiii", id);
+  console.log("ddddd", id);
+
+  return(
+    <Dialog>
+      <DialogContent>
+        ffffffff
+      </DialogContent>
+    </Dialog>
+  )
   
 }
 const updateRow = (id: string) => {
   console.log("ffff", id);
-  
 }
 
 export const intrestsColumns: ColumnDef<InterestsData>[] = [

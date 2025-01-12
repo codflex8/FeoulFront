@@ -19,12 +19,8 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
-
-import ProjectDropdown from "../ProjectDropdownFilter";
 import { useState } from "react"
 import { Button } from "../ui/button"
-import { DatePicker } from "../DatePicker";
-import { Input } from "../ui/input";
 import { format } from "date-fns";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { FaChevronDown } from "react-icons/fa6";
@@ -39,6 +35,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[],
   page?: string
 }
+
 
 export function DataTable<TData, TValue>({
   columns,
