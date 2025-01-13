@@ -20,6 +20,7 @@ import { Input } from "@/components/ui/input"
 import { useTranslations } from "next-intl"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
 import { useState } from "react"
+import { addCategory } from "@/lib/actions/dashboard.actions"
 
 const formSchema = z.object({
   name: z.string({
@@ -50,6 +51,7 @@ const AddCategoryForm = ({ setOpen }: React.ComponentState) => {
   })
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
+    addCategory(values)
     setOpen(false)
   }
 

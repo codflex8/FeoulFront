@@ -1,6 +1,6 @@
-import { Category, InterestsData, Operation, Project, Unit } from "./types/dashboard.types";
+import { Category, Interest, Operation, Project, Unit } from "./types/dashboard.types";
 
-export const interestsData: InterestsData[] = [
+export const interestsData: Interest[] = [
     {
         firstName: "محمد",
         surName: "الزهراني",

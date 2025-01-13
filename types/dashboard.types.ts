@@ -8,7 +8,7 @@ export interface Project  {
   date: Date;
 };
 
-export type InterestsData = {
+export type Interest = {
   firstName: string
   surName: string
   phone: string
