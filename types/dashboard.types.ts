@@ -29,6 +29,7 @@ export interface Unit  {
   number: string;
   name: string;
   model: string;
+  estate: string;
   landArea: string;
   buildingArea: string;
   totalArea: string;
@@ -37,6 +38,7 @@ export interface Unit  {
   price: string;
   videoUrl: string;
   floors: number;
+  floorsDesign: string[]
 };
 
 export type Operation = {

@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react";
 import { ColumnDef } from "@tanstack/react-table"
 import StatusBadge from "../dashboard/StatusBadge"
 import { Button } from "../ui/button"
@@ -7,23 +8,9 @@ import { Button } from "../ui/button"
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import { Category, InterestsData, Project, Unit, Operation } from "@/types/dashboard.types";
-import { Dialog, DialogContent } from "../ui/dialog";
+import FloorDesignsPopup from "@/components/dashboard/FloorDesignsPopup";
+import VideoPopup from "@/components/VideoPopup";
 
-const deleteRow = (id: string) => {
-  console.log("ddddd", id);
-
-  return(
-    <Dialog>
-      <DialogContent>
-        ffffffff
-      </DialogContent>
-    </Dialog>
-  )
-  
-}
-const updateRow = (id: string) => {
-  console.log("ffff", id);
-}
 
 export const intrestsColumns: ColumnDef<InterestsData>[] = [
   {
@@ -91,7 +78,10 @@ export const intrestsColumns: ColumnDef<InterestsData>[] = [
   }
 ]
 
-export const projectsColumns: ColumnDef<Project>[] = [
+export const getProjectsColumns = (
+  deleteRow: (id: string) => void,
+  updateRow: (rowData: Project) => void
+): ColumnDef<Project>[] => [
   {
     accessorKey: "projectNumber",
     header: () => <div className="text-center font-semibold">رقم المشروع</div>,
@@ -125,6 +115,20 @@ export const projectsColumns: ColumnDef<Project>[] = [
 
       return <p className="text-center font-medium text-sm">{formattedDate}</p>;
     },
+    filterFn: (row, columnId, filterValue) => {
+      const rawDate = row.getValue(columnId) as string;
+      const rowDate = new Date(rawDate);
+    
+      const rowDateNormalized = new Date(
+        rowDate.getFullYear(),
+        rowDate.getMonth(),
+        rowDate.getDate()
+      ).getTime();
+    
+      const filterDateNormalized = new Date(filterValue).setHours(0, 0, 0, 0);
+    
+      return rowDateNormalized === filterDateNormalized;
+    },
   },
   {
     accessorKey: "status",
@@ -155,7 +159,7 @@ export const projectsColumns: ColumnDef<Project>[] = [
         <Button size="icon" variant="ghost" onClick={() => deleteRow(row.getValue("projectNumber"))}>
           <MdDelete color="red" className="!w-6 !h-6" />
         </Button>
-        <Button size="icon" variant="ghost" onClick={() => updateRow(row.getValue("projectNumber"))}>
+        <Button size="icon" variant="ghost" onClick={() => updateRow(row.original)}>
           <FaEdit color="gray" className="!w-6 !h-6" />
         </Button>
       </div>
@@ -183,27 +187,27 @@ export const categoriesColumns: ColumnDef<Category>[] = [
     accessorKey: "status",
     header: () => <div className="text-center font-semibold">حالة الفئة</div>,
     cell: ({ row }) => <div className="flex justify-center">
-    <span
-      className={`flex w-fit items-center gap-2 rounded-full px-4 py-1 ${row.getValue("status") === "منشور"
-        ? "bg-green-200 text-green-800"
-        : row.getValue("status") === "مسودة"
-          ? "bg-yellow-200 text-yellow-800"
-          : "bg-red-200 text-red-800"
-        }`}
-    >
-      {row.getValue("status")}
-    </span>
-  </div>
+      <span
+        className={`flex w-fit items-center gap-2 rounded-full px-4 py-1 ${row.getValue("status") === "منشور"
+          ? "bg-green-200 text-green-800"
+          : row.getValue("status") === "مسودة"
+            ? "bg-yellow-200 text-yellow-800"
+            : "bg-red-200 text-red-800"
+          }`}
+      >
+        {row.getValue("status")}
+      </span>
+    </div>
   },
   {
     id: "actions",
     header: () => <div className="text-center font-semibold">الإجراءات</div>,
     cell: ({ row }) => (
       <div className="flex justify-center items-center gap-1">
-        <Button size="icon" variant="ghost" onClick={() => {}}>
+        <Button size="icon" variant="ghost" onClick={() => { }}>
           <MdDelete color="red" className="!w-6 !h-6" />
         </Button>
-        <Button size="icon" variant="ghost" onClick={() => {}}>
+        <Button size="icon" variant="ghost" onClick={() => { }}>
           <FaEdit color="gray" className="!w-6 !h-6" />
         </Button>
       </div>
@@ -221,6 +225,11 @@ export const unitsColumns: ColumnDef<Unit>[] = [
     accessorKey: "name",
     header: () => <div className="text-center font-semibold">إسم الوحدة</div>,
     cell: ({ row }) => <p className="text-center font-medium text-sm">{row.getValue("name")}</p>
+  },
+  {
+    accessorKey: "estate",
+    header: () => <div className="text-center font-semibold">المشروع</div>,
+    cell: ({ row }) => <p className="text-center font-medium text-sm">{row.getValue("estate")}</p>
   },
   {
     accessorKey: "model",
@@ -258,6 +267,31 @@ export const unitsColumns: ColumnDef<Unit>[] = [
     cell: ({ row }) => <p className="text-center font-medium text-sm">{row.getValue("floors")}</p>
   },
   {
+    accessorKey: "floorsDesign",
+    header: () => <div className="text-center font-semibold">تصميم الطوابق</div>,
+    cell: ({ row }) => {
+      const [isFloorDesignsPopupOpen, setIsFloorDesignsPopupOpen] = useState(false);
+      const floorDesigns = row.getValue("floorsDesign") as string[];      
+
+      return (
+        <div className="text-center">
+          <Button
+            variant="link"
+            onClick={() => setIsFloorDesignsPopupOpen(true)}
+            className="text-blue-600"
+          >
+            عرض الطوابق
+          </Button>
+          <FloorDesignsPopup
+            floorDesigns={floorDesigns}
+            isOpen={isFloorDesignsPopupOpen}
+            onClose={() => setIsFloorDesignsPopupOpen(false)}
+          />
+        </div>
+      );
+    },
+  },
+  {
     accessorKey: "price",
     header: () => <div className="text-center font-semibold">السعر</div>,
     cell: ({ row }) => <p className="text-center font-medium text-sm">{row.getValue("price")}</p>
@@ -265,13 +299,26 @@ export const unitsColumns: ColumnDef<Unit>[] = [
   {
     accessorKey: "videoUrl",
     header: () => <div className="text-center font-semibold">فيديو الوحدة</div>,
-    cell: ({ row }) => (
-      <div className="text-center">
-        <a href={row.getValue("videoUrl")} target="_blank" rel="noopener noreferrer" className="text-blue-600">
-          مشاهدة الفيديو
-        </a>
-      </div>
-    )
+    cell: ({ row }) => {
+      const [isVideoPopupOpen, setIsVideoPopupOpen] = useState(false);
+
+      return (
+        <div className="text-center">
+          <Button
+            variant="link"
+            onClick={() => setIsVideoPopupOpen(true)}
+            className="text-blue-600"
+          >
+            مشاهدة الفيديو
+          </Button>
+          <VideoPopup
+            videoUrl={row.getValue("videoUrl")}
+            isOpen={isVideoPopupOpen}
+            onClose={() => setIsVideoPopupOpen(false)}
+          />
+        </div>
+      );
+    },
   },
   {
     id: "actions",

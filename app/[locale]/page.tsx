@@ -2,7 +2,9 @@ import Map from "@/components/Map";
 import { getPlaces, getProjects } from "@/lib/actions/map.actions";
 import { Landmark } from "@/types/map.types";
 
+
 const Home = async () => {
+
 
   const projects = await getProjects();
   const places = await getPlaces();

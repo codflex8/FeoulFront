@@ -153,6 +153,7 @@ export const unitData: Unit[] = [
     number: "001",
     name: "وحدة سكنية 1",
     model: "موديل A",
+    estate: 'سراة من فيول',
     landArea: "300 متر مربع",
     buildingArea: "250 متر مربع",
     totalArea: "550 متر مربع",
@@ -160,12 +161,17 @@ export const unitData: Unit[] = [
     bathrooms: 2,
     price: "500,000 شيكل",
     videoUrl: "https://example.com/video1",
-    floors: 2
+    floors: 2,
+    floorsDesign: [
+      '/assets/images/test.jpg',
+      '/assets/images/test.jpg',
+    ]
   },
   {
     number: "002",
     name: "وحدة سكنية 2",
     model: "موديل B",
+    estate: 'مدينة حمد',
     landArea: "350 متر مربع",
     buildingArea: "300 متر مربع",
     totalArea: "650 متر مربع",
@@ -173,12 +179,18 @@ export const unitData: Unit[] = [
     bathrooms: 3,
     price: "600,000 شيكل",
     videoUrl: "https://example.com/video2",
-    floors: 3
+    floors: 3,
+    floorsDesign: [
+      '/assets/images/test.jpg',
+      '/assets/images/test.jpg',
+      '/assets/images/test.jpg',
+    ]
   },
   {
     number: "003",
     name: "وحدة سكنية 3",
     model: "موديل C",
+    estate: 'سراة من فيول',
     landArea: "400 متر مربع",
     buildingArea: "350 متر مربع",
     totalArea: "750 متر مربع",
@@ -186,12 +198,18 @@ export const unitData: Unit[] = [
     bathrooms: 4,
     price: "750,000 شيكل",
     videoUrl: "https://example.com/video3",
-    floors: 3
+    floors: 3,
+    floorsDesign: [
+      '/assets/images/test.jpg',
+      '/assets/images/test.jpg',
+      '/assets/images/test.jpg',
+    ]
   },
   {
     number: "001",
     name: "وحدة سكنية 1",
     model: "موديل A",
+    estate: 'مدينة حمد',
     landArea: "300 متر مربع",
     buildingArea: "250 متر مربع",
     totalArea: "550 متر مربع",
@@ -199,12 +217,17 @@ export const unitData: Unit[] = [
     bathrooms: 2,
     price: "500,000 شيكل",
     videoUrl: "https://example.com/video1",
-    floors: 2
+    floors: 2,
+    floorsDesign: [
+      '/assets/images/test.jpg',
+      '/assets/images/test.jpg',
+    ]
   },
   {
     number: "002",
     name: "وحدة سكنية 2",
     model: "موديل B",
+    estate: 'سراة من فيول',
     landArea: "350 متر مربع",
     buildingArea: "300 متر مربع",
     totalArea: "650 متر مربع",
@@ -212,12 +235,18 @@ export const unitData: Unit[] = [
     bathrooms: 3,
     price: "600,000 شيكل",
     videoUrl: "https://example.com/video2",
-    floors: 3
+    floors: 3,
+    floorsDesign: [
+      '/assets/images/test.jpg',
+      '/assets/images/test.jpg',
+      '/assets/images/test.jpg',
+    ]
   },
   {
     number: "003",
     name: "وحدة سكنية 3",
     model: "موديل C",
+    estate: 'سراة من فيول',
     landArea: "400 متر مربع",
     buildingArea: "350 متر مربع",
     totalArea: "750 متر مربع",
@@ -225,7 +254,12 @@ export const unitData: Unit[] = [
     bathrooms: 4,
     price: "750,000 شيكل",
     videoUrl: "https://example.com/video3",
-    floors: 3
+    floors: 3,
+    floorsDesign: [
+      '/assets/images/test.jpg',
+      '/assets/images/test.jpg',
+      '/assets/images/test.jpg',
+    ]
   }
 ];
 
