@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { ToastProvider } from "@radix-ui/react-toast";
-import { Cairo } from "next/font/google";
+// import { Cairo } from "next/font/google";
 
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
@@ -10,10 +10,10 @@ import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import { SidebarProvider } from "@/components/ui/sidebar"
 
-const fontFamily = Cairo({
-  variable: "--font-cairo",
-  subsets: ["latin"],
-});
+// const fontFamily = Cairo({
+//   variable: "--font-cairo",
+//   subsets: ["latin"],
+// });
 
 export const metadata: Metadata = {
   title: "سرايا البحيرات",
@@ -51,7 +51,7 @@ export default async function RootLayout({
   return (
     <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
       <body
-        className={`${fontFamily.variable}`}
+        // className={`${fontFamily.variable}`}
       >
         <NextIntlClientProvider messages={messages}>
           <SidebarProvider>

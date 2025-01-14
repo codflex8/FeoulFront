@@ -86,7 +86,7 @@ const Map = ({ projects, basicLandmarks, landmarks }: MapProps) => {
     [21.716783720651417, 39.12581285899645],
     [21.713749258798922, 39.12805840919132],
   ]
-  
+
   return (
     <div className="h-full w-full relative">
       <ControlFunctions selectedTypes={selectedTypes} setSelectedTypes={setSelectedTypes} setOpenHelpForm={setOpenHelpForm} />
@@ -137,14 +137,13 @@ const Map = ({ projects, basicLandmarks, landmarks }: MapProps) => {
           attribution='&copy; <a href="https://opentopomap.org">OpenTopoMap</a> contributors & <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         /> */}
 
+        {/* <Polygon key={idx} positions={position} pathOptions={fillPolygonOptions}> */}
         {projects.map((project, idx) => (
-          <Polygon key={idx} positions={position} pathOptions={fillPolygonOptions}>
-            {/* <AlwaysOpenPopup position={project.position[0]} project={project}> */}
-            <AlwaysOpenPopup position={[project.lat, project.lng]} project={project}>
-              {project.name}
-            </AlwaysOpenPopup>
-          </Polygon>
+          <AlwaysOpenPopup key={idx} position={[project.lat, project.lng]} project={project}>
+            {project.name}
+          </AlwaysOpenPopup>
         ))}
+        {/* </Polygon> */}
 
         {selectedTypes.includes("places") && basicLandmarks.map((landmark, idx) => (
           <Marker key={idx} position={landmark.position} icon={getCustomIcon(landmark.type)}>

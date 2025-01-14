@@ -13,6 +13,10 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import NeedHelpForm from '@/components/form/NeedHelpForm';
 import { Categories, Project } from '@/types/map.types';
 
+import { MapContainer, ImageOverlay, Marker, Popup, useMap, useMapEvent } from 'react-leaflet';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+
 interface BuildingProps {
   id: number;
   category: string;
@@ -23,7 +27,11 @@ interface BuildingProps {
 const page = ({ project, categories }: { project: Project, categories: string[] }) => {
   const t = useTranslations('ProjectPage');
 
-  console.log("prhhhoject", project);
+  const imageUrl = '/assets/images/project.jpg'; // استبدل بمسار الصورة
+  const imageBounds: L.LatLngBoundsExpression = [
+    [0, 0], // الحد الأدنى للإحداثيات (أسفل اليسار)
+    [1000, 1000], // الحد الأقصى للإحداثيات (أعلى اليمين)
+  ];
 
 
   const [showFilters, setShowFilters] = useState<boolean>(false);
@@ -89,6 +97,60 @@ const page = ({ project, categories }: { project: Project, categories: string[] 
     };
   }, []);
 
+
+  const units = [
+    {
+      id: 1,
+      name: 'Building 1',
+      position: [200, 200], // الإحداثيات النسبية للمبنى
+      size: [120, 366], // حجم المبنى (عرض × ارتفاع)
+    },
+    {
+      id: 2,
+      name: 'Building 2',
+      position: [400, 400],
+      size: [120, 457],
+    },
+    {
+      id: 3,
+      name: 'Building 3',
+      position: [268, 184],
+      size: [120, 457],
+    },
+    // أضف بقية المباني هنا
+  ];
+
+  const DynamicMarker = ({ building }: { building: any }) => {
+    const map = useMap();
+    const [zoomLevel, setZoomLevel] = useState(map.getZoom());
+
+    useMapEvent('zoomend', () => {
+      setZoomLevel(map.getZoom());
+    });
+
+    const iconSize = [
+      building.size[0] * (zoomLevel / 2), 
+      building.size[1] * (zoomLevel / 2),
+    ];
+
+    const icon = L.divIcon({
+      className: 'custom-icon',
+      html: `<div style="background: rgba(255, 0, 0, 0.5); width: ${iconSize[0]}px; height: ${iconSize[1]}px; display: flex; align-items: center; justify-content: center; color: white; font-size: 16px; transition: all 0.3s ease">${building.id}</div>`,
+    });
+
+    return <Marker position={building.position} icon={icon} />;
+  };
+
+  const FitBoundsToImage = ({ bounds }: { bounds: L.LatLngBoundsExpression }) => {
+    const map = useMap();
+    
+    React.useEffect(() => {
+      map.fitBounds(bounds, { padding: [20, 20] }); // إضافة حواف بسيطة
+    }, [map, bounds]);
+  
+    return null;
+  };
+
   return (
     <div className="bg-[#544533] relative text-center min-h-[100vh] w-screen flex items-center justify-center overflow-x-hidden">
 
@@ -129,7 +191,59 @@ const page = ({ project, categories }: { project: Project, categories: string[] 
       <div className='w-screen h-[100vh]'>
 
         {/* <Image src='/assets/icons/test.svg' alt='' width={500} height={500} className='max-h-full max-w-full' /> */}
-        <Image src='/assets/images/project.jpg' alt='' width={2000} height={2000} className='min-h-screen max-h-full min-w-full' />
+        {/* <Image src='/assets/images/project.jpg' alt='' width={2000} height={2000} className='min-h-screen max-h-full min-w-full' /> */}
+
+        {/* <MapContainer
+          center={[500, 500]} // مركز الخريطة
+          zoom={1} // مستوى التكبير الابتدائي
+          minZoom={1}
+          maxZoom={2}
+          scrollWheelZoom={true}
+          style={{ height: '100vh', width: '100vw', maxHeight: '100vh', maxWidth: '100vw' }}
+          crs={L.CRS.Simple} // استخدام نظام إحداثيات بسيط
+          maxBounds={imageBounds} // تقييد السحب ضمن أبعاد الصورة
+          maxBoundsViscosity={1.0}
+        >
+          <ImageOverlay className='w-screen h-screen transform' url={imageUrl} bounds={imageBounds} />
+
+          {units.map((building) => (
+            <Marker
+              key={building.id}
+              position={building.position}
+              icon={L.divIcon({
+                className: 'custom-icon',
+                html: `<div style="background: rgba(255, 0, 0, 0.5); width: 62px; height: 183px; color: white; font-size: 25px; font-weight: bold;" class="flex items-center justify-center">${building.id}</div>`,
+              })}
+            >
+              <Popup>
+                <div>
+                  <h3>{building.name}</h3>
+                  <p>تفاصيل المبنى هنا...</p>
+                </div>
+              </Popup>
+            </Marker>
+          ))}
+        </MapContainer> */}
+
+
+        <MapContainer
+          center={[500, 500]} 
+          zoom={1}
+          minZoom={1} 
+          maxZoom={2}
+          scrollWheelZoom={true}
+          style={{ height: '100vh', width: '100%' }}
+          crs={L.CRS.Simple}
+          maxBounds={imageBounds}
+          maxBoundsViscosity={1.0}
+        >
+          <ImageOverlay url={imageUrl} bounds={imageBounds} />
+          {/* <FitBoundsToScreen /> */}
+          <FitBoundsToImage bounds={imageBounds} />
+          {units.map((building) => (
+            <DynamicMarker key={building.id} building={building} />
+          ))}
+        </MapContainer>
 
       </div>
 
