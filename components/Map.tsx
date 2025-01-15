@@ -137,13 +137,11 @@ const Map = ({ projects, basicLandmarks, landmarks }: MapProps) => {
           attribution='&copy; <a href="https://opentopomap.org">OpenTopoMap</a> contributors & <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         /> */}
 
-        {/* <Polygon key={idx} positions={position} pathOptions={fillPolygonOptions}> */}
         {projects.map((project, idx) => (
           <AlwaysOpenPopup key={idx} position={[project.lat, project.lng]} project={project}>
             {project.name}
           </AlwaysOpenPopup>
         ))}
-        {/* </Polygon> */}
 
         {selectedTypes.includes("places") && basicLandmarks.map((landmark, idx) => (
           <Marker key={idx} position={landmark.position} icon={getCustomIcon(landmark.type)}>
