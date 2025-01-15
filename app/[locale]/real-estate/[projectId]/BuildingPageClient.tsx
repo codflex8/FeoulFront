@@ -30,7 +30,7 @@ const page = ({ project, categories }: { project: Project, categories: string[] 
   const imageUrl = '/assets/images/project.jpg'; // استبدل بمسار الصورة
   const imageBounds: L.LatLngBoundsExpression = [
     [0, 0], // الحد الأدنى للإحداثيات (أسفل اليسار)
-    [1000, 1000], // الحد الأقصى للإحداثيات (أعلى اليمين)
+    [500, 800], // الحد الأقصى للإحداثيات (أعلى اليمين)
   ];
 
 
