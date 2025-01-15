@@ -8,18 +8,22 @@ import { notFound } from 'next/navigation';
 export default async function BuildingPage({
   params,
 }: {
-  params: { projectId: string };
+  params: Promise<{ projectId: string }>;
 }) {
   
-  const projectId = params.projectId;
+  const projectId = (await params).projectId
   const { project } = await getProjectById(projectId);
   // const { categories } = await getCategories();
+
+  // if (!project) {
+  //   return <div>Project not found.</div>;
+  // }
 
   if (!project) {
     notFound();
   }
 
-  // console.log("project", project);
+  console.log("project", projectId);
   // console.log("categories", categories);
 
   const categories = ["category-a", "category-b", "category-c", "category-d"]
