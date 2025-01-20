@@ -1,9 +1,13 @@
-import createMiddleware from 'next-intl/middleware';
-import {routing} from './i18n/routing';
- 
-export default createMiddleware(routing);
- 
+import { NextRequest, NextResponse } from "next/server";
+
+export function middleware(request: NextRequest) {
+  const token = request.cookies.get("authToken");
+  if (!token) {
+    return NextResponse.redirect(new URL("/ar/login", request.url));
+  }
+  return NextResponse.next();
+}
+
 export const config = {
-  // Match only internationalized pathnames
-  matcher: ['/', '/(ar|en)/:path*']
+  matcher: ["/ar/dashboard/:path*"], 
 };
