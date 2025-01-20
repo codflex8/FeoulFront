@@ -40,7 +40,7 @@ export default function LoginForm() {
     },
   });
 
-  const onSubmit = async (data: LoginFormValues) => {
+  const onSubmit = async (data) => {
     try {
       const response = await fetch("http://18.116.28.100/api/v1/dashboard/auth/signin", {
         method: "POST",
@@ -49,14 +49,16 @@ export default function LoginForm() {
         },
         body: JSON.stringify(data),
       });
-
+  
       if (!response.ok) {
         throw new Error("فشل تسجيل الدخول");
       }
-
+  
       const result = await response.json();
-      localStorage.setItem("authToken", result.token);
-      router.push("/ar/dashboard");
+  
+      document.cookie = `authToken=${result.token}; path=/; HttpOnly=false; Secure=true;`;
+  
+       router.push("/ar/dashboard");
     } catch (error) {
       toast({
         title: "خطأ",
@@ -65,7 +67,7 @@ export default function LoginForm() {
       });
     }
   };
-
+  
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
