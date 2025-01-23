@@ -236,7 +236,11 @@ const BuildingViewPage = ({ unit }: { unit: Unit }) => {
           t("language").toLowerCase() === "en" ? "right-[10px]" : "left-[10px]"
         )}
       >
-        <WebsiteTitleSec projectId="222" blockNumber={60} />
+        <WebsiteTitleSec
+          projectName={unit.project.name}
+          projectId={unit.project.id}
+          blockNumber={unit.number}
+        />
       </div>
 
       {/* Building Properities Block */}
