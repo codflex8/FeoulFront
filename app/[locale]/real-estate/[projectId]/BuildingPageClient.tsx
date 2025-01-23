@@ -16,7 +16,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import NeedHelpForm from "@/components/form/NeedHelpForm";
-import { Categories, Project } from "@/types/map.types";
+import { Categories, Project, UnitsData } from "@/types/map.types";
 
 import {
   MapContainer,
@@ -38,17 +38,17 @@ interface BuildingProps {
 }
 
 // bottom line 105 * 35 || translate3d(232px, 642px, 0px) rotate(7deg)
+const imageUrl = "/assets/images/project.jpg";
 
 const page = ({
   project,
   categories,
 }: {
   project: Project;
+  unitsData: UnitsData;
   categories: string[];
 }) => {
   const t = useTranslations("ProjectPage");
-
-  const imageUrl = "/assets/images/project.jpg";
 
   let imageBounds: L.LatLngBoundsExpression = [
     [0, 0],
@@ -86,29 +86,29 @@ const page = ({
   const [space, setSpace] = useState<[number, number]>([150, 400]);
   const [openHelpForm, setOpenHelpForm] = useState<boolean>(false);
 
-  const buildings: BuildingProps[] = [
-    { id: 1, category: "category-a", price: 500, space: 500 },
-    { id: 2, category: "category-b", price: 600, space: 600 },
-    { id: 3, category: "category-c", price: 900, space: 900 },
-    { id: 4, category: "category-d", price: 1000, space: 1000 },
-    { id: 5, category: "category-a", price: 500, space: 500 },
-    { id: 6, category: "category-b", price: 400, space: 400 },
-    { id: 7, category: "category-c", price: 500, space: 500 },
-    { id: 8, category: "category-d", price: 300, space: 300 },
-    { id: 9, category: "category-a", price: 5500, space: 5500 },
-    { id: 10, category: "category-b", price: 5200, space: 5200 },
-    { id: 11, category: "category-c", price: 5400, space: 5400 },
-    { id: 12, category: "category-d", price: 500, space: 500 },
-  ];
+  // const buildings: BuildingProps[] = [
+  //   { id: 1, category: "category-a", price: 500, space: 500 },
+  //   { id: 2, category: "category-b", price: 600, space: 600 },
+  //   { id: 3, category: "category-c", price: 900, space: 900 },
+  //   { id: 4, category: "category-d", price: 1000, space: 1000 },
+  //   { id: 5, category: "category-a", price: 500, space: 500 },
+  //   { id: 6, category: "category-b", price: 400, space: 400 },
+  //   { id: 7, category: "category-c", price: 500, space: 500 },
+  //   { id: 8, category: "category-d", price: 300, space: 300 },
+  //   { id: 9, category: "category-a", price: 5500, space: 5500 },
+  //   { id: 10, category: "category-b", price: 5200, space: 5200 },
+  //   { id: 11, category: "category-c", price: 5400, space: 5400 },
+  //   { id: 12, category: "category-d", price: 500, space: 500 },
+  // ];
 
-  const filteredBuildings = buildings.filter(
-    (building) =>
-      selectedCategories.includes(building.category) &&
-      building.price >= price[0] &&
-      building.price <= price[1] &&
-      building.space >= space[0] &&
-      building.space <= space[1]
-  );
+  // const filteredBuildings = buildings.filter(
+  //   (building) =>
+  //     selectedCategories.includes(building.category) &&
+  //     building.price >= price[0] &&
+  //     building.price <= price[1] &&
+  //     building.space >= space[0] &&
+  //     building.space <= space[1]
+  // );
 
   const zoomStep = 0.2;
 

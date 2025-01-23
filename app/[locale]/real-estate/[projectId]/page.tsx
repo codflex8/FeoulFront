@@ -13,7 +13,7 @@ export default async function BuildingPage({
   const project = await getProjectById(projectId);
   const { items } = await getCategories();
 
-  if (!project) {
+  if (!project?.project) {
     // TODO: FIX the root layout issue and not-found page is not working!
     notFound();
   }
@@ -22,5 +22,11 @@ export default async function BuildingPage({
   // TODO: So I'll not make any changes to the code logic for ui filtering for now, I just passed it as an array of strings as it was before with static data
   const categories = items.map((item) => item.name);
 
-  return <BuildingPageClient project={project} categories={categories} />;
+  return (
+    <BuildingPageClient
+      project={project.project}
+      unitsData={project.unitsData}
+      categories={categories}
+    />
+  );
 }
