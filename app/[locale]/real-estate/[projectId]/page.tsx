@@ -1,18 +1,16 @@
 // app/projects/[projectId]/page.tsx (Server Component)
-import React from 'react';
-import { getCategories, getProjectById } from '@/lib/actions/map.actions';
-import BuildingPageClient from './BuildingPageClient'; // Your Client Component
-import { Project } from '@/types/map.types';
-import { notFound } from 'next/navigation';
+import React from "react";
+import { getCategories, getProjectById } from "@/lib/actions/map.actions";
+import BuildingPageClient from "./BuildingPageClient"; // Your Client Component
+import { notFound } from "next/navigation";
 
 export default async function BuildingPage({
   params,
 }: {
   params: Promise<{ projectId: string }>;
 }) {
-  
-  const projectId = (await params).projectId
-  const { project } = await getProjectById(projectId);
+  const projectId = (await params).projectId;
+  const project = await getProjectById(projectId);
   // const { categories } = await getCategories();
 
   // if (!project) {
@@ -20,14 +18,13 @@ export default async function BuildingPage({
   // }
 
   if (!project) {
+    // TODO: FIX the root layout issue and not-found page is not working!
     notFound();
   }
 
-  console.log("project", projectId);
   // console.log("categories", categories);
 
-  const categories = ["category-a", "category-b", "category-c", "category-d"]
-  
+  const categories = ["category-a", "category-b", "category-c", "category-d"];
 
-  return <BuildingPageClient project={project} categories={categories}   />;
+  return <BuildingPageClient project={project} categories={categories} />;
 }
