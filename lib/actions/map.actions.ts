@@ -1,18 +1,17 @@
 "use server";
 
-import { PaginatedProjects } from "@/types/map.types";
+import { PaginatedProjects, Project } from "@/types/map.types";
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const getProjects = async () => {
   try {
-    const response = await fetch(
-      "http://18.116.28.100/api/v1/public/projects",
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await fetch(`${API_URL}/public/projects`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
     if (!response.ok) {
       throw new Error(`Failed to fetch projects: ${response.statusText}`);
@@ -32,22 +31,20 @@ export const getProjects = async () => {
 
 export const getProjectById = async (projectId: string) => {
   try {
-    const response = await fetch(
-      `http://18.116.28.100/api/v1/public/projects/${projectId}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await fetch(`${API_URL}/public/projects/${projectId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
     if (!response.ok) {
       throw new Error(`Failed to fetch project: ${response.statusText}`);
     }
 
-    const project = await response.json();
-    return project;
+    const data: { project: Project } = await response.json();
+
+    return data.project;
   } catch (error) {
     console.error(
       "An error occurred while getting the project from the API:",
