@@ -111,15 +111,12 @@ export const getUnitById = async (unitId: string) => {
 
 export const getCategories = async () => {
   try {
-    const response = await fetch(
-      "http://localhost:3000/api/v1/public/unit-category",
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await fetch(`${API_URL}/public/unit-category`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
     if (!response.ok) {
       throw new Error(`Failed to fetch categories: ${response.statusText}`);
