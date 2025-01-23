@@ -1,16 +1,43 @@
+import { PaginatedResponse } from "./api.types";
+
 export type LatLng = [number, number];
+
+export enum CommonStatusesEnum {
+  posted = "posted",
+  archived = "archived",
+  deleted = "deleted",
+}
+
+type CommonStatuses = "posted" | "archived" | "deleted";
+
+export interface Template {
+  name: string;
+  link: string;
+  status: CommonStatuses;
+}
+
+export interface facility {
+  name: string;
+  lng: string;
+  lat: string;
+}
 
 export interface Project {
   id: string;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string | null;
+  number: number;
   name: string;
-  position: LatLng[];
-  lat: number;
-  lng: number;
+  status: CommonStatuses;
+  projectDocUrl: string | null;
+  facilities: facility[];
   city: string;
-  projectDoCUrl: string;
-  status: "posted" | "draft" | "deleted",
-  units: []
+  lng: string;
+  lat: string;
 }
+
+export type PaginatedProjects = PaginatedResponse<Project>;
 
 export interface Categories {
   id: string;
@@ -20,8 +47,8 @@ export interface Categories {
   lng: number;
   city: string;
   projectDoCUrl: string;
-  status: "posted" | "draft" | "deleted",
-  units: []
+  status: CommonStatuses;
+  units: [];
 }
 
 export interface Landmark {
