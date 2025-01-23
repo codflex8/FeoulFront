@@ -1,6 +1,10 @@
 "use server";
 
-import { PaginatedProjects, Project } from "@/types/map.types";
+import {
+  PaginatedCategories,
+  PaginatedProjects,
+  Project,
+} from "@/types/map.types";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -121,7 +125,7 @@ export const getCategories = async () => {
       throw new Error(`Failed to fetch categories: ${response.statusText}`);
     }
 
-    const categories = await response.json();
+    const categories: PaginatedCategories = await response.json();
     return categories;
   } catch (error) {
     console.error(
