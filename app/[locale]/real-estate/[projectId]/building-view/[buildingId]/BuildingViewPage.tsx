@@ -52,41 +52,49 @@ interface floorsImagesProps {
   title: string;
 }
 
-const BuildingProperties = () => {
+const BuildingProperties = ({ unit }: { unit: Unit }) => {
   const t = useTranslations("BuildingViewPage");
   return (
     <div className="p-4 grid grid-cols-3 gap-2 text-center">
       <div className="bg-gray-100 rounded-md p-1 shadow-sm">
         <span className="block text-xs text-gray-500">{t("BlockNumber")}</span>
-        <span className="block text-sm font-bold text-gray-800">وحدة 60</span>
+        <span className="block text-sm font-bold text-gray-800">
+          {unit.number}
+        </span>
       </div>
 
       <div className="bg-gray-100 rounded-md p-1 shadow-sm">
         <span className="block text-xs text-gray-500">{t("Category")}</span>
-        <span className="block text-sm font-bold text-gray-800">فئة A-1</span>
+        <span className="block text-sm font-bold text-gray-800">
+          {unit.category.name}
+        </span>
       </div>
 
       <div className="bg-gray-100 rounded-md p-1 shadow-sm">
         <span className="block text-xs text-gray-500">{t("Rooms")}</span>
-        <span className="block text-sm font-bold text-gray-800">5</span>
+        <span className="block text-sm font-bold text-gray-800">
+          {unit.bedroomNumber}
+        </span>
       </div>
 
       <div className="bg-gray-100 rounded-md p-1 shadow-sm">
         <span className="block text-xs text-gray-500">{t("Bathrooms")}</span>
-        <span className="block text-sm font-bold text-gray-800">7</span>
+        <span className="block text-sm font-bold text-gray-800">
+          {unit.bathroomNumber}
+        </span>
       </div>
 
       <div className="bg-gray-100 rounded-md p-1 shadow-sm">
         <span className="block text-xs text-gray-500">{t("TotalArea")}</span>
         <span className="block text-sm font-bold text-gray-800">
-          5 {t("Meter")}
+          {unit.buildSpace} {t("Meter")}
         </span>
       </div>
 
       <div className="bg-gray-100 rounded-md p-1 shadow-sm">
         <span className="block text-xs text-gray-500">{t("Price")}</span>
         <span className="font-bold gray-800">
-          5 <span className="text-sm">{t("Riyal")}</span>
+          {unit.price} <span className="text-sm">{t("Riyal")}</span>
         </span>
       </div>
     </div>
@@ -94,6 +102,7 @@ const BuildingProperties = () => {
 };
 
 const BuildingViewPage = ({ unit }: { unit: Unit }) => {
+  console.log("🚀 ~ BuildingViewPage ~ unit:", unit);
   const t = useTranslations("BuildingViewPage");
 
   const [scale, setScale] = useState<number>(1);
@@ -135,20 +144,20 @@ const BuildingViewPage = ({ unit }: { unit: Unit }) => {
     },
   ];
 
-  const floorsImages: floorsImagesProps[] = [
-    {
-      src: "test.jpg",
-      title: "Ground Floor",
-    },
-    {
-      src: "test.jpg",
-      title: "First Floor",
-    },
-    {
-      src: "test.jpg",
-      title: "Roof Floor",
-    },
-  ];
+  //   const floorsImages: floorsImagesProps[] = [
+  //     {
+  //       src: "test.jpg",
+  //       title: "Ground Floor",
+  //     },
+  //     {
+  //       src: "test.jpg",
+  //       title: "First Floor",
+  //     },
+  //     {
+  //       src: "test.jpg",
+  //       title: "Roof Floor",
+  //     },
+  //   ];
 
   const zoomIn = () => {
     if (scale <= 1) {
@@ -251,14 +260,14 @@ const BuildingViewPage = ({ unit }: { unit: Unit }) => {
         )}
       >
         <BuildingPropertiesCard
-          type="فيلا الياسمين"
-          status="متاح"
-          category="نموذج A-1"
-          rooms={5}
-          bathrooms={4}
-          buildingSpace={525.25}
-          landSpace={600}
-          price={1117427}
+          type={`${unit.type} - ${unit.template}`}
+          status={unit.status}
+          category={unit.category.name}
+          rooms={unit.bedroomNumber}
+          bathrooms={unit.bathroomNumber}
+          buildingSpace={unit.buildSpace}
+          landSpace={unit.landSpace}
+          price={unit.price}
           open={openInterestedForm}
           setOpen={setOpenInterestedForm}
         />
@@ -277,33 +286,20 @@ const BuildingViewPage = ({ unit }: { unit: Unit }) => {
           <h3 className="text-white text-xs font-semibold mb-1">
             {t("Floor")}
           </h3>
-          <Button
-            onClick={() => api?.scrollTo(0)}
-            className={clsx(
-              "py-1 !h-fit md:py-2 px-1 md:px-3 rounded-none rounded-t-md text-white bg-gray-500 text-sm border-b border-slate-400 hover:bg-white hover:text-black transition-all",
-              current === 0 ? "bg-white text-black" : ""
-            )}
-          >
-            {t("GroundFloor")}
-          </Button>
-          <Button
-            onClick={() => api?.scrollTo(1)}
-            className={clsx(
-              "py-1 !h-fit md:py-2 px-1 md:px-3 rounded-none text-white bg-gray-500 text-sm border-b border-slate-300 hover:bg-white hover:text-black transition-all",
-              current === 1 ? "bg-white text-black" : ""
-            )}
-          >
-            {t("FirstFloor")}
-          </Button>
-          <Button
-            onClick={() => api?.scrollTo(2)}
-            className={clsx(
-              "py-1 !h-fit md:py-2 px-1 md:px-3 rounded-none rounded-b-md text-white bg-gray-500 text-sm hover:bg-white hover:text-black transition-all",
-              current === 2 ? "bg-white text-black" : ""
-            )}
-          >
-            {t("SecondFloor")}
-          </Button>
+          {unit.floors.map((floor, index) => (
+            <Button
+              key={floor.id}
+              onClick={() => api?.scrollTo(index)}
+              className={clsx(
+                "py-1 !h-fit md:py-2 px-1 md:px-3 rounded-none text-white bg-gray-500 text-sm border-b border-slate-400 hover:bg-white hover:text-black transition-all",
+                current === index ? "bg-white text-black" : "",
+                index === 0 ? "rounded-t-md" : "",
+                index === unit.floors.length - 1 ? "rounded-b-md" : ""
+              )}
+            >
+              {floor.name} - {floor.index}
+            </Button>
+          ))}
         </div>
       </div>
 
@@ -321,11 +317,14 @@ const BuildingViewPage = ({ unit }: { unit: Unit }) => {
           }}
         >
           <CarouselContent className="min-h-[400px] h-[70vh] md:h-[80vh] rounded-md max-w-[80%] m-auto">
-            {floorsImages.map((img, key) => (
-              <CarouselItem key={key + img.title}>
-                <Image
-                  src={`/assets/images/${img.src}`}
-                  alt={img.title}
+            {unit.floors.map(({ id, imageUrl, name }) => (
+              <CarouselItem key={id}>
+                {/* TODO: Use Next Image component + read image url correctly from backend 
+                  now I have to use the native img tag because the image url is not correct
+                */}
+                <img
+                  src={`http://18.116.28.100${imageUrl}`}
+                  alt={name}
                   width={300}
                   height={1000}
                   className="h-full w-full rounded-md"
@@ -359,7 +358,7 @@ const BuildingViewPage = ({ unit }: { unit: Unit }) => {
         </Carousel>
 
         <div className="flex items-center justify-center gap-4 mt-4 md:mt-8">
-          <Link href="/ar/real-estate/2555545">
+          <Link href={`/ar/real-estate/${unit.project.id}`}>
             <Button className="font-semibold">
               {t("MainStructureButton")}
             </Button>
@@ -379,14 +378,14 @@ const BuildingViewPage = ({ unit }: { unit: Unit }) => {
             <SheetTitle>{t("BuildingProperties")}</SheetTitle>
           </SheetHeader>
           <BuildingPropertiesCard
-            type="فيلا الياسمين"
-            status="متاح"
-            category="نموذج A-1"
-            rooms={5}
-            bathrooms={4}
-            buildingSpace={525.25}
-            landSpace={600}
-            price={1117427}
+            type={`${unit.type} - ${unit.template}`}
+            status={unit.status}
+            category={unit.category.name}
+            rooms={unit.bedroomNumber}
+            bathrooms={unit.bathroomNumber}
+            buildingSpace={unit.buildSpace}
+            landSpace={unit.landSpace}
+            price={unit.price}
             open={openInterestedForm}
             setOpen={setOpenInterestedForm}
           />
@@ -485,7 +484,7 @@ const BuildingViewPage = ({ unit }: { unit: Unit }) => {
               {t("AddInterest")}
             </DialogTitle>
           </DialogHeader>
-          <BuildingProperties />
+          <BuildingProperties unit={unit} />
           <InterestedForm setOpen={setOpenInterestedForm} />
         </DialogContent>
       </Dialog>
