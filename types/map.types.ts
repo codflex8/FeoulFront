@@ -41,15 +41,23 @@ export type PaginatedProjects = PaginatedResponse<Project>;
 
 export interface Categories {
   id: string;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string | null;
+  number: number;
   name: string;
-  position: LatLng[];
-  lat: number;
-  lng: number;
-  city: string;
-  projectDoCUrl: string;
+  color: string;
   status: CommonStatuses;
-  units: [];
+
+  // position: LatLng[];
+  // lat: number;
+  // lng: number;
+  // city: string;
+  // projectDoCUrl: string;
+  // units: [];
 }
+
+export type PaginatedCategories = PaginatedResponse<Categories>;
 
 export interface Landmark {
   name: string;
