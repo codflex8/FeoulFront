@@ -4,6 +4,7 @@ import {
   PaginatedCategories,
   PaginatedProjects,
   Project,
+  Unit,
   UnitsData,
 } from "@/types/map.types";
 
@@ -86,21 +87,18 @@ export const getUnits = async () => {
 
 export const getUnitById = async (unitId: string) => {
   try {
-    const response = await fetch(
-      `http://18.116.28.100/api/v1/public/units/${unitId}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await fetch(`${API_URL}/public/units/${unitId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
     if (!response.ok) {
       throw new Error(`Failed to fetch units: ${response.statusText}`);
     }
 
-    const unit = await response.json();
+    const unit: Unit = await response.json();
     return unit;
   } catch (error) {
     console.error(
