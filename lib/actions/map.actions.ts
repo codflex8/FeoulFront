@@ -4,6 +4,7 @@ import {
   PaginatedCategories,
   PaginatedProjects,
   Project,
+  UnitsData,
 } from "@/types/map.types";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -46,9 +47,10 @@ export const getProjectById = async (projectId: string) => {
       throw new Error(`Failed to fetch project: ${response.statusText}`);
     }
 
-    const data: { project: Project } = await response.json();
+    const data: { project: Project; unitsData: UnitsData } =
+      await response.json();
 
-    return data.project;
+    return data;
   } catch (error) {
     console.error(
       "An error occurred while getting the project from the API:",
