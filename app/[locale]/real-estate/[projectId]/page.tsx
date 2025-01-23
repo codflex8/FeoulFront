@@ -11,20 +11,16 @@ export default async function BuildingPage({
 }) {
   const projectId = (await params).projectId;
   const project = await getProjectById(projectId);
-  // const { categories } = await getCategories();
-
-  // if (!project) {
-  //   return <div>Project not found.</div>;
-  // }
+  const { items } = await getCategories();
 
   if (!project) {
     // TODO: FIX the root layout issue and not-found page is not working!
     notFound();
   }
 
-  // console.log("categories", categories);
-
-  const categories = ["category-a", "category-b", "category-c", "category-d"];
+  // TODO: categories should be passed down as object to render the info but it's not working as expected
+  // TODO: So I'll not make any changes to the code logic for ui filtering for now, I just passed it as an array of strings as it was before with static data
+  const categories = items.map((item) => item.name);
 
   return <BuildingPageClient project={project} categories={categories} />;
 }
