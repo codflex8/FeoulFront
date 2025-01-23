@@ -52,6 +52,16 @@ export type UnitsSpaceRange = {
 //TODO: should be sold not saled we have typo in back-end
 export type UnitStatus = "reserved" | "saled" | "available";
 
+export type Floor = {
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string | null;
+  name: string;
+  index: number;
+  imageUrl: string;
+};
+
 export type Unit = {
   id: string;
   createdAt: string;
@@ -78,7 +88,7 @@ export type Unit = {
   floorsNumber: number;
   advantages: string | null;
   project: Project;
-  floors: [];
+  floors: Floor[];
   category: Categories;
 };
 
