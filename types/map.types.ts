@@ -39,6 +39,60 @@ export interface Project {
 
 export type PaginatedProjects = PaginatedResponse<Project>;
 
+export type UnitsPriceRange = {
+  maxPrice: number;
+  minPrice: number;
+};
+
+export type UnitsSpaceRange = {
+  maxSpace: number;
+  minSpace: number;
+};
+
+//TODO: should be sold not saled we have typo in back-end
+export type UnitStatus = "reserved" | "saled" | "available";
+
+export type Unit = {
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string | null;
+  number: number;
+  name: string;
+  price: number;
+  type: string;
+  template: string;
+  buildStatus: string;
+  buildLevel: number;
+  salesChannels: string[];
+  size: [string, string];
+  position: [string, string];
+  //TODO: should be soldSpace not saled we have typo in back-end
+  saledSpace: number;
+  landSpace: number;
+  buildSpace: number;
+  status: UnitStatus;
+  bedroomNumber: number;
+  bathroomNumber: number;
+  videoUrl: string | null;
+  floorsNumber: number;
+  advantages: string | null;
+  project: Project;
+  floors: [];
+  category: Categories;
+};
+
+export interface UnitsData {
+  unitsPriceRange: UnitsPriceRange;
+  unitsSpaceRange: UnitsSpaceRange;
+  //TODO: should be reservedUnits, but we can change this when back-end fix it
+  reverseUnits: Unit[];
+  //TODO: should be soldUnits, but we can change this when back-end fix it
+  saledUnits: Unit[];
+  //TODO: should be availableUnits, but we can change this when back-end fix it
+  avaliableUnits: Unit[];
+}
+
 export interface Categories {
   id: string;
   createdAt: string;
