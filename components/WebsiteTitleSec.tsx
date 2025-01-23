@@ -1,24 +1,28 @@
 import Link from "next/link";
 import Image from "next/image";
-import { useTranslations } from 'next-intl';
+import { useTranslations } from "next-intl";
 
-import { Badge } from "@/components/ui/badge"
+import { Badge } from "@/components/ui/badge";
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
+} from "@/components/ui/breadcrumb";
 
 interface WebsiteTitleProps {
   projectId?: string;
   projectName?: string;
-  blockNumber?: number
+  blockNumber?: number;
 }
 
-const WebsiteTitleSec = ({ projectId, projectName, blockNumber }: WebsiteTitleProps) => {
-  const t = useTranslations('MapPage');
+const WebsiteTitleSec = ({
+  projectId,
+  projectName,
+  blockNumber,
+}: WebsiteTitleProps) => {
+  const t = useTranslations("MapPage");
 
   return (
     <div className="bg-slate-600 rounded-md px-4 py-1 mb-4 flex items-center gap-6 w-fit">
@@ -27,7 +31,7 @@ const WebsiteTitleSec = ({ projectId, projectName, blockNumber }: WebsiteTitlePr
           <BreadcrumbItem>
             <Link href="/">
               <Image
-                src='/assets/icons/sarah-logo.png'
+                src="/assets/icons/sarah-logo.png"
                 alt="logo"
                 width={50}
                 height={50}
@@ -39,8 +43,12 @@ const WebsiteTitleSec = ({ projectId, projectName, blockNumber }: WebsiteTitlePr
             <>
               <BreadcrumbSeparator className="text-white font-bold rtl:rotate-180" />
               <BreadcrumbItem>
-                <Badge variant={(projectId && !blockNumber) ? "white" : "secondary"}>
-                  <Link href={`/ar/real-estate/${projectId}`}>{projectName}</Link>
+                <Badge
+                  variant={projectId && !blockNumber ? "white" : "secondary"}
+                >
+                  <Link href={`/ar/real-estate/${projectId}`}>
+                    {projectName}
+                  </Link>
                 </Badge>
               </BreadcrumbItem>
             </>
@@ -50,7 +58,9 @@ const WebsiteTitleSec = ({ projectId, projectName, blockNumber }: WebsiteTitlePr
               <BreadcrumbSeparator className="text-white font-bold rtl:rotate-180" />
               <BreadcrumbItem>
                 <Badge variant="white">
-                  <BreadcrumbPage>{t("Block")}{blockNumber}</BreadcrumbPage>
+                  <BreadcrumbPage>
+                    {t("Block")} {blockNumber}
+                  </BreadcrumbPage>
                 </Badge>
               </BreadcrumbItem>
             </>
@@ -58,7 +68,7 @@ const WebsiteTitleSec = ({ projectId, projectName, blockNumber }: WebsiteTitlePr
         </BreadcrumbList>
       </Breadcrumb>
     </div>
-  )
-}
+  );
+};
 
 export default WebsiteTitleSec;
