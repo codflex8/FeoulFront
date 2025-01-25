@@ -127,6 +127,7 @@ const BuildingBlocksFiters = ({
 }: BuildingBlocksFitersProps) => {
   const t = useTranslations("ProjectPage");
   const priceRange = unitsFilters.unitsPriceRange;
+  const spaceRange = unitsFilters.unitsSpaceRange;
 
   const handleShowAllBtn = () => {
     setSelectedCategories((prev: string[]) =>
@@ -260,10 +261,18 @@ const BuildingBlocksFiters = ({
           className="w-full h-2 bg-gray-300 rounded-md"
           thumbClassName="relative h-4 w-4 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full shadow-lg border-2 border-white cursor-pointer hover:scale-110 transition-transform"
           trackClassName="bg-gradient-to-r from-blue-400 to-purple-500 h-2 rounded-md"
-          value={space}
-          onChange={(newValues) => setSpace(newValues as [number, number])}
-          min={150}
-          max={400}
+          value={spaceRange.sliderValue}
+          onChange={(newValues) => {
+            setUnitsFilters((prevFilters) => ({
+              ...prevFilters,
+              unitsSpaceRange: {
+                ...prevFilters.unitsSpaceRange,
+                sliderValue: newValues,
+              },
+            }));
+          }}
+          min={spaceRange.minSpace}
+          max={spaceRange.maxSpace}
           step={10}
           renderThumb={(props, state) => {
             const { key, ...rest } = props;

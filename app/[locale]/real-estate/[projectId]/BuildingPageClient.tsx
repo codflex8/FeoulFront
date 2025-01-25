@@ -88,13 +88,21 @@ const page = ({
         unitsData.unitsPriceRange.maxPrice,
       ],
     },
-    unitsSpaceRange: unitsData.unitsSpaceRange,
+    unitsSpaceRange: {
+      ...unitsData.unitsSpaceRange,
+      sliderValue: [
+        unitsData.unitsSpaceRange.minSpace,
+        unitsData.unitsSpaceRange.maxSpace,
+      ],
+    },
   });
+  console.log("🚀 ~ unitsFilters:", unitsData);
 
   const getRenderedUnits = () => {
     let units = unitsData.avaliableUnits;
     const filteredStatus = unitsFilters.unitStatus;
     const filteredPriceRange = unitsFilters.unitsPriceRange;
+    const filteredSpaceRange = unitsFilters.unitsSpaceRange;
     if (filteredStatus === "reserved") {
       units = unitsData.reverseUnits;
     } else if (filteredStatus === "saled") {
@@ -103,10 +111,19 @@ const page = ({
 
     const minPrice = filteredPriceRange.sliderValue[0];
     const maxPrice = filteredPriceRange.sliderValue[1];
+    const minSpace = filteredSpaceRange.sliderValue[0];
+    console.log("🚀 ~ getRenderedUnits ~ minSpace:", minSpace);
+    const maxSpace = filteredSpaceRange.sliderValue[1];
+    console.log("🚀 ~ getRenderedUnits ~ maxSpace:", maxSpace);
 
     units = units.filter(
       (unit) => unit.price >= minPrice && unit.price <= maxPrice
     );
+
+    units = units.filter(
+      (unit) => unit.buildSpace >= minSpace && unit.buildSpace <= maxSpace
+    );
+    console.log("🚀 ~ getRenderedUnits ~ units:", units);
 
     return units;
   };

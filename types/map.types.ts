@@ -144,5 +144,5 @@ export interface MapProps {
 export interface UnitsFilters {
   unitStatus: UnitStatus;
   unitsPriceRange: UnitsPriceRange & { sliderValue: number[] };
-  unitsSpaceRange: UnitsSpaceRange;
+  unitsSpaceRange: UnitsSpaceRange & { sliderValue: number[] };
 }
