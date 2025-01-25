@@ -79,20 +79,34 @@ const page = ({
   //   window.addEventListener("resize", handleResize);
   //   return () => window.removeEventListener("resize", handleResize);
   // }, []);
-  const [currentUnitsData, setCurrentUnitsData] =
-    useState<UnitsData>(unitsData);
   const [unitsFilters, setUnitsFilters] = useState<UnitsFilters>({
     unitStatus: UnitStatusEnum.available,
+    unitsPriceRange: {
+      ...unitsData.unitsPriceRange,
+      sliderValue: [
+        unitsData.unitsPriceRange.minPrice,
+        unitsData.unitsPriceRange.maxPrice,
+      ],
+    },
+    unitsSpaceRange: unitsData.unitsSpaceRange,
   });
 
   const getRenderedUnits = () => {
     let units = unitsData.avaliableUnits;
     const filteredStatus = unitsFilters.unitStatus;
+    const filteredPriceRange = unitsFilters.unitsPriceRange;
     if (filteredStatus === "reserved") {
       units = unitsData.reverseUnits;
     } else if (filteredStatus === "saled") {
       units = unitsData.saledUnits;
     }
+
+    const minPrice = filteredPriceRange.sliderValue[0];
+    const maxPrice = filteredPriceRange.sliderValue[1];
+
+    units = units.filter(
+      (unit) => unit.price >= minPrice && unit.price <= maxPrice
+    );
 
     return units;
   };
@@ -108,7 +122,6 @@ const page = ({
     "category-c",
     "category-d",
   ]);
-  const [price, setPrice] = useState<[number, number]>([10000, 100000]);
   const [space, setSpace] = useState<[number, number]>([150, 400]);
   const [openHelpForm, setOpenHelpForm] = useState<boolean>(false);
 
@@ -210,8 +223,6 @@ const page = ({
             }
             selectedCategories={selectedCategories}
             setSelectedCategories={setSelectedCategories}
-            price={price}
-            setPrice={setPrice}
             space={space}
             setSpace={setSpace}
             unitsFilters={unitsFilters}

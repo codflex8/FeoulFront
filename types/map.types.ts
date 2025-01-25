@@ -143,4 +143,6 @@ export interface MapProps {
 
 export interface UnitsFilters {
   unitStatus: UnitStatus;
+  unitsPriceRange: UnitsPriceRange & { sliderValue: number[] };
+  unitsSpaceRange: UnitsSpaceRange;
 }

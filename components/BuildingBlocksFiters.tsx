@@ -23,8 +23,6 @@ interface BuildingBlocksFitersProps {
   className: string;
   selectedCategories: string[];
   setSelectedCategories: React.ComponentState;
-  price: [number, number];
-  setPrice: React.ComponentState;
   space: [number, number];
   setSpace: React.ComponentState;
 
@@ -122,14 +120,13 @@ const BuildingBlocksFiters = ({
   className,
   selectedCategories,
   setSelectedCategories,
-  price,
-  setPrice,
   space,
   setSpace,
   unitsFilters,
   setUnitsFilters,
 }: BuildingBlocksFitersProps) => {
   const t = useTranslations("ProjectPage");
+  const priceRange = unitsFilters.unitsPriceRange;
 
   const handleShowAllBtn = () => {
     setSelectedCategories((prev: string[]) =>
@@ -220,11 +217,19 @@ const BuildingBlocksFiters = ({
           className="w-full h-2 bg-gray-300 rounded-md"
           thumbClassName="relative h-4 w-4 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full shadow-lg border-2 border-white cursor-pointer hover:scale-110 transition-transform"
           trackClassName="bg-gradient-to-r from-blue-400 to-purple-500 h-2 rounded-md"
-          value={price}
-          onChange={(newValues) => setPrice(newValues as [number, number])}
-          min={10000}
-          max={100000}
-          step={10}
+          value={priceRange.sliderValue}
+          onChange={(newValues) => {
+            setUnitsFilters((prevFilters) => ({
+              ...prevFilters,
+              unitsPriceRange: {
+                ...prevFilters.unitsPriceRange,
+                sliderValue: newValues,
+              },
+            }));
+          }}
+          min={priceRange.minPrice}
+          max={priceRange.maxPrice}
+          step={1000}
           renderThumb={(props, state) => {
             const { key, ...rest } = props;
             return (
