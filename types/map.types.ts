@@ -78,7 +78,7 @@ export type Unit = {
   size: [string, string];
   position: [string, string];
   //TODO: should be soldSpace not saled we have typo in back-end
-  saledSpace: number;
+  saledSpace: number | null; // handle it when reserved it should be null
   landSpace: number;
   buildSpace: number;
   status: UnitStatus;
