@@ -52,6 +52,12 @@ export type UnitsSpaceRange = {
 //TODO: should be sold not saled we have typo in back-end
 export type UnitStatus = "reserved" | "saled" | "available";
 
+export enum UnitStatusEnum {
+  reserved = "reserved",
+  saled = "saled",
+  available = "available",
+}
+
 export type Floor = {
   id: string;
   createdAt: string;
@@ -133,4 +139,8 @@ export interface MapProps {
   projects: Project[];
   basicLandmarks: Landmark[];
   landmarks: Landmark[];
+}
+
+export interface UnitsFilters {
+  unitStatus: UnitStatus;
 }

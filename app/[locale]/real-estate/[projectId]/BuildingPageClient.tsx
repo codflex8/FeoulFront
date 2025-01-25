@@ -16,7 +16,14 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import NeedHelpForm from "@/components/form/NeedHelpForm";
-import { Categories, Project, Unit, UnitsData } from "@/types/map.types";
+import {
+  Categories,
+  Project,
+  Unit,
+  UnitsData,
+  UnitsFilters,
+  UnitStatusEnum,
+} from "@/types/map.types";
 
 import {
   MapContainer,
@@ -72,16 +79,25 @@ const page = ({
   //   window.addEventListener("resize", handleResize);
   //   return () => window.removeEventListener("resize", handleResize);
   // }, []);
-  const [
-    {
-      saledUnits,
-      reverseUnits,
-      avaliableUnits,
-      unitsPriceRange,
-      unitsSpaceRange,
-    },
-    setUnitsData,
-  ] = useState<UnitsData>(unitsData);
+  const [currentUnitsData, setCurrentUnitsData] =
+    useState<UnitsData>(unitsData);
+  const [unitsFilters, setUnitsFilters] = useState<UnitsFilters>({
+    unitStatus: UnitStatusEnum.available,
+  });
+
+  const getRenderedUnits = () => {
+    let units = unitsData.avaliableUnits;
+    const filteredStatus = unitsFilters.unitStatus;
+    if (filteredStatus === "reserved") {
+      units = unitsData.reverseUnits;
+    } else if (filteredStatus === "saled") {
+      units = unitsData.saledUnits;
+    }
+
+    return units;
+  };
+
+  const renderedUnits = getRenderedUnits();
   const [showFilters, setShowFilters] = useState<boolean>(false);
   const [isLargeScreen, setIsLargeScreen] = useState<boolean>(false);
   const [isLargeerScreen, setIsLargeerScreen] = useState<boolean>(false);
@@ -198,6 +214,8 @@ const page = ({
             setPrice={setPrice}
             space={space}
             setSpace={setSpace}
+            unitsFilters={unitsFilters}
+            setUnitsFilters={setUnitsFilters}
           />
         </div>
       </div>
@@ -253,11 +271,7 @@ const page = ({
           <ImageOverlay url={imageUrl} bounds={imageBounds} />
           {/* <FitBoundsToScreen /> */}
           <FitBoundsToImage bounds={imageBounds} />
-          {[
-            ...unitsData.reverseUnits,
-            ...unitsData.saledUnits,
-            ...unitsData.avaliableUnits,
-          ].map((unit) => (
+          {renderedUnits.map((unit) => (
             <DynamicMarker key={unit.id} unit={unit} />
           ))}
         </MapContainer>
