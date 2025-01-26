@@ -3,23 +3,11 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import Slider from "react-slider";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Image from "next/image";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
 import { Badge } from "./ui/badge";
 import { UnitsFilters, UnitStatus, UnitStatusEnum } from "@/types/map.types";
+import CategorySelect from "./CategorySelect";
 
-interface DropdownMenuBlockProps {
-  selectedCategories: string[];
-  setSelectedCategories: React.ComponentState;
-}
-
-interface BuildingBlocksFitersProps {
+interface BuildingBlocksFiltersProps {
   className: string;
   selectedCategories: string[];
   setSelectedCategories: React.ComponentState;
@@ -28,92 +16,6 @@ interface BuildingBlocksFitersProps {
   unitsCount: number;
 }
 
-const DropdownMenuBlock = ({
-  selectedCategories,
-  setSelectedCategories,
-}: DropdownMenuBlockProps) => {
-  const t = useTranslations("ProjectPage");
-
-  const toggleType = (type: string) => {
-    setSelectedCategories((prev: string[]) =>
-      prev.includes(type)
-        ? prev.filter((t: string) => t !== type)
-        : [...prev, type]
-    );
-  };
-
-  return (
-    <DropdownMenu dir={t("language").toLowerCase() === "en" ? "rtl" : "ltr"}>
-      <DropdownMenuTrigger asChild>
-        <Button
-          variant="outline"
-          className="flex items-center justify-between gap-6 w-full"
-        >
-          <span>{t("Category")}</span>
-          <Image
-            src="/assets/icons/right-arrow.svg"
-            alt="arrow"
-            width={10}
-            height={10}
-            className="transform rotate-90 -translate-y-[1px]"
-          />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-36 !z-[1000]">
-        <DropdownMenuSeparator />
-        <DropdownMenuCheckboxItem
-          className={clsx(
-            "flex items-center justify-between mb-1 cursor-pointer",
-            selectedCategories.includes("category-a") && "bg-slate-400"
-          )}
-          checked={selectedCategories.includes("category-a")}
-          onCheckedChange={() => toggleType("category-a")}
-        >
-          <span className="block text-base text-slate-500 font-semibold">
-            فئة- A
-          </span>
-        </DropdownMenuCheckboxItem>
-        <DropdownMenuCheckboxItem
-          className={clsx(
-            "flex items-center justify-between mb-1 cursor-pointer",
-            selectedCategories.includes("category-b") && "bg-slate-400"
-          )}
-          checked={selectedCategories.includes("category-b")}
-          onCheckedChange={() => toggleType("category-b")}
-        >
-          <span className="block text-base text-slate-500 font-semibold">
-            فئة-A
-          </span>
-        </DropdownMenuCheckboxItem>
-        <DropdownMenuCheckboxItem
-          className={clsx(
-            "flex items-center justify-between mb-1 cursor-pointer",
-            selectedCategories.includes("category-c") && "bg-slate-400"
-          )}
-          checked={selectedCategories.includes("category-c")}
-          onCheckedChange={() => toggleType("category-c")}
-        >
-          <span className="block text-base text-slate-500 font-semibold">
-            فئة-A
-          </span>
-        </DropdownMenuCheckboxItem>
-        <DropdownMenuCheckboxItem
-          className={clsx(
-            "flex items-center justify-between mb-1 cursor-pointer",
-            selectedCategories.includes("category-d") && "bg-slate-400"
-          )}
-          checked={selectedCategories.includes("category-d")}
-          onCheckedChange={() => toggleType("category-d")}
-        >
-          <span className="block text-base text-slate-500 font-semibold">
-            فئة-A
-          </span>
-        </DropdownMenuCheckboxItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  );
-};
-
 const BuildingBlocksFiters = ({
   className,
   selectedCategories,
@@ -121,7 +23,7 @@ const BuildingBlocksFiters = ({
   unitsFilters,
   setUnitsFilters,
   unitsCount,
-}: BuildingBlocksFitersProps) => {
+}: BuildingBlocksFiltersProps) => {
   const t = useTranslations("ProjectPage");
   const priceRange = unitsFilters.unitsPriceRange;
   const spaceRange = unitsFilters.unitsSpaceRange;
@@ -174,7 +76,7 @@ const BuildingBlocksFiters = ({
           UnitStatusEnum.saled,
         ].map((status) => (
           <TabsContent key={status} value={status} className="pb-4 pt-0 mt-0">
-            <DropdownMenuSeparator className="mt-0" />
+            <hr className="mb-2" />
             <h1 className="text-sm font-semibold text-white mb-2">
               {unitsCount}{" "}
               {status === UnitStatusEnum.available
@@ -183,9 +85,15 @@ const BuildingBlocksFiters = ({
                 ? t("BockedBlocks")
                 : t("SoldBlocks")}
             </h1>
-            <DropdownMenuBlock
-              selectedCategories={selectedCategories}
-              setSelectedCategories={setSelectedCategories}
+            <CategorySelect
+              categories={selectedCategories}
+              selectedCategory={unitsFilters.selectedCategory}
+              onCategoryChange={(category) => {
+                setUnitsFilters((prevFilters) => ({
+                  ...prevFilters,
+                  selectedCategory: category,
+                }));
+              }}
             />
           </TabsContent>
         ))}

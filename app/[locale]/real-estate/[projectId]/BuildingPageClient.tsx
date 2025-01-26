@@ -95,6 +95,7 @@ const page = ({
         unitsData.unitsSpaceRange.maxSpace,
       ],
     },
+    selectedCategory: "All",
   });
 
   const getRenderedUnits = () => {
@@ -129,12 +130,7 @@ const page = ({
   const [isLargeScreen, setIsLargeScreen] = useState<boolean>(false);
   const [isLargeerScreen, setIsLargeerScreen] = useState<boolean>(false);
   const [scale, setScale] = useState<number>(1);
-  const [selectedCategories, setSelectedCategories] = useState([
-    "category-a",
-    "category-b",
-    "category-c",
-    "category-d",
-  ]);
+  const [selectedCategories, setSelectedCategories] = useState(categories);
   const [openHelpForm, setOpenHelpForm] = useState<boolean>(false);
 
   const zoomStep = 0.2;
@@ -175,7 +171,6 @@ const page = ({
       window.removeEventListener("resize", checkScreenWidth);
     };
   }, []);
-  console.log("isLargeerScreen", isLargeerScreen);
 
   const FitBoundsToImage = ({
     bounds,

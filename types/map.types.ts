@@ -145,4 +145,5 @@ export interface UnitsFilters {
   unitStatus: UnitStatus;
   unitsPriceRange: UnitsPriceRange & { sliderValue: number[] };
   unitsSpaceRange: UnitsSpaceRange & { sliderValue: number[] };
+  selectedCategory: string;
 }
