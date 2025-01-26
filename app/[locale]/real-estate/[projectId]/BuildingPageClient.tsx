@@ -103,10 +103,15 @@ const page = ({
     const filteredStatus = unitsFilters.unitStatus;
     const filteredPriceRange = unitsFilters.unitsPriceRange;
     const filteredSpaceRange = unitsFilters.unitsSpaceRange;
+    const selectedCategory = unitsFilters.selectedCategory;
     if (filteredStatus === "reserved") {
       units = unitsData.reverseUnits;
     } else if (filteredStatus === "saled") {
       units = unitsData.saledUnits;
+    }
+
+    if (selectedCategory !== "All") {
+      units = units.filter((unit) => unit.category.name === selectedCategory);
     }
 
     const minPrice = filteredPriceRange.sliderValue[0];
