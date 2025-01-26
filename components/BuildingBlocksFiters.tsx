@@ -23,11 +23,9 @@ interface BuildingBlocksFitersProps {
   className: string;
   selectedCategories: string[];
   setSelectedCategories: React.ComponentState;
-  space: [number, number];
-  setSpace: React.ComponentState;
-
   unitsFilters: UnitsFilters;
   setUnitsFilters: React.Dispatch<React.SetStateAction<UnitsFilters>>;
+  unitsCount: number;
 }
 
 const DropdownMenuBlock = ({
@@ -120,10 +118,9 @@ const BuildingBlocksFiters = ({
   className,
   selectedCategories,
   setSelectedCategories,
-  space,
-  setSpace,
   unitsFilters,
   setUnitsFilters,
+  unitsCount,
 }: BuildingBlocksFitersProps) => {
   const t = useTranslations("ProjectPage");
   const priceRange = unitsFilters.unitsPriceRange;
@@ -149,7 +146,7 @@ const BuildingBlocksFiters = ({
     >
       <Tabs
         dir={t("language").toLowerCase() === "en" ? "rtl" : "ltr"}
-        defaultValue="available"
+        defaultValue={UnitStatusEnum.available}
         className="w-fit bg-slate-600 rounded-md"
         value={unitsFilters.unitStatus}
         onValueChange={(value) => {
@@ -171,38 +168,27 @@ const BuildingBlocksFiters = ({
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="available" className="pb-4 pt-0 mt-0">
-          <DropdownMenuSeparator className="mt-0" />
-          <h1 className="text-sm font-semibold text-white mb-2">
-            150 {t("AvaliableBlocks")}
-          </h1>
-          <DropdownMenuBlock
-            selectedCategories={selectedCategories}
-            setSelectedCategories={setSelectedCategories}
-          />
-        </TabsContent>
-
-        <TabsContent value="bocked" className="pb-4 pt-0 mt-0">
-          <DropdownMenuSeparator className="mt-0" />
-          <h1 className="text-sm font-semibold text-white mb-2">
-            150 {t("BockedBlocks")}
-          </h1>
-          <DropdownMenuBlock
-            selectedCategories={selectedCategories}
-            setSelectedCategories={setSelectedCategories}
-          />
-        </TabsContent>
-
-        <TabsContent value="sold" className="pb-4 pt-0 mt-0">
-          <DropdownMenuSeparator className="mt-0" />
-          <h1 className="text-sm font-semibold text-white mb-2">
-            150 {t("SoldBlocks")}
-          </h1>
-          <DropdownMenuBlock
-            selectedCategories={selectedCategories}
-            setSelectedCategories={setSelectedCategories}
-          />
-        </TabsContent>
+        {[
+          UnitStatusEnum.available,
+          UnitStatusEnum.reserved,
+          UnitStatusEnum.saled,
+        ].map((status) => (
+          <TabsContent key={status} value={status} className="pb-4 pt-0 mt-0">
+            <DropdownMenuSeparator className="mt-0" />
+            <h1 className="text-sm font-semibold text-white mb-2">
+              {unitsCount}{" "}
+              {status === UnitStatusEnum.available
+                ? t("AvaliableBlocks")
+                : status === UnitStatusEnum.reserved
+                ? t("BockedBlocks")
+                : t("SoldBlocks")}
+            </h1>
+            <DropdownMenuBlock
+              selectedCategories={selectedCategories}
+              setSelectedCategories={setSelectedCategories}
+            />
+          </TabsContent>
+        ))}
       </Tabs>
 
       {/* price Range Slider */}

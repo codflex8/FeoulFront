@@ -96,7 +96,6 @@ const page = ({
       ],
     },
   });
-  console.log("🚀 ~ unitsFilters:", unitsData);
 
   const getRenderedUnits = () => {
     let units = unitsData.avaliableUnits;
@@ -112,9 +111,7 @@ const page = ({
     const minPrice = filteredPriceRange.sliderValue[0];
     const maxPrice = filteredPriceRange.sliderValue[1];
     const minSpace = filteredSpaceRange.sliderValue[0];
-    console.log("🚀 ~ getRenderedUnits ~ minSpace:", minSpace);
     const maxSpace = filteredSpaceRange.sliderValue[1];
-    console.log("🚀 ~ getRenderedUnits ~ maxSpace:", maxSpace);
 
     units = units.filter(
       (unit) => unit.price >= minPrice && unit.price <= maxPrice
@@ -123,7 +120,6 @@ const page = ({
     units = units.filter(
       (unit) => unit.buildSpace >= minSpace && unit.buildSpace <= maxSpace
     );
-    console.log("🚀 ~ getRenderedUnits ~ units:", units);
 
     return units;
   };
@@ -139,7 +135,6 @@ const page = ({
     "category-c",
     "category-d",
   ]);
-  const [space, setSpace] = useState<[number, number]>([150, 400]);
   const [openHelpForm, setOpenHelpForm] = useState<boolean>(false);
 
   const zoomStep = 0.2;
@@ -240,10 +235,9 @@ const page = ({
             }
             selectedCategories={selectedCategories}
             setSelectedCategories={setSelectedCategories}
-            space={space}
-            setSpace={setSpace}
             unitsFilters={unitsFilters}
             setUnitsFilters={setUnitsFilters}
+            unitsCount={renderedUnits.length}
           />
         </div>
       </div>
