@@ -69,6 +69,7 @@
     "Category": "النموذج",
     "BuidingArea": "مساحة البناء",
     "Bathrooms": "دورات المياه",
+    "Bedrooms": "غرف النوم",
     "LandArea": "مساحة الأرض",
     "Meter": "م²",
     "Price": "السعر",
@@ -93,6 +94,7 @@
     "Area": "المنطقة",
     "StartFrom": "يبدأ من",
     "BuildingProperties": "نافذة الخصائص",
-    "Gallery": "معرض الصور"
+    "Gallery": "معرض الصور",
+    "ExploreUnit": "استكشف الوحدة"
   }
 }
