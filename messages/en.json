@@ -40,6 +40,7 @@
   "ProjectPage": {
     "language": "Ar",
     "Category": "Model",
+    "SelectCategory": "Select Category",
     "ShowAll": "Show All",
     "Avaliable": "Avaliable",
     "Bocked": "Bocked",
