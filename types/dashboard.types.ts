@@ -13,10 +13,10 @@ export interface Project  {
 
 export type Interest = {
   firstName: string
-  surName: string
-  phone: string
+  lastName: string
+  phoneNumber: string
   email: string
-  region: "المركز" | "الشرقي" | "الغربي"
+  area: string
   buildingNumber: number
   buildingStatus: "متاح" | "محجوز" | "مباع"
 }
