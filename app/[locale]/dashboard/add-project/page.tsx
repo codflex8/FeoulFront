@@ -49,7 +49,7 @@ const projectFormSchema = z.object({
   }).min(2, {
     message: "إسم المشروع يجب ألا يقل عن 5 أحرف",
   }),
-  city: z.enum(["جدة", "الرياض", "المدينة المنورة"], {
+  city: z.enum(["jadaa", "Riyadh", "AL Madinah AL Munawwarah"], {
     required_error: "المدينة حقل مطلوب",
   }),
   status: z.enum(["posted", "draft", "deleted"], {
@@ -59,7 +59,7 @@ const projectFormSchema = z.object({
     required_error: "عدد الوحدات السكنية حقل مطلوب"
   }),
   design: z.instanceof(File).array().nonempty({
-    required_error: "نموذج المشروع حقل مطلوب"
+    message: "نموذج المشروع حقل مطلوب"
   }),
   lng: z.string({
     required_error: "موقع المشروع حقل مطلوب",
@@ -76,14 +76,14 @@ const page = () => {
     defaultValues: {
       number: "",
       name: "",
-      city: "جدة",
-      status: "مسودة",
+      city: "jadaa",
+      status: "draft",
       lng: "",
       lat: "",
     },
   })
 
-  const onSubmit =  async  (values: z.infer<typeof projectFormSchema>) => {
+  const onSubmit =  async  (values:any) => {
       try {
         await addProject(values);
        } catch (error) {
@@ -239,9 +239,9 @@ const page = () => {
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               />
               <MapMarker
-                onLocationChange={(lng, lnt) => {
+                onLocationChange={(lng, lat) => {
                   form.setValue("lng", lng); 
-                  form.setValue("lnt", lnt); 
+                  form.setValue("lat", lat); 
                 }}
               />
             </MapContainer>

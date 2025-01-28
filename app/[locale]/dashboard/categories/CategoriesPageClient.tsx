@@ -18,12 +18,11 @@ const CategoriesPageClient = ({ categories }: { categories: Category[] }) => {
   const [openCategory, setOpenCategory] = useState<boolean>(false); 
   const [editCategory, setEditCategory] = useState<Category | null>(null);  
 
-  // وظيفة حذف الفئة
   const handleDelete = async (categoryId: string) => {
     const confirm = window.confirm("هل أنت متأكد من حذف هذا العنصر؟");
     if (confirm) {
       try {
-        await deleteCategory(categoryId); // استدعاء دالة الحذف
+        await deleteCategory(categoryId);
         setCategoriesData((prev) => prev.filter((item) => item.id !== categoryId));  
         alert("تم الحذف بنجاح!");
       } catch (error) {
