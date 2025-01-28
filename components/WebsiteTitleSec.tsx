@@ -30,12 +30,7 @@ const WebsiteTitleSec = ({
         <BreadcrumbList className="gap-1 md:gap-2">
           <BreadcrumbItem>
             <Link href="/">
-              <Image
-                src="/assets/icons/sarah-logo.png"
-                alt="logo"
-                width={50}
-                height={50}
-              />
+              <img src="/assets/icons/sarah-logo.png" alt="logo" width="50" height="50" />
             </Link>
           </BreadcrumbItem>
           <Badge variant="secondary">{t("JaddahCity")}</Badge>
