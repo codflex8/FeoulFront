@@ -21,11 +21,6 @@ interface DashboardPageProps {
 
 const DashboardPageClient: React.FC<DashboardPageProps> = ({ projects, units, interests }) => {
   const router = useRouter()
-
-  console.log("Projects from Dashboard client", projects);
-  console.log("units from Dashboard client", units);
-  console.log("interests from Dashboard client", interests);
-
   return (
     <div className="min-h-screen bg-gray-100 flex-1 p-6">
 

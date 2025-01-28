@@ -31,7 +31,7 @@ const formSchema = z.object({
   color: z.string({
     required_error: "لون الفئة مطلوب",
   }),
-  status: z.enum(["منشورة", "مسودة", "محذوف"], {
+  status: z.enum(["published", "draft", "deleted"], {
     required_error: "حالة الفئة مطلوبة",
   })
 
@@ -46,14 +46,20 @@ const AddCategoryForm = ({ setOpen }: React.ComponentState) => {
     defaultValues: {
       name: "",
       color: "#ff0000",
-      status: "منشورة"
+      status: "published",
     },
   })
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    addCategory(values)
-    setOpen(false)
+const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  console.log("Category Data to be sent:", values);
+  try {
+    await addCategory(values);
+    setOpen(false);
+  } catch (error) {
+    console.error("Failed to add category:", error);
   }
+};
+
 
 
   return (
@@ -104,7 +110,7 @@ const AddCategoryForm = ({ setOpen }: React.ComponentState) => {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent className="shad-select-content">
-                  {["منشورة", "مسودة", "محذوف"].map((dir, i) => (
+                  {["published", "draft", "deleted"].map((dir, i) => (
                     <SelectItem key={dir + i} value={dir}>
                       <div className="flex items-center gap-2 cursor-pointer">
                         <p>{dir}</p>

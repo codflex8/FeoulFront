@@ -1,11 +1,22 @@
+"use client";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import React from 'react'
 import { SidebarTrigger } from "../ui/sidebar"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu"
 import Link from "next/link"
 import { Separator } from "../ui/separator"
+import { useRouter } from "next/navigation";
 
 const DashboardHeader = () => {
+  const router = useRouter();
+
+  const handleLogout = () => {
+     document.cookie = "authToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+
+     router.push("/ar/login");
+  };
+
   return (
     <div className="flex items-center justify-between pl-6 pr-2 py-4 bg-white">
       <SidebarTrigger className="w-10 h-10" />
@@ -27,7 +38,7 @@ const DashboardHeader = () => {
               <Link href="/dashboard/settings">Settings</Link>
             </DropdownMenuItem>
             <Separator />
-            <DropdownMenuItem className="text-red-500">
+            <DropdownMenuItem onClick={handleLogout} className="text-red-500">
               Logout
             </DropdownMenuItem>
           </DropdownMenuContent>

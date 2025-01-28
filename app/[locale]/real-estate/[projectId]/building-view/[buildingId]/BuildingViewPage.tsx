@@ -102,8 +102,7 @@ const BuildingProperties = ({ unit }: { unit: Unit }) => {
 };
 
 const BuildingViewPage = ({ unit }: { unit: Unit }) => {
-  console.log("🚀 ~ BuildingViewPage ~ unit:", unit);
-  const t = useTranslations("BuildingViewPage");
+   const t = useTranslations("BuildingViewPage");
 
   const [scale, setScale] = useState<number>(1);
   const [openInterestedForm, setOpenInterestedForm] = useState<boolean>(false);
@@ -485,7 +484,7 @@ const BuildingViewPage = ({ unit }: { unit: Unit }) => {
             </DialogTitle>
           </DialogHeader>
           <BuildingProperties unit={unit} />
-          <InterestedForm setOpen={setOpenInterestedForm} />
+          <InterestedForm setOpen={setOpenInterestedForm}  unitId={unit.id} />
         </DialogContent>
       </Dialog>
 
@@ -497,7 +496,7 @@ const BuildingViewPage = ({ unit }: { unit: Unit }) => {
               {t("NeedHelp")}
             </DialogTitle>
           </DialogHeader>
-          <NeedHelpForm setOpen={setOpenHelpForm} />
+          <NeedHelpForm setOpen={setOpenHelpForm}  />
         </DialogContent>
       </Dialog>
     </div>

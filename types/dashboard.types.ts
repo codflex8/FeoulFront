@@ -1,11 +1,14 @@
 export interface Project  {
-  projectNumber: string;
-  projectName: string;
+  number: string;
+  name: string;
+  lat: string;
+  lng: string;
   location: string;
   city: string;
   status: "مسودة" | "منشور" | "محذوف";
   model: string;
-  date: Date;
+  updatedAt: Date;
+  createdAt: Date;
 };
 
 export type Interest = {
@@ -30,11 +33,12 @@ export interface Unit  {
   name: string;
   model: string;
   estate: string;
-  landArea: string;
-  buildingArea: string;
+  landSpace: string;
+  buildSpace: string;
   totalArea: string;
-  bedrooms: number;
-  bathrooms: number;
+  bedroomNumber: number;
+  bathroomNumber: number;
+  template: string;
   price: string;
   videoUrl: string;
   floors: number;
@@ -43,6 +47,8 @@ export interface Unit  {
 
 export type Operation = {
   number: number;
+  name: string;
+  price: number;
   operationType: string; 
   description: string;
   clientName: string; 

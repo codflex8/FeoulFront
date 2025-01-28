@@ -1,13 +1,20 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
-export function middleware(request: NextRequest) {
-  const token = request.cookies.get("authToken");
-  if (!token) {
-    return NextResponse.redirect(new URL("/ar/login", request.url));
+const protectedRoutes = ["/ar/dashboard"];
+
+export function middleware(req: NextRequest) {
+  const authToken = req.cookies.get("authToken");
+
+  if (protectedRoutes.some((route) => req.nextUrl.pathname.startsWith(route))) {
+    if (!authToken) {
+      return NextResponse.redirect(new URL("/ar/login", req.url));
+    }
   }
+
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/ar/dashboard/:path*"], 
+  matcher: ["/ar/dashboard:path*"],
 };

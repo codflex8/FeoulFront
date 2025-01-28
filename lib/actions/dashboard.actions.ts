@@ -1,14 +1,19 @@
 "use server";
 
 import { Project } from "@/types/dashboard.types";
-
+import { cookies } from "next/headers";
 // Projects
+
 export const getProjects = async () => {
+  const cookieStore =await cookies();
+  const token = cookieStore.get("authToken")?.value;
+  console.log(token);
   try {
     const response = await fetch('http://18.116.28.100/api/v1/dashboard/projects', {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
       },
     });
 
@@ -25,11 +30,14 @@ export const getProjects = async () => {
 };
 
 export const addProject = async (projectData: Project) => {
+    const cookieStore =await cookies();
+  const token = cookieStore.get("authToken")?.value;
   try {
     const response = await fetch('http://18.116.28.100/api/v1/dashboard/projects', {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
       },
       body: JSON.stringify(projectData), // Include the request body
     });
@@ -47,11 +55,14 @@ export const addProject = async (projectData: Project) => {
 };
 
 export const updateProject = async (projectId: string, projectData: Project) => {
+    const cookieStore =await cookies();
+  const token = cookieStore.get("authToken")?.value;
   try {
     const response = await fetch(`http://18.116.28.100/api/v1/dashboard/project/${projectId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
       },
       body: JSON.stringify(projectData), // Include the request body
     });
@@ -69,11 +80,14 @@ export const updateProject = async (projectId: string, projectData: Project) => 
 };
 
 export const deleteProject = async (projectId: string) => {
+    const cookieStore =await cookies();
+  const token = cookieStore.get("authToken")?.value;
   try {
     const response = await fetch(`http://18.116.28.100/api/v1/dashboard/project/${projectId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
       },
     });
 
@@ -91,11 +105,14 @@ export const deleteProject = async (projectId: string) => {
 
 // Category
 export const getCategories = async () => {
+    const cookieStore =await cookies();
+  const token = cookieStore.get("authToken")?.value;
   try {
-    const response = await fetch('http://localhost:3000/api/v1/dashboard/unit-category', {
+    const response = await fetch('http://18.116.28.100/api/v1/dashboard/unit-category', {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
       },
     });
 
@@ -112,21 +129,39 @@ export const getCategories = async () => {
 };
 
 export const addCategory = async (categoryData: any) => {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("authToken")?.value;
+
+  if (!token) {
+    throw new Error("Authentication token is missing");
+  }
+
+  console.log("Category Data:", categoryData);
+
   try {
-    const response = await fetch('http://localhost:3000/api/v1/dashboard/unit-category', {
+    const payload = {
+      ...categoryData,
+      status: categoryData.status === "منشورة" ? "published" : categoryData.status === "مسودة" ? "draft" : "deleted",
+    };
+
+    const response = await fetch('http://18.116.28.100/api/v1/dashboard/unit-category', {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
       },
-      body: JSON.stringify(categoryData), // Include the request body
+      body: JSON.stringify(payload),
     });
 
+    const responseData = await response.json();
+    console.log("Response Data:", responseData);
+
     if (!response.ok) {
+      console.error("Server Error:", responseData);
       throw new Error(`Failed to add new category: ${response.statusText}`);
     }
 
-    const data = await response.json();
-    return data;
+    return responseData;
   } catch (error) {
     console.error("An error occurred while adding new category:", error);
     throw error;
@@ -134,11 +169,14 @@ export const addCategory = async (categoryData: any) => {
 };
 
 export const deleteCategory = async (categoryId: string) => {
+    const cookieStore =await cookies();
+  const token = cookieStore.get("authToken")?.value;
   try {
-    const response = await fetch(`http://localhost:3000/api/v1/dashboard/unit-category/${categoryId}`, {
+    const response = await fetch(`http://18.116.28.100/api/v1/dashboard/unit-category/${categoryId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
       },
     });
 
@@ -153,35 +191,78 @@ export const deleteCategory = async (categoryId: string) => {
     throw error;
   }
 };
+export const updateCategory = async (categoryId: string, updatedData: any) => {
+  const cookieStore = await cookies();  
+  const token = cookieStore.get("authToken")?.value;
+  console.log("Category ID:", categoryId);
+  console.log("Updated Data:", updatedData);
+  
+  if (!token) {
+    throw new Error("Authentication token is missing");
+  }
 
-// Interests
-export const getInterests = async () => {
   try {
-    const response = await fetch('http://localhost:3000/api/v1/dashboard/unit-intreset', {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      `http://18.116.28.100/api/v1/dashboard/unit-category/${categoryId}`,  
+      {
+        method: "PUT",  
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,  
+        },
+        body: JSON.stringify(updatedData), 
+      }
+    );
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch interests: ${response.statusText}`);
+      const errorData = await response.json();
+      console.error("Error response from server:", errorData);
+      throw new Error(`Failed to update category: ${response.statusText}`);
     }
 
     const data = await response.json();
-    return data;
+    console.log("Updated category:", data);
+    return data;  
   } catch (error) {
-    console.error("An error occurred while getting the interests from the API:", error);
+    console.error("An error occurred while updating the category:", error);
     throw error;
   }
 };
 
+// Interests
+export const getInterests = async () => {
+  const cookieStore =await cookies();
+  const token = cookieStore.get("authToken")?.value;
+  console.log(token);
+  try {
+    const response = await fetch('http://18.116.28.100/api/v1/dashboard/unit-intreset', {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch projects: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data.items || data;  
+  } catch (error) {
+    console.error("An error occurred while getting projects from the API:", error);
+    throw error;
+  }
+};
 export const updateInterest = async (interestId: string, interestData: any) => {
+    const cookieStore =await cookies();
+  const token = cookieStore.get("authToken")?.value;
   try {
     const response = await fetch(`http://18.116.28.100/api/v1/dashboard/unit-intreset/${interestId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
       },
       body: JSON.stringify(interestData), // Include the request body
     });
@@ -199,11 +280,14 @@ export const updateInterest = async (interestId: string, interestData: any) => {
 };
 
 export const deleteInterest = async (interestId: string) => {
+    const cookieStore =await cookies();
+  const token = cookieStore.get("authToken")?.value;
   try {
-    const response = await fetch(`http://localhost:3000/api/v1/dashboard/unit-intreset/${interestId}`, {
+    const response = await fetch(`http://18.116.28.100/api/v1/dashboard/unit-intreset/${interestId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
       },
     });
 
@@ -221,11 +305,14 @@ export const deleteInterest = async (interestId: string) => {
 
 // Units
 export const getUnits = async () => {
+    const cookieStore =await cookies();
+  const token = cookieStore.get("authToken")?.value;
   try {
     const response = await fetch('http://18.116.28.100/api/v1/dashboard/units', {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
       },
     });
 
@@ -242,11 +329,14 @@ export const getUnits = async () => {
 };
 
 export const updateUnit = async (unitId: string, unitData: any) => {
+    const cookieStore =await cookies();
+  const token = cookieStore.get("authToken")?.value;
   try {
     const response = await fetch(`http://18.116.28.100/api/v1/dashboard/unit/${unitId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
       },
       body: JSON.stringify(unitData), // Include the request body
     });
@@ -264,11 +354,14 @@ export const updateUnit = async (unitId: string, unitData: any) => {
 };
 
 export const deleteUnit = async (unitId: string) => {
+    const cookieStore =await cookies();
+  const token = cookieStore.get("authToken")?.value;
   try {
-    const response = await fetch(`http://localhost:3000/api/v1/dashboard/unit/${unitId}`, {
+    const response = await fetch(`http://18.116.28.100/api/v1/dashboard/unit/${unitId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
       },
     });
 
@@ -286,11 +379,14 @@ export const deleteUnit = async (unitId: string) => {
 
 // Financial
 export const getFinancial = async () => {
+    const cookieStore =await cookies();
+  const token = cookieStore.get("authToken")?.value;
   try {
-    const response = await fetch('http://localhost:3000/api/v1/dashboard/financial', {
+    const response = await fetch('http://18.116.28.100/api/v1/dashboard/financial', {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
       },
     });
 
@@ -305,3 +401,32 @@ export const getFinancial = async () => {
     throw error;
   }
 };
+ export const getFloor = async (unitId: string) => {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("authToken")?.value;
+
+  try {
+    const response = await fetch(
+      `http://18.116.28.100/api/v1/dashboard/unit-floor?unitId=${unitId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch floor designs");
+    }
+
+    const data = await response.json();
+    return data?.floors || [];  
+  } catch (error) {
+    console.error("An error occurred while fetching floor designs:", error);
+    throw error;  
+  }
+};
+
+

@@ -7,11 +7,11 @@ import { Project } from '@/types/dashboard.types'
 
 const ProjectsPageClient = ({ projects }: { projects: Project[] }) => {
 
-  const [data, setData] = useState<Project[]>(projects); // Replace with your data fetching logic
+  const [data, setData] = useState<Project[]>(projects); 
 
-  const deleteRow = async (projectNumber: string) => {
+  const deleteRow = async (number: string) => {
     try {
-      const response = await fetch(`http://18.116.28.100/api/v1/dashboard/projects/${projectNumber}`, {
+      const response = await fetch(`http://18.116.28.100/api/v1/dashboard/projects/${number}`, {
         method: "DELETE",
       });
 
@@ -19,7 +19,7 @@ const ProjectsPageClient = ({ projects }: { projects: Project[] }) => {
         throw new Error("Failed to delete project");
       }
 
-      const updatedData = data.filter((project) => project.projectNumber !== projectNumber);
+      const updatedData = data.filter((project) => project.number !== number);
       setData(updatedData);
     } catch (error) {
       console.error("Error deleting project:", error);
@@ -28,7 +28,7 @@ const ProjectsPageClient = ({ projects }: { projects: Project[] }) => {
 
   const updateRow = async (updatedData: Project) => {
     try {
-      const response = await fetch(`http://18.116.28.100/api/v1/dashboard/projects/${updatedData.projectNumber}`, {
+      const response = await fetch(`http://18.116.28.100/api/v1/dashboard/projects/${updatedData.number}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -41,7 +41,7 @@ const ProjectsPageClient = ({ projects }: { projects: Project[] }) => {
       }
 
       const updatedProjects = data.map((project) =>
-        project.projectNumber === updatedData.projectNumber ? updatedData : project
+        project.number === updatedData.number ? updatedData : project
       );
       setData(updatedProjects);
     } catch (error) {
@@ -49,8 +49,8 @@ const ProjectsPageClient = ({ projects }: { projects: Project[] }) => {
     }
   };
 
-  const updateFields = [
-    { key: "projectName", label: "اسم المشروع" },
+  const updateFields: { key: keyof Project; label: string }[] = [
+    { key: "name", label: "اسم المشروع" },
     { key: "location", label: "موقع المشروع" },
     { key: "city", label: "المدينة" },
   ];

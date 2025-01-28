@@ -1,12 +1,11 @@
 import { getProjects } from "@/lib/actions/dashboard.actions";
-import { projectsData } from '@/dummyData'
-import ProjectsPageClient from './ProjectsPageClient';
+ import ProjectsPageClient from './ProjectsPageClient';
 
 export default async function DashboardPage() {
 
-  // const projects = await getProjects()
+  const projects = await getProjects()
 
-  // console.log("Projects from Dashboard", projects);
+  console.log("Projects from Dashboard", projects);
 
-  return <ProjectsPageClient projects={projectsData} />;
+  return <ProjectsPageClient projects={projects} />;
 }

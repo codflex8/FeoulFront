@@ -56,7 +56,7 @@ export default function LoginForm() {
   
       const result = await response.json();
   
-      document.cookie = `authToken=${result.token}; path=/; HttpOnly=false; Secure=true;`;
+      document.cookie = `authToken=${result.token}; path=/; Secure; SameSite=Strict;`;
   
        router.push("/ar/dashboard");
     } catch (error) {

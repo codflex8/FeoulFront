@@ -108,8 +108,7 @@ export const getUnitById = async (unitId: string) => {
     throw error;
   }
 };
-
-export const getCategories = async () => {
+ export const getCategories = async () => {
   try {
     const response = await fetch(`${API_URL}/public/unit-category`, {
       method: "GET",
@@ -136,7 +135,7 @@ export const getCategories = async () => {
 export const getPlaces = async () => {
   try {
     const response = await fetch(
-      "http://18.116.28.100/api/v1/public/project-facilities",
+      "${API_URL}/public/project-facilities",
       {
         method: "GET",
         headers: {
@@ -159,6 +158,29 @@ export const getPlaces = async () => {
       "An error occurred while getting the categories from the API:",
       error
     );
+    throw error;
+  }
+};
+
+
+export const addInterest = async (addInterest: any) => {
+  try {
+    const response = await fetch(`${API_URL}/public/unit-intreset`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(addInterest),  
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to add new interested: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("An error occurred while adding new interested:", error);
     throw error;
   }
 };
