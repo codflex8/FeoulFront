@@ -55,3 +55,10 @@ export type Operation = {
   date: string; 
   status: string; 
 };
+
+
+export type issues = {
+name: string;
+phoneNumber: string;
+description: string;
+}

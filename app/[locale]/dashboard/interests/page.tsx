@@ -11,7 +11,7 @@ const page = async () => {
   return (
     <div className="min-h-screen bg-gray-100 flex-1 p-6">
       {/* Table Section */}
-      <DataTable columns={intrestsColumns} data={interests.items || []} />
+      <DataTable columns={intrestsColumns} data={interests.items|| []} />
     </div>
   )
 }

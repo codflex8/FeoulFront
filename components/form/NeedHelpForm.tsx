@@ -7,6 +7,8 @@ import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
 import { E164Number } from 'libphonenumber-js/core'
 import { Button } from "@/components/ui/button"
+import { addissues } from "@/lib/actions/map.actions"
+
 import {
   Form,
   FormControl,
@@ -27,20 +29,20 @@ const formSchema = z.object({
   }).min(2, {
     message: "Name must be at least 2 characters.",
   }),
-  phone: z
+  phoneNumber: z
     .string({
-      required_error: "Phone number is required.",
+      required_error: "phoneNumber number is required.",
     })
     .min(10, {
-      message: "Phone number must be at least 10 digits.",
+      message: "phoneNumber number must be at least 10 digits.",
     })
     .max(15, {
-      message: "Phone number must be at most 15 digits.",
+      message: "phoneNumber number must be at most 15 digits.",
     }),
-  message: z
-    .string({ required_error: "Message is required.", })
-    .min(10, "Message must be at least 10 characters.")
-    .max(500, "Message must be no longer than 500 characters.")
+    description: z
+    .string({ required_error: "description is required.", })
+    .min(10, "description must be at least 10 characters.")
+    .max(500, "description must be no longer than 500 characters.")
 
 })
 
@@ -51,14 +53,22 @@ const NeedHelpForm = ({ setOpen }: React.ComponentState) => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      phone: "",
-      message: ""
+      phoneNumber: "",
+      description: ""
     },
   })
-
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    setOpen(false)
-  }
+const onSubmit = async (values: z.infer<typeof formSchema>) => {
+   
+    try {
+      await addissues(values);
+      setOpen(false);
+      alert("تم إرسال سؤالك بنجاح!");
+    } catch (error: any) {
+      console.error("Error during submission:", error);
+      alert(`حدث خطأ أثناء إرسال سؤالك: ${error.message || "يرجى المحاولة مرة أخرى."}`);
+    }
+  };
+  
 
   return (
     <Form {...form}>
@@ -79,10 +89,10 @@ const NeedHelpForm = ({ setOpen }: React.ComponentState) => {
 
         <FormField
           control={form.control}
-          name="phone"
+          name="phoneNumber"
           render={({ field }) => (
             <FormItem className="flex-1">
-              <FormLabel>{t("Phone")}</FormLabel>
+              <FormLabel>{t("phoneNumber")}</FormLabel>
               <FormControl>
                 <PhoneInput
                   defaultCountry="SA"
@@ -102,10 +112,10 @@ const NeedHelpForm = ({ setOpen }: React.ComponentState) => {
 
         <FormField
           control={form.control}
-          name="message"
+          name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("Message")}</FormLabel>
+              <FormLabel>{t("description")}</FormLabel>
               <FormControl>
                 <Textarea placeholder={t("MessagePlaceholder")} {...field} />
               </FormControl>

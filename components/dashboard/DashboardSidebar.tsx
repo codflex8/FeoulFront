@@ -68,6 +68,11 @@ const items: ItemsProps[] = [
     url: "/ar/dashboard/financial",
     icon: FaMoneyBillTransfer,
   },
+  {
+    title: "طلبات التواصل",
+    url: "/ar/dashboard/issues",
+    icon: MdInterests,
+  },
 ]
 
 export default function DashboardSidebar() {

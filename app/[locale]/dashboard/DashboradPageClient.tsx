@@ -14,12 +14,10 @@ import BuildingsChart from "@/components/dashboard/BuildingsChart";
 import { Interest, Project, Unit } from "@/types/dashboard.types";
 
 interface DashboardPageProps {
-  projects: Project[];
-  units: Unit[];
-  interests: Interest[];
+  home: any;
 }
 
-const DashboardPageClient: React.FC<DashboardPageProps> = ({ projects, units, interests }) => {
+const DashboardPageClient: React.FC<DashboardPageProps> = ({ home }) => {
   const router = useRouter()
   return (
     <div className="min-h-screen bg-gray-100 flex-1 p-6">
@@ -27,9 +25,9 @@ const DashboardPageClient: React.FC<DashboardPageProps> = ({ projects, units, in
       {/* Cards Section */}
       <section className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-6 text-right">
         <CountsCard icon={FaUsers} label="عدد الزائرين" value={665} color="#8280FF" background="#D6D4FF" />
-        <CountsCard icon={FaCity} label="عدد المشاريع" value={150} color="#FEC53D" background="#FFE8B3" />
-        <CountsCard icon={FaBuilding} label="عدد الوحدات السكنية" value={760} color="#4AD991" background="#B3F0D3" />
-        <CountsCard icon={MdInterests} label="عدد الإهتمامات" value={222} color="#FF9066" background="#FFD4BF" />
+        <CountsCard icon={FaCity} label="عدد المشاريع" value={home.projectsCount} color="#FEC53D" background="#FFE8B3" />
+        <CountsCard icon={FaBuilding} label="عدد الوحدات السكنية" value={home.unitsCount} color="#4AD991" background="#B3F0D3" />
+        <CountsCard icon={MdInterests} label="عدد الإهتمامات" value={home.intresetCount} color="#FF9066" background="#FFD4BF" />
       </section>
 
       {/* Charts Section */}
@@ -39,7 +37,7 @@ const DashboardPageClient: React.FC<DashboardPageProps> = ({ projects, units, in
       </section>
 
       {/* Table Section */}
-      <DataTable page="dashboard" columns={intrestsColumns} data={interests} />
+      <DataTable page="dashboard" columns={intrestsColumns} data={home.lastIntresets} />
       <Button
         variant="outline"
         size="lg"

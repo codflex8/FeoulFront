@@ -4,10 +4,34 @@ import { Project } from "@/types/dashboard.types";
 import { cookies } from "next/headers";
 // Projects
 
+export const getHome = async () => {
+  const cookieStore =await cookies();
+  const token = cookieStore.get("authToken")?.value;
+
+  try {
+    const response = await fetch('http://18.116.28.100/api/v1/dashboard/home', {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch projects: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data.items || data; // Handle both cases where data is nested or direct
+  } catch (error) {
+    console.error("An error occurred while getting projects from the API:", error);
+    throw error;
+  }
+};
 export const getProjects = async () => {
   const cookieStore =await cookies();
   const token = cookieStore.get("authToken")?.value;
-  console.log(token);
+
   try {
     const response = await fetch('http://18.116.28.100/api/v1/dashboard/projects', {
       method: "GET",
@@ -233,7 +257,7 @@ export const updateCategory = async (categoryId: string, updatedData: any) => {
 export const getInterests = async () => {
   const cookieStore =await cookies();
   const token = cookieStore.get("authToken")?.value;
-  console.log(token);
+
   try {
     const response = await fetch('http://18.116.28.100/api/v1/dashboard/unit-intreset', {
       method: "GET",
@@ -429,4 +453,28 @@ export const getFinancial = async () => {
   }
 };
 
+export const getIssues = async () => {
+  const cookieStore =await cookies();
+  const token = cookieStore.get("authToken")?.value;
+
+  try {
+    const response = await fetch('http://18.116.28.100/api/v1/dashboard/issues', {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch projects: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data.items || data; // Handle both cases where data is nested or direct
+  } catch (error) {
+    console.error("An error occurred while getting issues from the API:", error);
+    throw error;
+  }
+};
 

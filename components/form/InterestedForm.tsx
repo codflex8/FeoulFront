@@ -63,8 +63,7 @@ const InterestedForm = ({ setOpen, unitId }: { setOpen: (open: boolean) => void;
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log("🚀 ~ onSubmit ~ values:", values);
-  
+   
     try {
       await addInterest(values);
       setOpen(false);

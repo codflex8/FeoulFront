@@ -184,3 +184,25 @@ export const addInterest = async (addInterest: any) => {
     throw error;
   }
 };
+
+export const addissues = async (addissues: any) => {
+  try {
+    const response = await fetch(`${API_URL}/public/issues`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(addissues),  
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to add new interested: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("An error occurred while adding new interested:", error);
+    throw error;
+  }
+};

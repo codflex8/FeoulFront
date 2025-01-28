@@ -7,7 +7,7 @@ import { Button } from "../ui/button"
 
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
-import { Category, Interest, Project, Unit, Operation } from "@/types/dashboard.types";
+import { Category, Interest, Project, Unit, Operation,issues } from "@/types/dashboard.types";
 import FloorDesignsPopup from "@/components/dashboard/FloorDesignsPopup";
 import VideoPopup from "@/components/VideoPopup";
 
@@ -48,7 +48,7 @@ export const intrestsColumns: ColumnDef<Interest>[] = [
     accessorKey: "unit",
     header: () => <div className="text-center font-semibold">رقم الوحدة السكنية</div>,
     cell: ({ row }) => {
-      const unit = row.getValue("unit") as { number: string };
+      const unit = row.getValue("unit") as { number: string; status?: string };
   
       if (unit && unit.number) {
         return (
@@ -66,11 +66,25 @@ export const intrestsColumns: ColumnDef<Interest>[] = [
     },
   },
   {
-    accessorKey: "buildingStatus",
+    accessorKey: "unit",
     header: () => <div className="text-center font-semibold">حالة الوحدة السكنية</div>,
-    cell: ({ row }) => <div className="flex justify-center items-center">
-      <StatusBadge status={row.original.buildingStatus} />
-    </div>
+    cell: ({ row }) => {
+      const unit = row.getValue("unit") as { number: string; status?: string };
+  
+      if (unit && unit.status) {
+        return (
+          <p className="text-center font-medium">
+            {unit.status}
+          </p>
+        );
+      }
+  
+       return (
+        <p className="text-center font-medium text-gray-500">
+          غير متوفر
+        </p>
+      );
+    },
   },
   {
     id: "actions",
@@ -478,7 +492,7 @@ export const financialColumns: ColumnDef<Operation>[] = [
       const interests = row.getValue("interests");
 
       if (Array.isArray(interests) && interests.length > 0) {
-        const { firstName, lastName } = interests[0]; // استخراج أول عنصر
+        const { firstName, lastName } = interests[0];  
         return (
           <p className="text-center font-medium text-sm">
             {firstName} {lastName}
@@ -547,6 +561,44 @@ export const financialColumns: ColumnDef<Operation>[] = [
       );
     },
   }
+  
+];
+export const issuesColumns: ColumnDef<issues>[] = [
+  {
+    accessorKey: "rowId",
+    header: () => <div className="text-center font-semibold">#</div>,
+    cell: ({ row }) => (
+      <p className="text-center font-medium text-sm">
+        {row.index + 1}  
+      </p>
+    ),
+  },
+  {
+    accessorKey: "name",
+    header: () => <div className="text-center font-semibold">الاسم</div>,
+    cell: ({ row }) => (
+      <p className="text-center font-medium text-sm">{row.getValue("name")}</p>
+    ),
+  },
+  {
+    accessorKey: "phoneNumber",
+    header: () => <div className="text-center font-semibold">رقم الجوال</div>,
+    cell: ({ row }) => (
+      <p className="text-center font-medium text-sm">
+        {row.getValue("phoneNumber")}
+      </p>
+    ),
+  },
+  {
+    accessorKey: "description",
+    header: () => <div className="text-center font-semibold">الرسالة</div>,
+    cell: ({ row }) => (
+      <p className="text-center font-medium text-sm">
+        {row.getValue("description")}
+      </p>
+    ),
+  },
+
   
 ];
 
