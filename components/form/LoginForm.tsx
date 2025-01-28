@@ -40,7 +40,16 @@ export default function LoginForm() {
     },
   });
 
-  const onSubmit = async (data) => {
+  interface LoginResponse {
+    token: string;
+  }
+
+  interface LoginFormData {
+    username: string;
+    password: string;
+  }
+
+  const onSubmit = async (data: LoginFormData) => {
     try {
       const response = await fetch("http://18.116.28.100/api/v1/dashboard/auth/signin", {
         method: "POST",
@@ -49,16 +58,16 @@ export default function LoginForm() {
         },
         body: JSON.stringify(data),
       });
-  
+
       if (!response.ok) {
         throw new Error("فشل تسجيل الدخول");
       }
-  
-      const result = await response.json();
-  
+
+      const result: LoginResponse = await response.json();
+
       document.cookie = `authToken=${result.token}; path=/; Secure; SameSite=Strict;`;
-  
-       router.push("/ar/dashboard");
+
+      router.push("/ar/dashboard");
     } catch (error) {
       toast({
         title: "خطأ",

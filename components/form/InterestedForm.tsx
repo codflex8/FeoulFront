@@ -8,6 +8,7 @@ import PhoneInput from 'react-phone-number-input'
 import { E164Number } from 'libphonenumber-js/core'
 import { Button } from "@/components/ui/button"
 import { addInterest } from "@/lib/actions/map.actions"
+import { useToast } from "@/hooks/use-toast";
 import {
   Form,
   FormControl,
@@ -50,7 +51,7 @@ const formSchema = z.object({
 
 const InterestedForm = ({ setOpen, unitId }: { setOpen: (open: boolean) => void; unitId: string }) => {
   const t = useTranslations('BuildingViewPage');
-
+  const { toast } = useToast()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -58,7 +59,7 @@ const InterestedForm = ({ setOpen, unitId }: { setOpen: (open: boolean) => void;
       lastName: "",
       phoneNumber: "",
       area: "central",
-      unitId, // تأكد من تسجيل unitId كقيمة افتراضية
+      unitId, // Hidden field
     },
   });
 
@@ -67,11 +68,19 @@ const InterestedForm = ({ setOpen, unitId }: { setOpen: (open: boolean) => void;
     try {
       await addInterest(values);
       setOpen(false);
-      alert("تم إرسال اهتمامك بنجاح!");
+      toast({
+        title: "نجاح",
+        description: " تم إرسال اهتمامك بنجاح!",
+        variant: "default",
+      });
     } catch (error: any) {
       console.error("Error during submission:", error);
-      alert(`حدث خطأ أثناء إرسال اهتمامك: ${error.message || "يرجى المحاولة مرة أخرى."}`);
-    }
+      toast({
+        title: "خطأ",
+        description:"حدث خطأ أثناء إرسال اهتمامك",
+        variant: "destructive",
+      });
+     }
   };
   
 

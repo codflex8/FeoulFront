@@ -8,6 +8,7 @@ import PhoneInput from 'react-phone-number-input'
 import { E164Number } from 'libphonenumber-js/core'
 import { Button } from "@/components/ui/button"
 import { addissues } from "@/lib/actions/map.actions"
+import { useToast } from "@/hooks/use-toast";
 
 import {
   Form,
@@ -48,6 +49,7 @@ const formSchema = z.object({
 
 const NeedHelpForm = ({ setOpen }: React.ComponentState) => {
   const t = useTranslations('BuildingViewPage');
+  const { toast } = useToast()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -62,10 +64,18 @@ const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       await addissues(values);
       setOpen(false);
-      alert("تم إرسال سؤالك بنجاح!");
+       toast({
+        title: "نجاح",
+        description: " تم إرسال سؤالك بنجاح!",
+        variant: "default",
+      });
     } catch (error: any) {
       console.error("Error during submission:", error);
-      alert(`حدث خطأ أثناء إرسال سؤالك: ${error.message || "يرجى المحاولة مرة أخرى."}`);
+      toast({
+        title: "خطأ",
+        description:"حدث خطأ أثناء إرسال سؤالك",
+        variant: "destructive",
+      });
     }
   };
   
